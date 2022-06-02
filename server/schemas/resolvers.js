@@ -5,8 +5,8 @@ const { signToken } = require('../utils/auth');
 const resolvers = {
   Query: {
     decks: async () => {
-        //return all decks
-        return await Deck.find({});
+      //return all decks
+      return await Deck.find({});
     },
     deck: async(parent, {deckId}) => {
       return await Deck.findOne({ _id: deckId });
@@ -33,60 +33,60 @@ const resolvers = {
   },
   Mutation: {
     //this is creating a user from the sign up page
-  addUser: async (parent, args) => {
-    const user = await User.create(args);
-    const token = signToken(user);
+    addUser: async (parent, args) => {
+      const user = await User.create(args);
+      const token = signToken(user);
 
-    return { token, user };
-  },
-  //addDeck
-  addDeck: async (parent, {title, category, description}) => {
+      return { token, user };
+    },
+    //addDeck
+    addDeck: async (parent, {title, category, description}) => {
       const deck = await Deck.create({title, category, description});
       return deck;
-  },
-  // addCard
-  addCard: async (parent, {sideA, sideB, deck}) => {
-      const card = await Card.create({sideA, sideB, deck});
-      return card;
-  },
-  // Update User
-  updateUser: async (parent, args, context) => {
-    if (context.user) {
-      return await User.findByIdAndUpdate(context.user._id, args, { new: true });
-    }
-    throw new AuthenticationError('Not logged in');
-  },
-  //Update Deck 
-  updateDeck: async (parent, args, context) => {
-      if (context.deck) {
-          return await Deck.findByIdAndUpdate(context.deck._id, args, {new: true});
+    },
+    // addCard
+    addCard: async (parent, {sideA, sideB, deck}) => {
+        const card = await Card.create({sideA, sideB, deck});
+        return card;
+    },
+    // Update User
+    updateUser: async (parent, args, context) => {
+      if (context.user) {
+        return await User.findByIdAndUpdate(context.user._id, args, { new: true });
       }
-  },
-  //Update Card
-  updateCard: async (parent, args, context) => {
+      throw new AuthenticationError('Not logged in');
+    },
+    //Update Deck 
+    updateDeck: async (parent, args, context) => {
       if (context.deck) {
-          return await Card.findByIdAndUpdate(context.card._id, args, {new: true});
+        return await Deck.findByIdAndUpdate(context.deck._id, args, {new: true});
       }
-  },
-  //Login check is by email, password requirement is 8 characters
-  login: async (parent, { username, password }) => {
-    const user = await User.findOne({ username });
+    },
+    //Update Card
+    updateCard: async (parent, args, context) => {
+      if (context.deck) {
+        return await Card.findByIdAndUpdate(context.card._id, args, {new: true});
+      }
+    },
+    //Login check is by email, password requirement is 8 characters
+    login: async (parent, { username, password }) => {
+      const user = await User.findOne({ username });
 
-    if (!user) {
-      throw new AuthenticationError('Incorrect credentials');
+      if (!user) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
+
+      const token = signToken(user);
+
+      return { token, user };
     }
-
-    const correctPw = await user.isCorrectPassword(password);
-
-    if (!correctPw) {
-      throw new AuthenticationError('Incorrect credentials');
-    }
-
-    const token = signToken(user);
-
-    return { token, user };
   }
-}
 };
 
 module.exports = resolvers;
