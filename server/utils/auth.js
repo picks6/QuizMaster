@@ -7,7 +7,7 @@ module.exports = {
     authMiddleWare: function ({ req }) {
         let token = req.body.token || req.query.token || req.headers.authorization;
 
-        if (req.headers.authorization) {
+        if (req.headers.authorization) { // expect req.headers.authorization: "Bearer <tokenvalue>"
             token = token.split(' ').pop().trim();
         }
 
