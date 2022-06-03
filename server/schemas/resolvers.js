@@ -64,8 +64,13 @@ const resolvers = {
     },
     //Update Card
     updateCard: async (parent, args, context) => {
+      // args: { cardId: ID, sideA: String!, sideB: String! }
       if (context.deck) {
         return await Card.findByIdAndUpdate(context.card._id, args, {new: true});
+      } else {
+        return await Card.findOneAndUpdate(
+          { _id: args.cardId }, { sideA: args.sideA, sideB: args.sideB }, { new: true }
+        );
       }
     },
     //Login check is by email, password requirement is 8 characters
