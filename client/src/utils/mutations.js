@@ -82,4 +82,15 @@ export const UPDATE_DECK = gql`
       }
     }
   }`;
-export const LOGIN_USER = gql``;
+export const LOGIN_USER = gql`
+  mutation Login($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+      token
+      user {
+        _id
+        username
+        email
+        password
+      }
+    }
+  }`;
