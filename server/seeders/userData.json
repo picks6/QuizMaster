@@ -1,0 +1,17 @@
+[
+  {
+    "email": "asdf@mail.com",
+    "username": "asdf",
+    "password": "asdfasdf"
+  },
+  {
+    "email": "qwer@mail.com",
+    "username": "qwer",
+    "password": "qwerqwer"
+  },
+  {
+    "email": "zxcv@mail.com",
+    "username": "zxcv",
+    "password": "zxcvzxcv"
+  }
+]
