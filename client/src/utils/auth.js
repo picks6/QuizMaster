@@ -1,6 +1,6 @@
 import decode from 'jwt-decode';
 
-class Auth {
+export default class Auth {
   login(token) { // save token to local storage
     localStorage.setItem('id_token', token);
     // window.location.assign('/'); // reload page
