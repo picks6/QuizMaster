@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 export const GET_DECKS = gql`
-  query getDecks {
+  query GetDecks {
     decks {
       _id
       title
@@ -18,7 +18,7 @@ export const GET_DECKS = gql`
     }
   }`;
 export const QUERY_DECK = gql`
-  query queryDeck($deckId: ID) {
+  query QueryDeck($deckId: ID) {
     deck(deckId: $deckId) {
       _id
       title
@@ -54,7 +54,7 @@ export const QUERY_TITLE = gql`
     }
   }`;
 export const QUERY_CARD = gql`
-  query queryCard($deck: ID) {
+  query QueryCard($deck: ID) {
     card(deck: $deck) {
       _id
       sideA
@@ -64,7 +64,7 @@ export const QUERY_CARD = gql`
     }
   }`;
 export const GET_CARDS = gql`
-  query getCards {
+  query GetCards {
     cards {
       _id
       sideA
@@ -74,7 +74,7 @@ export const GET_CARDS = gql`
     }
   }`;
 export const QUERY_USER = gql`
-  query queryUser {
+  query QueryUser {
     user {
       _id
       username
