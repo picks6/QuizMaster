@@ -18,7 +18,11 @@ export default class Auth {
     try {
       const decodedToken = decode(token);
       // check if expiration time has passed
-      decodedToken.exp < Date.now()/1000 ? true : false;
+     if (decodedToken.exp < Date.now()/1000) {
+       return true;
+     } else {
+       return false;
+     }
     } catch (err) {
       return false;
     }
