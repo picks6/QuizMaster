@@ -4,8 +4,8 @@ import React from 'react'
 // import Header from './components/Header/header';
 // import Navbar from './components/Nav/navbar';
 import Signup from './pages/Signup';
-
 import Login from './pages/Login';
+import Logout from './components/Logout';
 
 
 
@@ -17,8 +17,6 @@ const App = () => {
     {/* <Navbar /> */}
     <Signup />
     <Login />
- 
-    
     </>
   )
 }
