@@ -56,7 +56,7 @@ const resolvers = {
       if (context.user) {
         return await User.findByIdAndUpdate(context.user._id, args, { new: true });
       } 
-      if (args.deck) { // for backend testing without context
+      if (args.deck) { // for backend testing
         return await User.findOneAndUpdate(
           { username: args.username}, { $addToSet: { decks: args.deck } }, { new: true }
         ).populate(
@@ -72,6 +72,11 @@ const resolvers = {
     updateDeck: async (parent, args, context) => {
       if (context.deck) {
         return await Deck.findByIdAndUpdate(context.deck._id, args, {new: true});
+      }
+      if (args.cardId) { // for backend testing
+        return await Deck.findOneAndUpdate(
+          { title: args.title }, { $addToSet: { cards: args.cardId } }, { new: true }
+        ).populate({ path: 'cards' });
       }
     },
     //Update Card
