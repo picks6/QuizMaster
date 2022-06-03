@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+
 export const GET_DECKS = gql`
   query GetDecks {
     decks {
@@ -97,3 +98,4 @@ export const QUERY_USER = gql`
       }
     }
   }`;
+
