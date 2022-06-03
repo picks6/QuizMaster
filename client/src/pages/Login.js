@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
+
+import Logout from '../components/Logout';
 import Auth from '../utils/auth';
 
 const Login = (props) => {
@@ -47,6 +49,7 @@ const Login = (props) => {
             {data ? (
               <p>
                 Success! You may now head{' '}
+                <Logout />
                 {/* <Link to="/">back to the homepage.</Link> */}
               </p>
             ) : (
