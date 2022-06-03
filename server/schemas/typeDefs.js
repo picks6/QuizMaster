@@ -47,7 +47,7 @@ const typeDefs = gql`
     updateCard(cardId: ID, sideA: String!, sideB: String!): Card
     updateUser(username: String, email: String, password: String, deck: ID): User
     updateDeck(title: String, category: String, description: String, cardId: ID): Deck
-    login( username: String!, password: String!): Auth
+    login( username: String, email: String, password: String!): Auth
   }
 `;
 
