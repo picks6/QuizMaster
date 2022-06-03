@@ -92,8 +92,10 @@ const resolvers = {
       }
     },
     //Login check is by email, password requirement is 8 characters
-    login: async (parent, { username, password }) => {
-      const user = await User.findOne({ username });
+    login: async (parent, { username, email, password }) => {
+      const user = await User.findOne(
+        { $or: [{ username }, { email }] }
+      );
 
       if (!user) {
         throw new AuthenticationError('Incorrect credentials');
