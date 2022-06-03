@@ -34,6 +34,7 @@ const resolvers = {
   Mutation: {
     //this is creating a user from the sign up page
     addUser: async (parent, args) => {
+      // args: { username: String!, email: String!, password: String! }
       const user = await User.create(args);
       const token = signToken(user);
 
@@ -51,8 +52,19 @@ const resolvers = {
     },
     // Update User
     updateUser: async (parent, args, context) => {
+      // args: { username: String, email: String, password: String, deck: ID }
       if (context.user) {
         return await User.findByIdAndUpdate(context.user._id, args, { new: true });
+      } 
+      if (args.deck) { // for backend testing without context
+        return await User.findOneAndUpdate(
+          { username: args.username}, { $addToSet: { decks: args.deck } }, { new: true }
+        ).populate(
+          { 
+            path: 'decks', 
+            // populate: { path: 'cards' } 
+          }
+        );
       }
       throw new AuthenticationError('Not logged in');
     },
@@ -67,7 +79,8 @@ const resolvers = {
       // args: { cardId: ID, sideA: String!, sideB: String! }
       if (context.deck) {
         return await Card.findByIdAndUpdate(context.card._id, args, {new: true});
-      } else {
+      } 
+      if (args.cardId) { // for backend testing
         return await Card.findOneAndUpdate(
           { _id: args.cardId }, { sideA: args.sideA, sideB: args.sideB }, { new: true }
         );
