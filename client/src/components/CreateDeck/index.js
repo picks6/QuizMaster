@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+
+import { Form, Button, Checkbox } from 'semantic-ui-react';
+
 import { useMutation } from '@apollo/client';
 import { ADD_DECK } from '../../utils/mutations';
-import { Link } from 'react-router-dom';
-import { GET_DECKS } from '../../client/src/utils/queries';
+// import { Link } from 'react-router-dom';
+import { GET_DECKS } from '../../utils/queries';
 
-function createDeck() {
+function CreateDeck() {
     const [title, setTitle] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
@@ -46,7 +49,7 @@ function createDeck() {
         console.log(title); 
         console.log(name)
         console.log(value)
-        switch (name){
+        switch (name) {
             case "title": setTitle(value); break; 
             case "category": setCategory(value); break;
             case "description": setDescription(value); break;
@@ -55,7 +58,32 @@ function createDeck() {
     };
 
 // WHAT DOES THE RETURN LOOK LIKE? 
-
+    return (
+        <Form onSubmit={handleFormSubmit}>
+            <Form.Field>
+              <label>Title</label>
+              <Form.Input 
+              placeholder='Title' 
+              onChange={handleChange} 
+              value={title} />
+            </Form.Field>
+            <Form.Field>
+              <label>Category</label>
+              <input 
+              placeholder='Category' 
+              onChange={handleChange} 
+              value={category} />
+            </Form.Field>
+            <Form.Field>
+              <label>Description</label>
+              <input 
+              placeholder='Description' 
+              onChange={handleChange} 
+              value={description} />
+            </Form.Field>
+            <Button type='submit'>Create</Button>
+        </Form>
+    )
 }
 
-export default createDeck;
+export default CreateDeck;
