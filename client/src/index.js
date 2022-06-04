@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+
 import 'semantic-ui-css/semantic.min.css'
 
 import {
@@ -34,11 +35,11 @@ const client = new ApolloClient( // configure client with links
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <ApolloProvider client={client}> {/* connect Apollo Client*/}
       <App />
     </ApolloProvider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
