@@ -14,8 +14,11 @@ const resolvers = {
     deckTitle: async(parent,{deckTitle}) =>{
       return await Deck.findOne({title: deckTitle})
     },
-    card: async (parent, { deck }) => {
-      return await Card.find({deck: deck});
+    card: async (parent, args) => {
+      if (args.cardId) { // for testing
+        return await Card.findOne({ _id: args.cardId });
+      }
+      return await Card.find({deck: args.deck});
     },
     cards: async (parent, args) => {
       return Card.find({});
