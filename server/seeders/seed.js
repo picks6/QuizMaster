@@ -17,6 +17,6 @@ db.once('open', async () => {
   const users = await User.insertMany(userData);
   const cards = await Card.insertMany(cardData);
 
-  console.log('datyabse seeded!');
+  console.log('database seeded!');
   process.exit(0);
 })
