@@ -55,8 +55,8 @@ export const QUERY_TITLE = gql`
     }
   }`;
 export const QUERY_CARD = gql`
-  query QueryCard($deck: ID) {
-    card(deck: $deck) {
+  query QueryCard($deck: ID, $cardId: ID) {
+    card(deck: $deck, cardId: $cardId) {
       _id
       sideA
       sideB
