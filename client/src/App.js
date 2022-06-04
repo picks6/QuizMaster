@@ -1,27 +1,25 @@
-
-import React from 'react'
+import React from "react";
 //import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // import Header from './components/Header/header';
 // import Navbar from './components/Nav/navbar';
-import Signup from './pages/Signup';
-import Login from './pages/Login';
-import Logout from './components/Logout';
-import CardFlip from './components/Card/CardFlip';
-import Deck from './components/Deck';
-import CreateDeck from './components/CreateDeck';
+import SignUpPage from "./pages/SignupPage";
+import LoginPage from "./pages/LoginPage";
+import DeckPage from "./pages/DeckPage";
+import CardFlipPage from "./pages/CardFlipPage";
+
+import CardFlip from "./components/Card/CardFlip";
+
 const App = () => {
   return (
     <>
-    {/* <Header /> */}
-    {/* <Navbar /> */}
-    <Signup />
-    {/* <Login /> */}
-    {/* <Logout /> */}
-    {/* <CardFlip /> */}
-    {/* <Deck /> */}
-    {/* <CreateDeck /> */}
+      {/* <Header /> */}
+      {/* <Main /> */}
+      {/* <Signup /> */}
+      {/* <Login /> */}
+      {/* <Logout /> */}
+      {/* <CardFlip /> */}
     </>
-  )
-}
+  );
+};
 
 export default App;
