@@ -7,7 +7,7 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Logout from './components/Logout';
 
-import CardFlip from './components//Card/CardFlip';
+import CardFlip from './components/Card/CardFlip';
 
 const App = () => {
   return (
