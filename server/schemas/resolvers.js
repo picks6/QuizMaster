@@ -83,13 +83,15 @@ const resolvers = {
     //Update Card
     updateCard: async (parent, args, context) => {
       // args: { cardId: ID, sideA: String!, sideB: String! }
-      if (context.deck) {
+      if (context.deck) { // TODO: Reconfigure to query Deck for Cards to update
         return await Card.findByIdAndUpdate(context.card._id, args, {new: true});
       } 
       if (args.cardId) { // for backend testing
-        return await Card.findOneAndUpdate(
-          { _id: args.cardId }, { sideA: args.sideA, sideB: args.sideB }, { new: true }
+        const newDeck = await Deck.findOneAndUpdate(
+          { _id: args.deck, "cards._id": args.cardId }, { $set: {"cards.$.sideA": args.sideA, "cards.$.sideB": args.sideB} }, { new: true }
         );
+        console.log(newDeck);
+        return newDeck;
       }
     },
     //Login check is by email, password requirement is 8 characters
