@@ -6,6 +6,7 @@ import SignUpPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import DeckPage from "./pages/DeckPage";
 import CardFlipPage from "./pages/CardFlipPage";
+import CreateDeckPage from "./pages/CreateDeckPage";
 
 
 
@@ -18,7 +19,8 @@ const App = () => {
       {/* <LoginPage /> */}
       {/* <Logout /> */}
       {/* <CardFlipPage /> */}
-      <DeckPage />
+      {/* <DeckPage /> */}
+      <CreateDeckPage />
     </>
   );
 };
