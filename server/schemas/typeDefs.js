@@ -15,7 +15,6 @@ const typeDefs = gql`
     _id: ID
     sideA: String!
     sideB: String!
-    deckTitle: String
     deck: ID
   }
 
