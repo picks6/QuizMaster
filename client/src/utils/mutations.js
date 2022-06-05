@@ -3,7 +3,6 @@ import { gql } from '@apollo/client';
 
 export const ADD_USER = gql`
   mutation AddUser($username: String!, $email: String!, $password: String!) {
-
     addUser(username: $username, email: $email, password: $password) {
       token
       user {
@@ -26,8 +25,8 @@ export const ADD_DECK = gql`
     }
   }`;
 export const ADD_CARD = gql`
-  mutation AddCard($sideA: String!, $sideB: String!, $deck: ID!) {
-    addCard(sideA: $sideA, sideB: $sideB, deck: $deck) {
+  mutation AddCard($deckId: ID!, $sideA: String!, $sideB: String!) {
+    addCard(deckId: $deckId, sideA: $sideA, sideB: $sideB) {
       _id
       title
       category
@@ -42,8 +41,8 @@ export const ADD_CARD = gql`
     }
   }`;
 export const UPDATE_CARD = gql`
-  mutation UpdateCard($deck: ID!, $cardId: ID!, $sideA: String!, $sideB: String!) {
-    updateCard(deck: $deck, cardId: $cardId, sideA: $sideA, sideB: $sideB) {
+  mutation UpdateCard($deckId: ID!, $cardId: ID!, $sideA: String!, $sideB: String!) {
+    updateCard(deckId: $deckId, cardId: $cardId, sideA: $sideA, sideB: $sideB) {
       _id
       title
       category
@@ -58,8 +57,8 @@ export const UPDATE_CARD = gql`
     }
   }`;
 export const UPDATE_USER = gql`
-  mutation UpdateUser($deck: ID, $password: String, $email: String, $username: String) {
-    updateUser(deck: $deck, password: $password, email: $email, username: $username) {
+  mutation UpdateUser($password: String, $email: String, $username: String, $deckId: ID) {
+    updateUser(password: $password, email: $email, username: $username, deckId: $deckId) {
       _id
       username
       email
@@ -81,8 +80,8 @@ export const UPDATE_USER = gql`
     }
   }`;
 export const UPDATE_DECK = gql`
-  mutation UpdateDeck($cardId: ID, $description: String, $category: String, $title: String) {
-    updateDeck(cardId: $cardId, description: $description, category: $category, title: $title) {
+  mutation UpdateDeck($deckId: ID!, $description: String, $category: String, $title: String) {
+    updateDeck(deckId: $deckId, description: $description, category: $category, title: $title) {
       title
       category
       description
