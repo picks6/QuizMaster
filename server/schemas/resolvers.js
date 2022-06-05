@@ -16,7 +16,7 @@ const resolvers = {
     },
     card: async (parent, args) => {
       if (args.cardId && args.deck) { // for testing
-        return await Deck.findById(args.deck, {cards: { $elemMatch: { _id: args.cardId }} });
+        return await Deck.findById(args.deck, { cards: { $elemMatch: { _id: args.cardId }} });
       }
       return await Card.find({deck: args.deck});
     },
@@ -47,7 +47,8 @@ const resolvers = {
     },
     // addCard
     addCard: async (parent, {sideA, sideB, deck}) => {
-        const card = await Card.create({sideA, sideB, deck});
+        const card = await Deck.findByIdAndUpdate(deck, { $addToSet: { cards: { sideA, sideB, deck } }}, { new: true });
+        console.log(card);
         return card;
     },
     // Update User
