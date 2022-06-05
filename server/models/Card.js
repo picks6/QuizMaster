@@ -20,13 +20,9 @@ const cardSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref:'deck'
         },
-        deckTitle: {
-            type: String
-        },
-           
     }
 );
 
-const Card = model('card', cardSchema);
+// const Card = model('card', cardSchema);
 
-module.exports = Card;
+module.exports = cardSchema;

@@ -13,7 +13,6 @@ export const GET_DECKS = gql`
         _id
         sideA
         sideB
-        deckTitle
         deck
       }
     }
@@ -31,7 +30,6 @@ export const QUERY_DECK = gql`
         _id
         sideA
         sideB
-        deckTitle
         deck
       }
     }
@@ -49,29 +47,19 @@ export const QUERY_TITLE = gql`
         _id
         sideA
         sideB
-        deckTitle
         deck
       }
     }
   }`;
 export const QUERY_CARD = gql`
-  query QueryCard($deck: ID, $cardId: ID) {
+  query Card($deck: ID, $cardId: ID) {
     card(deck: $deck, cardId: $cardId) {
-      _id
-      sideA
-      sideB
-      deckTitle
-      deck
-    }
-  }`;
-export const GET_CARDS = gql`
-  query GetCards {
-    cards {
-      _id
-      sideA
-      sideB
-      deckTitle
-      deck
+      cards {
+        _id
+        sideA
+        sideB
+        deck
+      }
     }
   }`;
 export const QUERY_USER = gql`
@@ -92,7 +80,6 @@ export const QUERY_USER = gql`
           _id
           sideA
           sideB
-          deckTitle
           deck
         }
       }

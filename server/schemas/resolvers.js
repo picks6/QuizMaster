@@ -15,13 +15,10 @@ const resolvers = {
       return await Deck.findOne({title: deckTitle})
     },
     card: async (parent, args) => {
-      if (args.cardId) { // for testing
-        return await Card.findOne({ _id: args.cardId });
+      if (args.cardId && args.deck) { // for testing
+        return await Deck.findById(args.deck, { cards: { $elemMatch: { _id: args.cardId }} });
       }
       return await Card.find({deck: args.deck});
-    },
-    cards: async (parent, args) => {
-      return Card.find({});
     },
     //find the user by ID, populate decks and cards
     user: async (parent, args, context) => {
@@ -44,13 +41,14 @@ const resolvers = {
       return { token, user };
     },
     //addDeck
-    addDeck: async (parent, {title, category, description}) => {
+    addDeck: async (parent, {title, category, description}, context) => {
       const deck = await Deck.create({title, category, description});
       return deck;
     },
     // addCard
     addCard: async (parent, {sideA, sideB, deck}) => {
-        const card = await Card.create({sideA, sideB, deck});
+        const card = await Deck.findByIdAndUpdate(deck, { $addToSet: { cards: { sideA, sideB, deck } }}, { new: true });
+        console.log(card);
         return card;
     },
     // Update User
@@ -85,13 +83,15 @@ const resolvers = {
     //Update Card
     updateCard: async (parent, args, context) => {
       // args: { cardId: ID, sideA: String!, sideB: String! }
-      if (context.deck) {
+      if (context.deck) { // TODO: Reconfigure to query Deck for Cards to update
         return await Card.findByIdAndUpdate(context.card._id, args, {new: true});
       } 
       if (args.cardId) { // for backend testing
-        return await Card.findOneAndUpdate(
-          { _id: args.cardId }, { sideA: args.sideA, sideB: args.sideB }, { new: true }
+        const newDeck = await Deck.findOneAndUpdate(
+          { _id: args.deck, "cards._id": args.cardId }, { $set: {"cards.$.sideA": args.sideA, "cards.$.sideB": args.sideB} }, { new: true }
         );
+        console.log(newDeck);
+        return newDeck;
       }
     },
     //Login check is by email, password requirement is 8 characters
