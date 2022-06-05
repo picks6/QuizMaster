@@ -19,7 +19,7 @@ function CardFlipPage({ deckId, cardId }) {
   if (error) return <div>Error! {`${error.message}`}</div>;
   
   const card = data.card.cards[0];
-  console.log(card);
+  console.log("QUERY_CARD:", card);
 
   return (
     <section>
