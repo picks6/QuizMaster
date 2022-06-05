@@ -12,20 +12,22 @@ function CreateDeck() {
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
 
-    const [addDeck, { error }] = useMutation(ADD_DECK, {
-        update(cache, { data: { addDeck } }) {
-            try {
-                const { newDeck } = cache.readQuery({ query: GET_DECKS });
+    const [addDeck, { error }] = useMutation(ADD_DECK, 
+        // {
+        //     update(cache, { data: { addDeck } }) {
+        //         try {
+        //             const { newDeck } = cache.readQuery({ query: GET_DECKS });
 
-                cache.writeQuery({
-                    query: GET_DECKS,
-                    data: { newDeck: [addDeck, ...newDeck] },
-                })
-            } catch (e) {
-                console.log(e);
-            }
-        }
-    });
+        //             cache.writeQuery({
+        //                 query: GET_DECKS,
+        //                 data: { newDeck: [addDeck, ...newDeck] },
+        //             })
+        //         } catch (e) {
+        //             console.log(e);
+        //         }
+        //     }
+        // }
+    );
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
@@ -34,9 +36,9 @@ function CreateDeck() {
             const { data } = await addDeck({
                 variables: { title, category, description },
             });
-            document.getElementById("Deck").classList.toggle("hide");
-            document.getElementById("Card").classList.toggle("hide");
-
+            // document.getElementById("Deck").classList.toggle("hide");
+            // document.getElementById("Card").classList.toggle("hide");
+            console.log('ADD_DECK:', data.addDeck);
             
         } catch (err) {
             console.log(err);
@@ -92,7 +94,7 @@ function CreateDeck() {
               onChange={handleChange} 
               value={description} />
             </Form.Field>
-            
+
             <Button type='submit'>Create</Button>
         </Form>
     )
