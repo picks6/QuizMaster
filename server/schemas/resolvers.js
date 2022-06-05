@@ -15,13 +15,10 @@ const resolvers = {
       return await Deck.findOne({title: deckTitle})
     },
     card: async (parent, args) => {
-      if (args.cardId) { // for testing
-        return await Card.findOne({ _id: args.cardId });
+      if (args.cardId && args.deck) { // for testing
+        return await Deck.findById(args.deck, {cards: { $elemMatch: { _id: args.cardId }} });
       }
       return await Card.find({deck: args.deck});
-    },
-    cards: async (parent, args) => {
-      return Card.find({});
     },
     //find the user by ID, populate decks and cards
     user: async (parent, args, context) => {
@@ -44,7 +41,7 @@ const resolvers = {
       return { token, user };
     },
     //addDeck
-    addDeck: async (parent, {title, category, description}) => {
+    addDeck: async (parent, {title, category, description}, context) => {
       const deck = await Deck.create({title, category, description});
       return deck;
     },
