@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import CardFlip from '../Card/CardFlip';
+import CardFlip from '../quizmaster/CardFlip';
 
 import { useQuery } from '@apollo/client';
 import { GET_CARDS, QUERY_CARD } from '../../utils/queries';
