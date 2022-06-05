@@ -9,7 +9,6 @@ export const ADD_USER = gql`
       user {
         _id
         username
-
         email
         password
       }
@@ -30,10 +29,16 @@ export const ADD_CARD = gql`
   mutation AddCard($sideA: String!, $sideB: String!, $deck: ID!) {
     addCard(sideA: $sideA, sideB: $sideB, deck: $deck) {
       _id
-      sideA
-      sideB
-      deckTitle
-      deck
+      title
+      category
+      creator
+      date_created
+      cards {
+        _id
+        sideA
+        sideB
+        deck
+      }
     }
   }`;
 export const UPDATE_CARD = gql`
@@ -42,7 +47,6 @@ export const UPDATE_CARD = gql`
       _id
       sideA
       sideB
-      deckTitle
       deck
     }
   }`;
@@ -64,7 +68,6 @@ export const UPDATE_USER = gql`
           _id
           sideA
           sideB
-          deckTitle
           deck
         }
       }
@@ -81,7 +84,6 @@ export const UPDATE_DECK = gql`
       cards {
         sideA
         sideB
-        deckTitle
       }
     }
   }`;
