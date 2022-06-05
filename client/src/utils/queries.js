@@ -17,7 +17,7 @@ export const GET_DECKS = gql`
     }
   }`;
 export const QUERY_DECK = gql`
-  query QueryDeck($deckId: ID) {
+  query QueryDeck($deckId: ID!) {
     deck(deckId: $deckId) {
       _id
       title
@@ -33,7 +33,7 @@ export const QUERY_DECK = gql`
     }
   }`;
 export const QUERY_TITLE = gql`
-  query DeckTitle($deckTitle: String) {
+  query DeckTitle($deckTitle: String!) {
     deckTitle(deckTitle: $deckTitle) {
       _id
       title
@@ -49,7 +49,7 @@ export const QUERY_TITLE = gql`
     }
   }`;
 export const QUERY_CARD = gql`
-  query Card($deckId: ID, $cardId: ID) {
+  query QueryCard($deckId: ID!, $cardId: ID!) {
     card(deckId: $deckId, cardId: $cardId) {
       cards {
         _id
