@@ -17,7 +17,8 @@ const App = () => {
       {/* <SignUpPage /> */}
       {/* <LoginPage /> */}
       {/* <Logout /> */}
-      <CardFlipPage />
+      {/* <CardFlipPage /> */}
+      <DeckPage />
     </>
   );
 };
