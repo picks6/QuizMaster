@@ -46,9 +46,9 @@ function CreateDeck() {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        console.log(title); 
-        console.log(name)
-        console.log(value)
+        // console.log(title); 
+        // console.log(name)
+        // console.log(value)
         switch (name) {
             case "title": setTitle(value); break; 
             case "category": setCategory(value); break;
@@ -62,25 +62,37 @@ function CreateDeck() {
         <Form onSubmit={handleFormSubmit}>
             <Form.Field>
               <label>Title</label>
+
               <Form.Input 
               placeholder='Title' 
+              name='title' 
+              type='text'
               onChange={handleChange} 
               value={title} />
             </Form.Field>
+
             <Form.Field>
               <label>Category</label>
-              <input 
+
+              <Form.Input 
               placeholder='Category' 
+              name='category' 
+              type='text' 
               onChange={handleChange} 
               value={category} />
             </Form.Field>
+
             <Form.Field>
               <label>Description</label>
-              <input 
+
+              <Form.Input 
               placeholder='Description' 
+              name='description' 
+              type='text' 
               onChange={handleChange} 
               value={description} />
             </Form.Field>
+            
             <Button type='submit'>Create</Button>
         </Form>
     )
