@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ReactCardFlip from "react-card-flip";
 import { Card, Button, Header, Grid } from "semantic-ui-react";
 
-const CardFlip = (props) => {
+const CardFlip = ({card}) => {
   
   const [isFlipped, setIsFlipped] = useState(false);
 
@@ -18,14 +18,14 @@ const CardFlip = (props) => {
         </Header>
         <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
           <Card>
-            <Card.Content>{props.card.sideA}</Card.Content>
+            <Card.Content>{card.sideA}</Card.Content>
             <Button color="teal" onClick={handleClick}>
               Click to flip
             </Button>
           </Card>
 
           <Card>
-            <Card.Content>{props.card.sideB}</Card.Content>
+            <Card.Content>{card.sideB}</Card.Content>
             <Button color="teal" onClick={handleClick}>
               Click to flip
             </Button>
