@@ -64,16 +64,6 @@ export const QUERY_CARD = gql`
       deck
     }
   }`;
-export const GET_CARDS = gql`
-  query GetCards {
-    cards {
-      _id
-      sideA
-      sideB
-      deckTitle
-      deck
-    }
-  }`;
 export const QUERY_USER = gql`
   query QueryUser {
     user {
