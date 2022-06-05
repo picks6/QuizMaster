@@ -3,7 +3,7 @@ import ReactCardFlip from "react-card-flip";
 import { Card, Button, Header, Grid } from "semantic-ui-react";
 
 import { useQuery } from "@apollo/client";
-import { GET_CARDS, QUERY_CARD } from "../../utils/queries";
+import { GET_CARDS, QUERY_CARD } from '../../utils/queries';
 
 const CardFlip = () => {
   const { loading, error, data } = useQuery(QUERY_CARD, {

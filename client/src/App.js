@@ -7,17 +7,17 @@ import LoginPage from "./pages/LoginPage";
 import DeckPage from "./pages/DeckPage";
 import CardFlipPage from "./pages/CardFlipPage";
 
-import CardFlip from "./components/Card/CardFlip";
+
 
 const App = () => {
   return (
     <>
       {/* <Header /> */}
       {/* <Main /> */}
-      {/* <Signup /> */}
-      {/* <Login /> */}
+      {/* <SignUpPage /> */}
+      {/* <LoginPage /> */}
       {/* <Logout /> */}
-      {/* <CardFlip /> */}
+      <CardFlipPage />
     </>
   );
 };
