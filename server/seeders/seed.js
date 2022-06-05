@@ -23,11 +23,7 @@ db.once('open', async () => {
         {
           creator: users[i]._id, 
           $addToSet: {
-            cards: {
-              ...cardData[j], 
-              deck: decks[i]._id, 
-              deckTitle: decks[i].title 
-            }
+            cards: { ...cardData[j], deck: decks[i]._id }
           }
         }
       );
