@@ -33,18 +33,18 @@ const typeDefs = gql`
 
   type Query {
     decks: [Deck]
-    deck(deckId: ID): Deck
-    deckTitle(deckTitle: String): Deck
-    card(deck: ID, cardId: ID): Deck
+    deck(deckId: ID!): Deck
+    deckTitle(deckTitle: String!): Deck
+    card(deckId: ID!, cardId: ID!): Deck
     user: User
   }
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     addDeck(title: String!, category: String!, description: String): Deck
-    addCard(sideA: String!, sideB: String!, deck: ID!): Deck
-    updateCard(deck: ID!, cardId: ID!, sideA: String!, sideB: String!): Deck
-    updateUser(username: String, email: String, password: String, deck: ID): User
-    updateDeck(title: String, category: String, description: String, cardId: ID): Deck
+    addCard(deckId: ID!, sideA: String!, sideB: String!): Deck
+    updateCard(deckId: ID!, cardId: ID!, sideA: String!, sideB: String!): Deck
+    updateUser(username: String, email: String, password: String, deckId: ID): User
+    updateDeck(deckId: ID!, title: String, category: String, description: String): Deck
     login( username: String, email: String, password: String!): Auth
   }
 `;
