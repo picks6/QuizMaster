@@ -42,12 +42,19 @@ export const ADD_CARD = gql`
     }
   }`;
 export const UPDATE_CARD = gql`
-  mutation UpdateCard($sideA: String!, $sideB: String!, $cardId: ID!) {
-    updateCard(sideA: $sideA, sideB: $sideB, cardId: $cardId) {
+  mutation UpdateCard($deck: ID!, $cardId: ID!, $sideA: String!, $sideB: String!) {
+    updateCard(deck: $deck, cardId: $cardId, sideA: $sideA, sideB: $sideB) {
       _id
-      sideA
-      sideB
-      deck
+      title
+      category
+      creator
+      date_created
+      cards {
+        _id
+        sideA
+        sideB
+        deck
+      }
     }
   }`;
 export const UPDATE_USER = gql`
