@@ -71,7 +71,7 @@ const Signup = () => {
               />
               <Form.Input
                 fluid
-                placeholder="******"
+                placeholder="********"
                 name="password"
                 type="password"
                 value={formState.password}

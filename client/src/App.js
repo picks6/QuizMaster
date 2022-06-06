@@ -5,6 +5,9 @@ import LoginPage from "./pages/LoginPage";
 import DeckPage from "./pages/DeckPage";
 import CreateDeckPage from "./pages/CreateDeckPage";
 import CardFlipPage from "./pages/CardFlipPage";
+import CreateDeckPage from "./pages/CreateDeckPage";
+
+import Layout from "./components/layout/Layout";
 import Landing from './components/quizmaster/Landing';
 
 function App() {

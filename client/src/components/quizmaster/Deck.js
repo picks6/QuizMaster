@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import { Card, Button } from 'semantic-ui-react';
+// import CardFlip from '../quizmaster/CardFlip';
 
 import CardFlip from '../quizmaster/CardFlip';
 
@@ -14,7 +16,7 @@ const Deck = () => {
 
   return (
     <div>
-      {cards.map((el) => <CardFlip sideA={el.sideA} sideB={el.sideB} />)}
+      {/* {cards.map((el) => <CardFlip sideA={el.sideA} sideB={el.sideB} />)} */}
     </div>
   )
 }

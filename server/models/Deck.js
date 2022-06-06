@@ -13,31 +13,31 @@ const cardSchema = require('./Card');
 const dateFormat = require('../utils/dateFormat');
 
 const deckSchema = new Schema(
-    {
-      title: {
-        type: String,
-        required: true,
-      },
-      category: {
-        type: String,
-        required: true,
-      },
-      description: {
-        type: String,
-      },
-      //need date formatting 
-      date_created: {
-        type: Date,
-        default: Date.now,
-        get: (timestamp) => dateFormat(timestamp),
-      
-      },
-      creator:{
-        type: Schema.Types.ObjectId,
-        ref: 'user',
-      },
-      cards: [cardSchema],
-    }
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    category: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+    },
+    //need date formatting 
+    date_created: {
+      type: Date,
+      default: Date.now,
+      get: (timestamp) => dateFormat(timestamp),
+    
+    },
+    creator:{
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+    },
+    cards: [cardSchema],
+  }
 );
 
 const Deck = model('deck', deckSchema);

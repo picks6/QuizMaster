@@ -13,12 +13,11 @@ export const GET_DECKS = gql`
         _id
         sideA
         sideB
-        deck
       }
     }
   }`;
 export const QUERY_DECK = gql`
-  query QueryDeck($deckId: ID) {
+  query QueryDeck($deckId: ID!) {
     deck(deckId: $deckId) {
       _id
       title
@@ -30,12 +29,11 @@ export const QUERY_DECK = gql`
         _id
         sideA
         sideB
-        deck
       }
     }
   }`;
 export const QUERY_TITLE = gql`
-  query DeckTitle($deckTitle: String) {
+  query DeckTitle($deckTitle: String!) {
     deckTitle(deckTitle: $deckTitle) {
       _id
       title
@@ -47,13 +45,12 @@ export const QUERY_TITLE = gql`
         _id
         sideA
         sideB
-        deck
       }
     }
   }`;
 export const QUERY_CARD = gql`
-  query Card($deck: ID, $cardId: ID) {
-    card(deck: $deck, cardId: $cardId) {
+  query QueryCard($deckId: ID!, $cardId: ID!) {
+    card(deckId: $deckId, cardId: $cardId) {
       cards {
         _id
         sideA
@@ -74,13 +71,9 @@ export const QUERY_USER = gql`
         title
         category
         description
-        creator
         date_created
         cards {
           _id
-          sideA
-          sideB
-          deck
         }
       }
     }

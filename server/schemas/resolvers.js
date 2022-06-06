@@ -15,19 +15,15 @@ const resolvers = {
       return await Deck.findOne({title: deckTitle})
     },
     card: async (parent, args) => {
-      if (args.cardId && args.deck) { // for testing
-        return await Deck.findById(args.deck, { cards: { $elemMatch: { _id: args.cardId }} });
+      if (args.cardId && args.deckId) { // for testing
+        return await Deck.findById(args.deckId, { cards: { $elemMatch: { _id: args.cardId }} });
       }
       return await Card.find({deck: args.deck});
     },
     //find the user by ID, populate decks and cards
     user: async (parent, args, context) => {
       if (context.user) {
-        const user = await User.findById(context.user._id).populate({
-          path: 'decks',
-          populate: 'cards'
-        });
-        return user;
+        return await User.findById(context.user._id).populate({ path: 'decks', populate: 'cards' });
       }
     },
   },
@@ -46,10 +42,10 @@ const resolvers = {
       return deck;
     },
     // addCard
-    addCard: async (parent, {sideA, sideB, deck}) => {
-        const card = await Deck.findByIdAndUpdate(deck, { $addToSet: { cards: { sideA, sideB, deck } }}, { new: true });
-        console.log(card);
-        return card;
+    addCard: async (parent, {sideA, sideB, deckId}) => {
+      return await Deck.findByIdAndUpdate(
+        deckId, { $addToSet: { cards: { sideA, sideB, deck: deckId } }}, { new: true }
+      );
     },
     // Update User
     updateUser: async (parent, args, context) => {
@@ -57,41 +53,37 @@ const resolvers = {
       if (context.user) {
         return await User.findByIdAndUpdate(context.user._id, args, { new: true });
       } 
-      if (args.deck) { // for backend testing
-        return await User.findOneAndUpdate(
-          { username: args.username}, { $addToSet: { decks: args.deck } }, { new: true }
-        ).populate(
-          { 
-            path: 'decks', 
-            // populate: { path: 'cards' } 
-          }
-        );
+      if (args.deckId) { // for backend testing
+        return await User.findOneAndUpdate( // add Deck to User
+          { username: args.username}, { $addToSet: { decks: args.deckId } }, { new: true }
+        ).populate('decks');
       }
       throw new AuthenticationError('Not logged in');
     },
     //Update Deck 
     updateDeck: async (parent, args, context) => {
+      // args: { deckId: ID!, title: String, category: String, description: String }
       if (context.deck) {
         return await Deck.findByIdAndUpdate(context.deck._id, args, {new: true});
       }
-      if (args.cardId) { // for backend testing
-        return await Deck.findOneAndUpdate(
-          { title: args.title }, { $addToSet: { cards: args.cardId } }, { new: true }
-        ).populate({ path: 'cards' });
+      if (args.deckId) { // for backend testing
+        return await Deck.findByIdAndUpdate(
+          args.deckId, { ...args }, { new: true }
+        );
       }
     },
     //Update Card
     updateCard: async (parent, args, context) => {
-      // args: { cardId: ID, sideA: String!, sideB: String! }
+      // args: { deckId: ID!, cardId: ID, sideA: String!, sideB: String! }
       if (context.deck) { // TODO: Reconfigure to query Deck for Cards to update
         return await Card.findByIdAndUpdate(context.card._id, args, {new: true});
       } 
       if (args.cardId) { // for backend testing
-        const newDeck = await Deck.findOneAndUpdate(
-          { _id: args.deck, "cards._id": args.cardId }, { $set: {"cards.$.sideA": args.sideA, "cards.$.sideB": args.sideB} }, { new: true }
+        return await Deck.findOneAndUpdate(
+          { _id: args.deckId, "cards._id": args.cardId }, 
+          { $set: {"cards.$.sideA": args.sideA, "cards.$.sideB": args.sideB} }, 
+          { new: true }
         );
-        console.log(newDeck);
-        return newDeck;
       }
     },
     //Login check is by email, password requirement is 8 characters

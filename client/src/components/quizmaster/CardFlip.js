@@ -2,21 +2,14 @@ import React, { useState } from "react";
 import ReactCardFlip from "react-card-flip";
 import { Card, Button, Header, Grid } from "semantic-ui-react";
 
-import { useQuery } from "@apollo/client";
-import { GET_CARDS, QUERY_CARD } from '../../utils/queries';
-
-const CardFlip = () => {
-  const { loading, error, data } = useQuery(QUERY_CARD, {
-    variables: { cardId: "629a4823d329d4ec1515c3b6" },
-  });
-  console.log(data);
+const CardFlip = ({card}) => {
+  
   const [isFlipped, setIsFlipped] = useState(false);
 
   const handleClick = () => {
     setIsFlipped(!isFlipped);
   };
-  if (loading) return <div>Loading</div>;
-  if (error) return `Error! ${error.message}`;
+  
   return (
     <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">
       <Grid.Column style={{ maxWidth: 450 }}>
@@ -25,14 +18,14 @@ const CardFlip = () => {
         </Header>
         <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
           <Card>
-            <Card.Content>{data.card.sideA}</Card.Content>
+            <Card.Content>{card.sideA}</Card.Content>
             <Button color="teal" onClick={handleClick}>
               Click to flip
             </Button>
           </Card>
 
           <Card>
-            <Card.Content>{data.card.sideB}</Card.Content>
+            <Card.Content>{card.sideB}</Card.Content>
             <Button color="teal" onClick={handleClick}>
               Click to flip
             </Button>
