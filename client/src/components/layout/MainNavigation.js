@@ -5,7 +5,7 @@ import { Menu, Button, Icon } from "semantic-ui-react";
 import classes from "./MainNavigation.module.css";
 
 const MainNavigation = () => (
-  <Menu inverted>
+  <Menu inverted className={classes.menu}>
     <Menu.Item>
       <Button as={Link} to="/dashboard" inverted color="olive">
         Dashboard
