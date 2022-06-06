@@ -5,10 +5,12 @@ import Signup from '../quizmaster/Signup';
 // import "./Landing.css";
 
 function Landing() {
-    const [loginPopup, setLoginPopup] = useState(false);
-    const [buttonPopup, setButtonPopup] = useState(false);
-
-// WHAT IS RETURN
+  const [loginPopup, setLoginPopup] = useState(false);
+  const [buttonPopup, setButtonPopup] = useState(false);  
+  
+  return (
+      <></>
+  )
 
 }
 

@@ -5,7 +5,6 @@ import LoginPage from "./pages/LoginPage";
 import DeckPage from "./pages/DeckPage";
 import CreateDeckPage from "./pages/CreateDeckPage";
 import CardFlipPage from "./pages/CardFlipPage";
-import CreateDeckPage from "./pages/CreateDeckPage";
 
 import Layout from "./components/layout/Layout";
 import Landing from './components/quizmaster/Landing';
@@ -14,7 +13,7 @@ function App() {
   return (
 
     <Router>
-         
+      <Layout>
         <Routes>
           {/* <Route path="/" element={<Landing />}/> */}
           <Route path="/" element={<SignupPage />}/>
@@ -26,6 +25,7 @@ function App() {
          
           {/* <Route path='/user/:userId' element={<User />}/> */}
         </Routes>
+      </Layout>
      
     </Router>
 
