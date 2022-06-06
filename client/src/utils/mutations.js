@@ -22,6 +22,9 @@ export const ADD_DECK = gql`
       description
       creator
       date_created
+      cards {
+        _id
+      }
     }
   }`;
 export const ADD_CARD = gql`
