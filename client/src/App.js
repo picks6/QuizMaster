@@ -9,6 +9,7 @@ import CardFlipPage from "./pages/CardFlipPage";
 import CreateDeckPage from "./pages/CreateDeckPage";
 
 
+import Layout from "./components/layout/Layout";
 
 const App = () => {
   return (
