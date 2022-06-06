@@ -13,7 +13,7 @@ function App() {
   return (
 
     <Router>
-         
+      <Layout>
         <Routes>
           {/* <Route path="/" element={<Landing />}/> */}
           <Route path="/" element={<SignupPage />}/>
@@ -25,6 +25,7 @@ function App() {
          
           {/* <Route path='/user/:userId' element={<User />}/> */}
         </Routes>
+      </Layout>
      
     </Router>
 
