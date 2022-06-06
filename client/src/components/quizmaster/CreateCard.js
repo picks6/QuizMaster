@@ -1,41 +1,54 @@
 import React, { useState } from 'react';
 
-import { Button, Card} from 'semantic-ui-react';
+import { Header, Button, Card} from 'semantic-ui-react';
 
+const CreateCardHeader = ({ deck }) => (
+  <>
+    <Header as='h1'>
+      {deck.title}
+    </Header>
+    <Header as='h2'>
+      Category: {deck.category}
+    </Header>
+  </>
+)
 const CreateCard = ({ deck, handleClick, cardState, children }) => (
-  <Card.Group>
-    {
-      deck.cards.length ? (
-        deck.cards.map(card =>
-          <Card id={card._id}>
+  <>
+    <CreateCardHeader deck={deck}/>
+    <Card.Group>
+      {
+        deck.cards.length ? (
+          deck.cards.map(card =>
+            <Card id={card._id}>
+              <Card.Content>
+                {card.sideA}
+              </Card.Content>
+              <Card.Content>
+                {card.sideB}
+              </Card.Content>
+            </Card>
+          )
+        ) : (
+          <></>
+        )
+      }
+      {
+        cardState.editing == true ? (
+          <Card>
             <Card.Content>
-              {card.sideA}
-            </Card.Content>
-            <Card.Content>
-              {card.sideB}
+              {children}
             </Card.Content>
           </Card>
+        ) : (
+          <></>
         )
-      ) : (
-        <></>
-      )
-    }
-    {
-      cardState.editing == true ? (
-        <Card>
-          <Card.Content>
-            {children}
-          </Card.Content>
-        </Card>
-      ) : (
-        <></>
-      )
-    }
-    <Card>
-      <Card.Content>
-        <Button basic color='white' onClick={handleClick}>✖️</Button>
-      </Card.Content>
-    </Card>
-  </Card.Group>
+      }
+      <Card>
+        <Card.Content>
+          <Button basic color='white' onClick={handleClick}>✖️</Button>
+        </Card.Content>
+      </Card>
+    </Card.Group>  
+  </>
 );
 export default CreateCard;
