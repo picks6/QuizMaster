@@ -7,7 +7,7 @@ function CardFlipPage({ deckId, cardId }) {
   // Card ID and Deck ID must be passed.
   const { loading, error, data } = useQuery(QUERY_CARD, {
     // variables: { deckId, cardId },
-    variables: { deckId: "629c07565cac8a2aa7e11d62", cardId: "629c07565cac8a2aa7e11d6d" } // for testing
+    variables: { deckId: "629c07565cac8a2aa7e11d62", cardId: "629ce302d7482b2bc771c9f1" } // for testing
   }); // returns single card
   // Expect data: {
   //   card: {

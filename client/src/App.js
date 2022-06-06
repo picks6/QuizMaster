@@ -13,14 +13,16 @@ import Layout from "./components/layout/Layout";
 const App = () => {
   return (
     <>
-      {/* <Header /> */}
-      {/* <Main /> */}
-      {/* <SignUpPage /> */}
-      {/* <LoginPage /> */}
-      {/* <Logout /> */}
-      {/* <CardFlipPage /> */}
-      {/* <DeckPage /> */}
-      <CreateDeckPage />
+      <Layout>
+        {/* <Header /> */}
+        {/* <Main /> */}
+        {/* <SignUpPage /> */}
+        {/* <LoginPage /> */}
+        {/* <Logout /> */}
+        {/* <CardFlipPage /> */}
+        {/* <DeckPage /> */}
+        {/* <CreateDeckPage /> */}
+      </Layout>
     </>
   );
 };
