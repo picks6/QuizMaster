@@ -1,13 +1,17 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import Layout from "./components/layout/Layout";
+
+import LandingPage from "./pages/LandingPage";
+import DashboardPage from "./pages/DashboardPage";
+
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
+
 import DeckPage from "./pages/DeckPage";
 import CreateDeckPage from "./pages/CreateDeckPage";
 import CardFlipPage from "./pages/CardFlipPage";
-
-import Layout from "./components/layout/Layout";
-import Landing from './components/quizmaster/Landing';
 
 function App() {
   return (
@@ -15,14 +19,14 @@ function App() {
     <Router>
       <Layout>
         <Routes>
-          {/* <Route path="/" element={<Landing />}/> */}
-          <Route path="/" element={<SignupPage />}/>
-          <Route path="/Signup" element={<SignupPage />}/>
-          <Route path="/Login" element={<LoginPage />}/>
-          <Route path="/Deck" element={<DeckPage />}/>
-          <Route path="/CreateDeck" element={<CreateDeckPage />}/>
-          <Route path="/CardFlip" element={<CardFlipPage />}/>
-         
+          <Route path="/" element={<LandingPage />}/>
+          <Route path="/dashboard" element={<DashboardPage />}/>
+          <Route path="/signup" element={<SignupPage />}/>
+          <Route path="/login" element={<LoginPage />}/>
+          <Route path="/deck" element={<DeckPage />}/>
+          <Route path="/createDeck" element={<CreateDeckPage />}/>
+          <Route path="/cardFlip" element={<CardFlipPage />}/>
+
           {/* <Route path='/user/:userId' element={<User />}/> */}
         </Routes>
       </Layout>
