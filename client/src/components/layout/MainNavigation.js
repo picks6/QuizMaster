@@ -37,7 +37,7 @@ const LogoutButton = (props) => (
     <Icon 
       name="log out" 
       color="red" 
-      onclick={Auth.logout}
+      onClick={Auth.logout}
     />
   </Menu.Item>
 );
