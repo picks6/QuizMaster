@@ -6,18 +6,19 @@ import SignUpPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import DeckPage from "./pages/DeckPage";
 import CardFlipPage from "./pages/CardFlipPage";
-
-
+import Layout from "./components/layout/Layout";
 
 const App = () => {
   return (
     <>
-      {/* <Header /> */}
-      {/* <Main /> */}
-      {/* <SignUpPage /> */}
-      {/* <LoginPage /> */}
-      {/* <Logout /> */}
-      <CardFlipPage />
+      <Layout>
+        {/* <Header /> */}
+        {/* <Main /> */}
+        {/* <SignUpPage /> */}
+        {/* <LoginPage /> */}
+        {/* <Logout /> */}
+        <CardFlipPage />
+      </Layout>
     </>
   );
 };
