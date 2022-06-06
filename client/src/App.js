@@ -24,7 +24,7 @@ function App() {
           <Route path="/signup" element={<SignupPage />}/>
           <Route path="/login" element={<LoginPage />}/>
           <Route path="/deck" element={<DeckPage />}/>
-          <Route path="/createDeck" element={<CreateDeckPage />}/>
+          <Route path="/create-deck" element={<CreateDeckPage />}/>
           <Route path="/cardFlip" element={<CardFlipPage />}/>
 
           {/* <Route path='/user/:userId' element={<User />}/> */}
