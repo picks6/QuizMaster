@@ -44,7 +44,7 @@ const resolvers = {
     // addCard
     addCard: async (parent, {sideA, sideB, deckId}) => {
       return await Deck.findByIdAndUpdate(
-        deckId, { $addToSet: { cards: { sideA, sideB, deckId } }}, { new: true }
+        deckId, { $addToSet: { cards: { sideA, sideB, deck: deckId } }}, { new: true }
       );
     },
     // Update User
