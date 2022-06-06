@@ -1,0 +1,29 @@
+.banner__title {
+    animation-duration: 3s;
+    animation-name: title;
+    animation-timing-function: ease-in-out;
+    color: #15db95;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 7.5rem;
+    font-weight: bolder;
+    padding-top: 3rem;
+    position: relative;
+    text-align: center;
+    text-shadow: 2px 2px 15px #e4c580
+}
+
+@keyframes title {
+    from {right: 40rem}
+    to {right: 0px}
+}
+
+@media screen and (min-width: 768px) {
+    .banner__title {
+        font-size: 10rem;
+    }
+}
+
+.title__container {
+    height: 30vh;
+}
+

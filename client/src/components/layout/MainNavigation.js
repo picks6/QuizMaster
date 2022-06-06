@@ -15,9 +15,9 @@ const DashboardButton = () => (
 );
 const SearchBar = () => (
   <Menu.Item position="right">
-    <Input icon='search' placeholder='Search...' />
+    <Input icon="search" placeholder="Search..." />
   </Menu.Item>
-)
+);
 const LoginButton = () => (
   <Menu.Item>
     <Button as={Link} to="/login" inverted color="orange">
@@ -34,34 +34,27 @@ const SignupButton = () => (
 );
 const LogoutButton = (props) => (
   <Menu.Item>
-    <Icon 
-      name="log out" 
-      color="red" 
-      onClick={Auth.logout}
-    />
+    <Icon name="log out" color="red" onClick={Auth.logout} />
   </Menu.Item>
 );
 
 const MainNavigation = () => {
-  
   return (
     <Menu inverted>
-      {
-        Auth.isLoggedIn() ? (
-          <>
-            <DashboardButton />
-            <SearchBar />
-            <LogoutButton />
-          </>
-        ) : (
-          <>
-            <LoginButton />
-            <SearchBar />
-            <SignupButton />
-          </>
-        )
-      }
+      {Auth.isLoggedIn() ? (
+        <>
+          <DashboardButton />
+          <SearchBar />
+          <LogoutButton />
+        </>
+      ) : (
+        <>
+          <LoginButton />
+          <SearchBar />
+          <SignupButton />
+        </>
+      )}
     </Menu>
-  )
+  );
 };
 export default MainNavigation;

@@ -12,5 +12,8 @@
   },
   "devDependencies": {
     "concurrently": "^7.2.1"
+  },
+  "dependencies": {
+    "react-transition-group": "^1.2.1"
   }
 }
