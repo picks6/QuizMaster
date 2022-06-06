@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import './CreateAccount.css';
 import { Link } from 'react-router-dom';
-import { ADD_USER } from '../../utils/mutations';
-import Auth from '../../utils/auth'
+import { ADD_USER } from '../../src/utils/mutations';
+import Auth from '../../src/utils/auth'
 
 //ACCOUNT REQS - USERNAME EMAIL PASSWORD
 
