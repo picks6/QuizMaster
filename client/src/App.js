@@ -7,11 +7,9 @@ import CreateDeckPage from "./pages/CreateDeckPage";
 import CardFlipPage from "./pages/CardFlipPage";
 import Landing from './components/quizmaster/Landing';
 
-
-
-
 function App() {
   return (
+
     <Router>
          
         <Routes>
@@ -27,6 +25,7 @@ function App() {
         </Routes>
      
     </Router>
+
   );
 }
 
