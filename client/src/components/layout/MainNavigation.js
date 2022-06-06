@@ -1,6 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Menu, Button, Icon, Input } from "semantic-ui-react";
+import { 
+  Menu, 
+  Button, 
+  Icon, 
+  Input 
+} from "semantic-ui-react";
 
 import Auth from "../../utils/auth";
 
@@ -15,7 +20,10 @@ const DashboardButton = () => (
 );
 const SearchBar = () => (
   <Menu.Item position="right">
-    <Input icon='search' placeholder='Search...' />
+    <Input 
+      icon='search' 
+      placeholder='Search...'
+    />
   </Menu.Item>
 )
 const LoginButton = () => (
