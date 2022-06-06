@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Login from '../Login/index.js';
-import CreateAccount from '../CreateAccount/index.js';
-import "./landing.css";
+import Login from '../quizmaster/Login';
+import Signup from '../quizmaster/Signup';
+// import "./Landing.css";
 
 function Landing() {
     const [loginPopup, setLoginPopup] = useState(false);

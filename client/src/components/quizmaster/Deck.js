@@ -3,11 +3,11 @@ import React, {useState} from 'react';
 import CardFlip from '../quizmaster/CardFlip';
 
 import { useQuery } from '@apollo/client';
-import { GET_CARDS, QUERY_CARD } from '../../utils/queries';
+import { GET_DECKS, QUERY_DECK } from '../../utils/queries';
 
 const Deck = () => {
-  const { loading, error, data } = useQuery(GET_CARDS);
-  console.log('GET_CARDS:', data);
+  const { loading, error, data } = useQuery(GET_DECKS);
+  console.log('GET_DECKS:', data);
   const cards = data.cards
   if (loading) return <div>Loading</div>; 
   if (error) return `Error! ${error.message}`;
