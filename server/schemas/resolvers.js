@@ -10,7 +10,7 @@ const resolvers = {
       }
     },
     decks: async () => { // return all decks
-      return await Deck.find({});
+      return await Deck.find({}).populate('category creator');
     },
     deck: async(parent, {deckId}) => {
       return await Deck.findOne({ _id: deckId });
