@@ -21,7 +21,7 @@ const typeDefs = gql`
   type Deck {
     _id: ID
     title: String
-    category: [Category]
+    categories: [Category]
     description: String
     creator: User
     date_created: String

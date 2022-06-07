@@ -6,6 +6,7 @@ const resolvers = {
   Query: {
     user: async (parent, args, context) => {
       if (context.user) {
+        console.log(context.user);
         return await User.findById(context.user._id).populate({ path: 'decks', populate: 'cards' });
       }
     },
@@ -51,7 +52,7 @@ const resolvers = {
 
     addDeck: async (parent, {title, category, description}, context) => {
       return await Deck.create(
-        { title, description, $addToSet: { category: [category]} }
+        { title, description, $addToSet: { categories: [category]} }
       );
     },
     addCard: async (parent, {sideA, sideB, deckId}) => {

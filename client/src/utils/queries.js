@@ -1,13 +1,19 @@
 import { gql } from '@apollo/client';
 
 export const GET_DECKS = gql`
-  query GetDecks {
+  query getDecks {
     decks {
       _id
       title
-      category
+      categories {
+        _id
+        category
+      }
       description
-      creator
+      creator {
+        _id
+        username
+      }
       date_created
       cards {
         _id
@@ -21,7 +27,7 @@ export const QUERY_DECK = gql`
     deck(deckId: $deckId) {
       _id
       title
-      category
+      categories
       description
       creator
       date_created
@@ -38,7 +44,7 @@ export const QUERY_TITLE = gql`
     deckTitle(deckTitle: $deckTitle) {
       _id
       title
-      category
+      categories
       description
       creator
       date_created
@@ -71,7 +77,7 @@ export const QUERY_USER = gql`
       decks {
         _id
         title
-        category
+        categories
         description
         date_created
         cards {
