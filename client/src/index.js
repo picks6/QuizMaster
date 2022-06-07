@@ -11,6 +11,7 @@ import {
   concat
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import Auth from './utils/auth';
 
 import './index.css';
 
@@ -19,13 +20,13 @@ import reportWebVitals from './reportWebVitals';
 
 // initialize Apollo Client
 const httpLink = new HttpLink({ uri: '/graphql'}); // create endpoint link
-const authLink = setContext((request, { headers }) => {
-  // const token = localStorage.getItem('id_token'); // get auth token from local storage if it exists
-
+const authLink = setContext( async (request, { headers }) => {
+  const token = localStorage.getItem('id_token'); // get auth token from local storage if it exists
+  console.log('token:', token);
   return { 
     headers: { 
       ...headers, 
-      // authorization: token ? `Bearer ${token}`
+      authorization: token ? `Bearer ${token}` : ''
     }
   };
 });

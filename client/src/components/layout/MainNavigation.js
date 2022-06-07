@@ -1,6 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Menu, Button, Icon, Input } from "semantic-ui-react";
+import { 
+  Menu, 
+  Button, 
+  Icon, 
+  Input 
+} from "semantic-ui-react";
 
 import Auth from "../../utils/auth";
 

@@ -36,11 +36,11 @@ function CreateDeckPage() {
       console.log(error);
     }
   };
-
+  
   const handleClick = async (event) => {
     setCardState({ editing: true })
   }
-
+  
   const handleCardFormChange = async (event) => {
     const { name, value } = event.target;
     setCardFormState({ ...cardFormState, [name]: value});
@@ -67,7 +67,7 @@ function CreateDeckPage() {
     setCardState({ editing: false });
     setCardFormState('');
   }
-
+  
   if (deck === '') {
     return (
       <CreateDeck 
