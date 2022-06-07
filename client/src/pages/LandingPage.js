@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { Card } from "semantic-ui-react";
 
 import Landing from '../components/quizmaster/Landing';
-import CategorySelect from "../components/quizmaster/CategorySelect";
 
 import { useLazyQuery } from "@apollo/client";
 import { GET_DECKS } from "../utils/queries";
 // import gql from 'graphql-tag'
 
-const Search = ({ handleSubmit, updateSearch, search, children}) => (
+const Search = ({ handleSubmit, updateSearch, search}) => (
   <form onSubmit={ handleSubmit }>
     <input
       type='text'
@@ -32,7 +31,7 @@ const LandingPage = () => {
     event.preventDefault()
     const query = await getDecks();
     const decks = query.data.decks;
-    console.log(decks);
+    console.log('GET_DECKS:', decks);
     setDecks(decks);
   }
   
@@ -46,18 +45,17 @@ const LandingPage = () => {
       <Card.Group>
       {
         decks.length 
-          ? decks.map(
-              deck => (
-                <Card key={deck._id}>
-                  <Card.Content>{deck.title}</Card.Content>
-                  <Card.Content>{deck.category}</Card.Content>
-                </Card>
-              )
-            )
+          ? decks.map(deck => (
+              <Card key={deck._id}>
+                <Card.Content>{deck.title}</Card.Content>
+                <Card.Content>
+                  {deck.category.map(category => `${category.category}`)}
+                </Card.Content>
+              </Card>
+            ))
           : <></>
       }
       </Card.Group>
-      <CategorySelect />
     </>
   )
 };
