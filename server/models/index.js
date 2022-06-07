@@ -1,5 +1,5 @@
 const User = require('./User');
-const Card = require('./Card');
 const Deck = require('./Deck');
+const Category = require('./Category')
 
-module.exports = { User, Card, Deck };
+module.exports = { User, Category, Deck };
