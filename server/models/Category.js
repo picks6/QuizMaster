@@ -9,6 +9,6 @@ const categorySchema = new Schema(
     }
 );
 
-// const Card = model('card', cardSchema);
+const Category = model('category', categorySchema);
 
-module.exports = categorySchema;
+module.exports = Category;
