@@ -4,10 +4,9 @@ const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
-    user: async (parent, args, context) => {
-      if (context.user) {
-        console.log(context.user);
-        return await User.findById(context.user._id).populate({ path: 'decks', populate: 'cards' });
+    user: async (parent, args, { user }) => {
+      if (user) {
+        return await User.findById(user._id).populate({ path: 'decks', populate: 'cards' });
       }
     },
     decks: async () => { // return all decks
