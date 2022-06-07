@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { Deck, Card, User } = require('../models');
+const { Deck, Card, User, Category } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -85,6 +85,20 @@ const resolvers = {
           { new: true }
         );
       }
+    },
+
+    updateCategory: async (parent, args, context) => {
+      // args: { categoryId: ID!, category: String! }
+      if (context.deck) { 
+        return await Category.findByIdAndUpdate(context.category._id, args, {new: true});
+      } 
+    //   if (args.cardId) { // for backend testing
+    //     return await Deck.findOneAndUpdate(
+    //       { _id: args.deckId, "cards._id": args.cardId }, 
+    //       { $set: {"cards.$.sideA": args.sideA, "cards.$.sideB": args.sideB} }, 
+    //       { new: true }
+    //     );
+    //   }
     },
     //Login check is by email, password requirement is 8 characters
     login: async (parent, { username, email, password }) => {
