@@ -89,8 +89,7 @@ const resolvers = {
       return { token, user };
     },
 
-    updateCategory: async (parent, args, context) => {
-      // args: { categoryId: ID!, category: String! }
+    updateCategory: async (parent, args, context) => { // args: { categoryId: ID!, category: String! }
       if (context.deck) { 
         return await Category.findByIdAndUpdate(context.category._id, args, {new: true});
       } 
@@ -103,7 +102,6 @@ const resolvers = {
     //   }
     },
 
-    //Update Deck 
     updateDeck: async (parent, args, context) => {
       // args: { deckId: ID!, title: String, category: String, description: String }
       if (context.deck) {
@@ -115,7 +113,6 @@ const resolvers = {
         );
       }
     },
-    //Update Card
     updateCard: async (parent, args, context) => {
       // args: { deckId: ID!, cardId: ID, sideA: String!, sideB: String! }
       if (context.deck) { // TODO: Reconfigure to query Deck for Cards to update

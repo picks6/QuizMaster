@@ -10,11 +10,10 @@ module.exports = {
         if (req.headers.authorization) { // expect req.headers.authorization: "Bearer <tokenvalue>"
             token = token.split(' ').pop().trim();
         }
-
         if (!token) {
             return req;
         }
-
+        
         try {
             const { data } = jwt.verify(token, secret, { maxAge: expiration });
             req.user = data;
