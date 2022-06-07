@@ -31,6 +31,11 @@ const typeDefs = gql`
     user: User
   }
 
+  type Category {
+    _id: ID
+    category: String
+  }
+
   type Query {
     decks: [Deck]
     deck(deckId: ID!): Deck
@@ -46,6 +51,8 @@ const typeDefs = gql`
     updateUser(username: String, email: String, password: String, deckId: ID): User
     updateDeck(deckId: ID!, title: String, category: String, description: String): Deck
     login( username: String, email: String!, password: String!): Auth
+    addCategory(categoryID: ID!, category: String!): Category
+    updateCategory(categoryID: ID!, category: String!): Category
   }
 `;
 
