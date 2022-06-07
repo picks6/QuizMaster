@@ -23,7 +23,7 @@ const typeDefs = gql`
     title: String
     category: [Category]
     description: String
-    creator: ID
+    creator: User
     date_created: String
     cards: [Card]
   }
