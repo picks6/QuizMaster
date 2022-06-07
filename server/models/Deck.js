@@ -19,11 +19,12 @@ const deckSchema = new Schema(
       type: String,
       required: true,
     },
-    category: 
+    category: [
       {
         type: Schema.Types.ObjectId,
         ref: 'Category',
-      },
+      }
+    ],
     description: {
       type: String,
     },
