@@ -40,8 +40,9 @@ const typeDefs = gql`
     decks: [Deck]
     deck(deckId: ID!): Deck
     deckTitle(deckTitle: String!): Deck
-    card(deckId: ID!, cardId: ID!): Deck
+    categories: [Category]
     category(categoryID: ID, category: String): Category
+    card(deckId: ID!, cardId: ID!): Deck
     user: User
   }
   type Mutation {
