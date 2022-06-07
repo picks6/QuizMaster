@@ -32,6 +32,7 @@ export const QUERY_DECK = gql`
       }
     }
   }`;
+
 export const QUERY_TITLE = gql`
   query DeckTitle($deckTitle: String!) {
     deckTitle(deckTitle: $deckTitle) {
@@ -48,6 +49,7 @@ export const QUERY_TITLE = gql`
       }
     }
   }`;
+
 export const QUERY_CARD = gql`
   query QueryCard($deckId: ID!, $cardId: ID!) {
     card(deckId: $deckId, cardId: $cardId) {
@@ -79,3 +81,14 @@ export const QUERY_USER = gql`
     }
   }`;
 
+export const QUERY_CATEGORY = gql`
+  query DeckCategory($deckCategory: String!) {
+    deckCategory(deckCategory: $deckCategory) {
+      _id
+      title
+      category (category: $deckCategory)
+      description
+      creator
+      date_created
+    }
+  }`;
