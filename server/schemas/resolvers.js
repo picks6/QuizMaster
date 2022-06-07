@@ -14,9 +14,20 @@ const resolvers = {
     deckTitle: async(parent,{deckTitle}) =>{
       return await Deck.findOne({title: deckTitle})
     },
+    categories: async () => {
+      return awaitCategory.Find({});
+    },
+    category: async (parent, args) => { // args: { categoryID: ID, category: String }
+      return await Category.findOne(
+        { $or: [{ _id: args.categoryID }, { category: args.category }] }
+      );
+    },
     card: async (parent, args) => {
       if (args.cardId && args.deckId) { // for testing
-        return await Deck.findById(args.deckId, { cards: { $elemMatch: { _id: args.cardId }} });
+        return await Deck.findById(
+          args.deckId, 
+          { cards: { $elemMatch: { _id: args.cardId} }}
+        );
       }
       return await Card.find({deck: args.deck});
     },
@@ -38,8 +49,9 @@ const resolvers = {
     },
     //addDeck
     addDeck: async (parent, {title, category, description}, context) => {
-      const deck = await Deck.create({title, category, description});
-      return deck;
+      return await Deck.create(
+        { title, description, $addToSet: { category: [category]} }
+      );
     },
     // addCard
     addCard: async (parent, {sideA, sideB, deckId}) => {
