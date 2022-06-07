@@ -4,8 +4,12 @@ const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
-    decks: async () => {
-      //return all decks
+    user: async (parent, args, context) => {
+      if (context.user) {
+        return await User.findById(context.user._id).populate({ path: 'decks', populate: 'cards' });
+      }
+    },
+    decks: async () => { // return all decks
       return await Deck.find({});
     },
     deck: async(parent, {deckId}) => {
@@ -14,51 +18,48 @@ const resolvers = {
     deckTitle: async(parent,{deckTitle}) =>{
       return await Deck.findOne({title: deckTitle})
     },
-    categories: async () => {
-      return awaitCategory.Find({});
+    card: async (parent, args) => {
+      if (args.cardId && args.deckId) { // for testing
+        return await Deck.findById(
+          args.deckId, { cards: { $elemMatch: { _id: args.cardId} }}
+        );
+      }
+      // return await Card.find({deck: args.deck});
+    },
+
+    categories: async () => { // return all categories
+      return await Category.Find({});
     },
     category: async (parent, args) => { // args: { categoryID: ID, category: String }
       return await Category.findOne(
         { $or: [{ _id: args.categoryID }, { category: args.category }] }
       );
-    },
-    card: async (parent, args) => {
-      if (args.cardId && args.deckId) { // for testing
-        return await Deck.findById(
-          args.deckId, 
-          { cards: { $elemMatch: { _id: args.cardId} }}
-        );
-      }
-      return await Card.find({deck: args.deck});
-    },
-    //find the user by ID, populate decks and cards
-    user: async (parent, args, context) => {
-      if (context.user) {
-        return await User.findById(context.user._id).populate({ path: 'decks', populate: 'cards' });
-      }
-    },
+    }
   },
   Mutation: {
     //this is creating a user from the sign up page
-    addUser: async (parent, args) => {
-      // args: { username: String!, email: String!, password: String! }
+    addUser: async (parent, args) => { // args: { username: String!, email: String!, password: String! }
       const user = await User.create(args);
       const token = signToken(user);
 
       return { token, user };
     },
-    //addDeck
+
+    addCategory: async (parent, { category }) => {
+      return await Category.create({ category });
+    },
+
     addDeck: async (parent, {title, category, description}, context) => {
       return await Deck.create(
         { title, description, $addToSet: { category: [category]} }
       );
     },
-    // addCard
     addCard: async (parent, {sideA, sideB, deckId}) => {
       return await Deck.findByIdAndUpdate(
         deckId, { $addToSet: { cards: { sideA, sideB, deck: deckId } }}, { new: true }
       );
     },
+    
     // Update User
     updateUser: async (parent, args, context) => {
       // args: { username: String, email: String, password: String, deck: ID }
@@ -72,6 +73,36 @@ const resolvers = {
       }
       throw new AuthenticationError('Not logged in');
     },
+    login: async (parent, { username, email, password }) => {
+      const user = await User.findOne(
+        { $or: [{ username }, { email }] }
+      );
+      if (!user) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
+      const correctPw = await user.isCorrectPassword(password);
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
+      const token = signToken(user);
+
+      return { token, user };
+    },
+
+    updateCategory: async (parent, args, context) => {
+      // args: { categoryId: ID!, category: String! }
+      if (context.deck) { 
+        return await Category.findByIdAndUpdate(context.category._id, args, {new: true});
+      } 
+    //   if (args.cardId) { // for backend testing
+    //     return await Deck.findOneAndUpdate(
+    //       { _id: args.deckId, "cards._id": args.cardId }, 
+    //       { $set: {"cards.$.sideA": args.sideA, "cards.$.sideB": args.sideB} }, 
+    //       { new: true }
+    //     );
+    //   }
+    },
+
     //Update Deck 
     updateDeck: async (parent, args, context) => {
       // args: { deckId: ID!, title: String, category: String, description: String }
@@ -97,40 +128,6 @@ const resolvers = {
           { new: true }
         );
       }
-    },
-
-    updateCategory: async (parent, args, context) => {
-      // args: { categoryId: ID!, category: String! }
-      if (context.deck) { 
-        return await Category.findByIdAndUpdate(context.category._id, args, {new: true});
-      } 
-    //   if (args.cardId) { // for backend testing
-    //     return await Deck.findOneAndUpdate(
-    //       { _id: args.deckId, "cards._id": args.cardId }, 
-    //       { $set: {"cards.$.sideA": args.sideA, "cards.$.sideB": args.sideB} }, 
-    //       { new: true }
-    //     );
-    //   }
-    },
-    //Login check is by email, password requirement is 8 characters
-    login: async (parent, { username, email, password }) => {
-      const user = await User.findOne(
-        { $or: [{ username }, { email }] }
-      );
-
-      if (!user) {
-        throw new AuthenticationError('Incorrect credentials');
-      }
-
-      const correctPw = await user.isCorrectPassword(password);
-
-      if (!correctPw) {
-        throw new AuthenticationError('Incorrect credentials');
-      }
-
-      const token = signToken(user);
-
-      return { token, user };
     }
   }
 };
