@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Button,
@@ -10,7 +10,17 @@ import {
   Segment,
 } from 'semantic-ui-react';
 
+import { useQuery } from "@apollo/client";
+import { QUERY_USER } from "../utils/queries";
+
 const DashboardPage = () => {
+  const [userState, setUser] = useState('');
+  const { loading, error, data } =useQuery(QUERY_USER);
+
+  if (loading) return <div>Loading</div>; 
+  if (error) return `Error! ${error.message}`;
+  console.log(data);
+  // setUser(data); 
   return (
     <Segment placeholder>
       <Grid columns={1} textAlign='center'>
