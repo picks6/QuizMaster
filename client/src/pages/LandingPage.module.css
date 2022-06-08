@@ -1,0 +1,25 @@
+.search__container {
+    display: flex;
+    flex-direction: column;
+    min-height: 20vh;
+    margin-top: 7rem;
+    align-items: center;
+
+    
+}
+
+input {
+    border-radius: 10px;
+    height: 3.5rem;
+    width: 30vw;
+    outline: 0;
+}
+
+input:focus {
+    box-shadow: 0px 0px 10px 5px  #15db95;
+}
+
+input:hover {
+    box-shadow: 0px 0px 10px 5px  #15db95;
+    transition-delay: color 0.3s;
+}
