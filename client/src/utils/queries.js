@@ -48,6 +48,13 @@ export const GET_DECKS = gql`
       }
     }
   }`;
+export const GET_CATEGORIES = gql`
+  query getCategories {
+    categories {
+      _id
+      category
+    }
+  }`;
 export const QUERY_DECK = gql`
   query QueryDeck($deckId: ID!) {
     deck(deckId: $deckId) {
