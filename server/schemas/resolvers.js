@@ -49,14 +49,16 @@ const resolvers = {
       return await Category.create({ category });
     },
 
-    addDeck: async (parent, {title, category, description}, context) => {
-      return await Deck.create(
-        { title, description, $addToSet: { categories: [category]} }
+    addDeck: async (parent, {title, categories, description}, context) => {
+      console.log({title, description, categories})
+      const newDeck = await Deck.create(
+        { title, description, categories  }
       );
+      return newDeck;
     },
-    addCard: async (parent, {sideA, sideB, deckId}) => {
+    addCard: async (parent, {sideA, sideB, deckId}, context) => {
       return await Deck.findByIdAndUpdate(
-        deckId, { $addToSet: { cards: { sideA, sideB, deck: deckId } }}, { new: true }
+        deckId, { creator: context.user._id, $addToSet: { cards: { sideA, sideB, deck: deckId } }}, { new: true }
       );
     },
     

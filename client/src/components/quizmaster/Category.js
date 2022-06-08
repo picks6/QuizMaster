@@ -14,12 +14,12 @@ const Category = ({ handleChange, categoryState }) => {
   const categories = data.categories.map(
     ({ category, _id }) => {return { label: category, value: _id}}
   );
-  console.log('categoryState:', categoryState);
+  // console.log('categoryState:', categoryState);
   return (
     <Creatable
      isClearable
      isMulti
-     onChange={(value) => handleChange(value)}
+     onChange={(value) => handleChange( null, value)}
      options={categories}
      value={categoryState}
     />

@@ -18,16 +18,17 @@ function CreateDeck({ handleChange, handleFormSubmit, formState, children }) {
       </Form.Field>
       <Form.Field>
         <label>Category</label>
-        <Form.Input 
-          placeholder='Category' 
-          name='category' 
-          type='text' 
-          onChange={handleChange} 
-          value={formState.category} 
-        />
+        {children}
       </Form.Field>
       <Form.Field>
-        {children}
+        <label>Description</label>
+        <Form.Input 
+          placeholder='Description' 
+          name='description' 
+          type='text' 
+          onChange={handleChange} 
+          value={formState.description} 
+        />
       </Form.Field>
       <Button type='submit'>Create</Button>
     </Form>
