@@ -10,7 +10,7 @@ const resolvers = {
       }
     },
     decks: async () => { // return all decks
-      return await Deck.find({}).populate('category creator');
+      return await Deck.find({}).populate('categories creator');
     },
     deck: async(parent, {deckId}) => {
       return await Deck.findOne({ _id: deckId });
@@ -28,7 +28,7 @@ const resolvers = {
     },
 
     categories: async () => { // return all categories
-      return await Category.Find({});
+      return await Category.find({});
     },
     category: async (parent, args) => { // args: { categoryID: ID, category: String }
       return await Category.findOne(
