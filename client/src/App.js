@@ -12,6 +12,7 @@ import LoginPage from "./pages/LoginPage";
 import DeckPage from "./pages/DeckPage";
 import CreateDeckPage from "./pages/CreateDeckPage";
 import CardFlipPage from "./pages/CardFlipPage";
+import Category from './components/quizmaster/Category'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/deck" element={<DeckPage />}/>
           <Route path="/create-deck" element={<CreateDeckPage />}/>
           <Route path="/cardFlip" element={<CardFlipPage />}/>
+          <Route path="/category" element={<Category />}/>
 
           {/* <Route path='/user/:userId' element={<User />}/> */}
         </Routes>
