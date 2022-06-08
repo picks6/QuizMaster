@@ -23,7 +23,7 @@ const DashboardPage = () => {
   // setUser(data); 
   return (
     <Segment placeholder>
-      <Grid columns={1} textAlign='center'>
+      <Grid columns={3} textAlign='center'>
         <Grid.Row verticalAlign='middle'>
           <Grid.Column>
             <Header icon>
