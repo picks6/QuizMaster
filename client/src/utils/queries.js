@@ -1,19 +1,58 @@
 import { gql } from '@apollo/client';
 
+// used in DashboardPage.js
+export const QUERY_USER = gql`
+  query User {
+    user {
+      _id
+      username
+      email
+      password
+      decks {
+        _id
+        categories {
+          category
+          _id
+        }
+        title
+        description
+        date_created
+        cards {
+          _id
+          sideA
+          sideB
+        }
+      }
+    }
+  }`;
+// not used
 export const GET_DECKS = gql`
-  query GetDecks {
+  query getDecks {
     decks {
       _id
       title
-      category
+      categories {
+        _id
+        category
+      }
       description
-      creator
+      creator {
+        _id
+        username
+      }
       date_created
       cards {
         _id
         sideA
         sideB
       }
+    }
+  }`;
+export const GET_CATEGORIES = gql`
+  query getCategories {
+    categories {
+      _id
+      category
     }
   }`;
 export const QUERY_DECK = gql`
@@ -21,7 +60,10 @@ export const QUERY_DECK = gql`
     deck(deckId: $deckId) {
       _id
       title
-      category
+      categories {
+        _id
+        category
+      }
       description
       creator
       date_created
@@ -32,12 +74,16 @@ export const QUERY_DECK = gql`
       }
     }
   }`;
+
 export const QUERY_TITLE = gql`
   query DeckTitle($deckTitle: String!) {
     deckTitle(deckTitle: $deckTitle) {
       _id
       title
-      category
+      categories {
+        _id
+        category
+      }
       description
       creator
       date_created
@@ -48,6 +94,7 @@ export const QUERY_TITLE = gql`
       }
     }
   }`;
+
 export const QUERY_CARD = gql`
   query QueryCard($deckId: ID!, $cardId: ID!) {
     card(deckId: $deckId, cardId: $cardId) {
@@ -59,23 +106,14 @@ export const QUERY_CARD = gql`
       }
     }
   }`;
-export const QUERY_USER = gql`
-  query QueryUser {
-    user {
+export const QUERY_CATEGORY = gql`
+  query DeckCategory($deckCategory: String!) {
+    deckCategory(deckCategory: $deckCategory) {
       _id
-      username
-      email
-      password
-      decks {
-        _id
-        title
-        category
-        description
-        date_created
-        cards {
-          _id
-        }
-      }
+      title
+      category (category: $deckCategory)
+      description
+      creator
+      date_created
     }
   }`;
-

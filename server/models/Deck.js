@@ -9,6 +9,7 @@
 const { Schema, model } = require('mongoose');
 const userSchema = require('./User');
 const cardSchema = require('./Card');
+const categorySchema = require('./Category')
 // need dateFormat utility
 const dateFormat = require('../utils/dateFormat');
 
@@ -18,10 +19,12 @@ const deckSchema = new Schema(
       type: String,
       required: true,
     },
-    category: {
-      type: String,
-      required: true,
-    },
+    categories: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'category',
+      }
+    ],
     description: {
       type: String,
     },

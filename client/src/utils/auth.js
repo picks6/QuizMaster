@@ -3,7 +3,7 @@ import decode from 'jwt-decode';
 class Auth {
   login(token) { // save token to local storage
     localStorage.setItem('id_token', token);
-    window.location.assign('/'); // reload page
+    window.location.assign('/dashboard'); // reload page
   }
 
   getToken() {
