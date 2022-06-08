@@ -25,7 +25,7 @@ function CreateDeckPage() {
     { sideA: '', sideB: '' }
   );
 
-  const handleDeckFormChange = (valueArr, event) => {
+  const handleDeckFormChange = (event, valueArr) => {
     if (event) {
       const { name, value } = event.target;
       console.log('event:', {name, value});
@@ -34,11 +34,12 @@ function CreateDeckPage() {
       // console.log('state:', { ...deckFormState, categories: [...valueArr] });
       // const categories = valueArr.map(category => deckFormState.categories.push(category));
       // console.log('new array:', categories);
-      setDeckFormState({ ...deckFormState, categories: [...valueArr] })
+      setDeckFormState({ ...deckFormState, categories: [...valueArr] });
     }
   };
   const handleDeckFormSubmit = async (event) => {
     event.preventDefault();
+    console.log('test');
     try {
       const { data } = await addDeck({variables: { ...deckFormState }});
       // const newDeck = data.addDeck;

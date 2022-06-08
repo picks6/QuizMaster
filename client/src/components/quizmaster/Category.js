@@ -19,7 +19,7 @@ const Category = ({ handleChange, categoryState }) => {
     <Creatable
      isClearable
      isMulti
-     onChange={(value) => handleChange(value)}
+     onChange={(value) => handleChange( null, value)}
      options={categories}
      value={categoryState}
     />
