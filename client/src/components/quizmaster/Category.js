@@ -14,7 +14,7 @@ const Category = ({ handleChange, categoryState }) => {
   const categories = data.categories.map(
     ({ category, _id }) => {return { label: category, value: _id}}
   );
-  console.log('categoryState:', categoryState);
+  // console.log('categoryState:', categoryState);
   return (
     <Creatable
      isClearable

@@ -39,9 +39,23 @@ function CreateDeckPage() {
   };
   const handleDeckFormSubmit = async (event) => {
     event.preventDefault();
-    console.log('test');
+    console.log('test:', {            
+      title: deckFormState.title, 
+      categories: [...deckFormState.categories], 
+      description: deckFormState.description
+    });
     try {
-      const { data } = await addDeck({variables: { ...deckFormState }});
+      const categories = deckFormState.categories.map(category => category.value);
+      console.log('categories:', categories[0]);
+      const { data } = await addDeck(
+        {
+          variables: {
+            title: deckFormState.title, 
+            category: categories, 
+            description: deckFormState.description
+          }
+        }
+      );
       // const newDeck = data.addDeck;
       // console.log('ADD_DECK:', newDeck);
       setDeck(data.addDeck);
