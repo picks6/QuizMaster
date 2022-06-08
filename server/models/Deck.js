@@ -12,6 +12,7 @@ const cardSchema = require('./Card');
 const categorySchema = require('./Category')
 // need dateFormat utility
 const dateFormat = require('../utils/dateFormat');
+const categories = require('./Category');
 
 const deckSchema = new Schema(
   {
@@ -42,6 +43,13 @@ const deckSchema = new Schema(
     cards: [cardSchema],
   }
 );
+
+deckSchema
+  .virtual('getCategories')
+  // Getter
+  .get(function () {
+    return this.categories.length;
+  });
 
 const Deck = model('deck', deckSchema);
 
