@@ -10,7 +10,7 @@ function Layout(props) {
       <MainNavigation />
       <Banner />
       <main className={classes.main}>{props.children}</main>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }

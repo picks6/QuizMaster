@@ -40,7 +40,7 @@ const LogoutButton = (props) => (
 
 const MainNavigation = () => {
   return (
-    <Menu inverted>
+    <Menu inverted className={classes.menu}>
       {Auth.isLoggedIn() ? (
         <>
           <DashboardButton />

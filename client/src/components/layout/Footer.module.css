@@ -1,0 +1,28 @@
+img {
+    max-height: 5rem;
+}
+
+.footer {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.footer__item {
+  height: 6rem;
+}
+
+a:hover {
+    opacity: .4;
+    transition: opacity 0.4s;
+}
+
+.thankyou {
+    color: #e4c580;
+    font-size: 1.6rem;
+    padding-bottom: 5rem;
+    padding-top: 1rem;
+}
+
