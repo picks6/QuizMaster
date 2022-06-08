@@ -18,7 +18,10 @@ export const ADD_DECK = gql`
     addDeck(title: $title, category: $category, description: $description) {
       _id
       title
-      category
+      categories {
+        _id
+        category
+      }
       description
       creator
       date_created
@@ -32,7 +35,10 @@ export const ADD_CARD = gql`
     addCard(deckId: $deckId, sideA: $sideA, sideB: $sideB) {
       _id
       title
-      category
+      categories {
+        _id
+        category
+      }
       creator
       date_created
       cards {
@@ -48,7 +54,10 @@ export const UPDATE_CARD = gql`
     updateCard(deckId: $deckId, cardId: $cardId, sideA: $sideA, sideB: $sideB) {
       _id
       title
-      category
+      categories {
+        _id
+        category
+      }
       creator
       date_created
       cards {
@@ -69,7 +78,10 @@ export const UPDATE_USER = gql`
       decks {
         _id
         title
-        category
+        categories {
+          _id
+          category
+        }
         description
         creator
         date_created
@@ -86,7 +98,10 @@ export const UPDATE_DECK = gql`
   mutation UpdateDeck($deckId: ID!, $description: String, $category: String, $title: String) {
     updateDeck(deckId: $deckId, description: $description, category: $category, title: $title) {
       title
-      category
+      categories {
+        _id
+        category
+      }
       description
       creator
       date_created

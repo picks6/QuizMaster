@@ -1,17 +1,14 @@
 [
   {
     "title": "Deck 1",
-    "category": "A",
     "description": "Deck 1"
   },
   {
     "title": "Deck 2",
-    "category": "A",
     "description": "Deck 2"
   },
   {
     "title": "Deck 3",
-    "category": "B",
     "description": "Deck 3"
   }
 ]

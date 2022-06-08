@@ -1,13 +1,45 @@
 import { gql } from '@apollo/client';
 
+// used in DashboardPage.js
+export const QUERY_USER = gql`
+  query User {
+    user {
+      _id
+      username
+      email
+      password
+      decks {
+        _id
+        categories {
+          category
+          _id
+        }
+        title
+        description
+        date_created
+        cards {
+          _id
+          sideA
+          sideB
+        }
+      }
+    }
+  }`;
+// not used
 export const GET_DECKS = gql`
-  query GetDecks {
+  query getDecks {
     decks {
       _id
       title
-      category
+      categories {
+        _id
+        category
+      }
       description
-      creator
+      creator {
+        _id
+        username
+      }
       date_created
       cards {
         _id
@@ -16,12 +48,22 @@ export const GET_DECKS = gql`
       }
     }
   }`;
+export const GET_CATEGORIES = gql`
+  query getCategories {
+    categories {
+      _id
+      category
+    }
+  }`;
 export const QUERY_DECK = gql`
   query QueryDeck($deckId: ID!) {
     deck(deckId: $deckId) {
       _id
       title
-      category
+      categories {
+        _id
+        category
+      }
       description
       creator
       date_created
@@ -38,7 +80,10 @@ export const QUERY_TITLE = gql`
     deckTitle(deckTitle: $deckTitle) {
       _id
       title
-      category
+      categories {
+        _id
+        category
+      }
       description
       creator
       date_created
@@ -61,26 +106,6 @@ export const QUERY_CARD = gql`
       }
     }
   }`;
-export const QUERY_USER = gql`
-  query QueryUser {
-    user {
-      _id
-      username
-      email
-      password
-      decks {
-        _id
-        title
-        category
-        description
-        date_created
-        cards {
-          _id
-        }
-      }
-    }
-  }`;
-
 export const QUERY_CATEGORY = gql`
   query DeckCategory($deckCategory: String!) {
     deckCategory(deckCategory: $deckCategory) {

@@ -1,17 +1,20 @@
 const db = require('../config/connection');
 
-const { Deck, User } = require('../models');
+const { Deck, User, Category } = require('../models');
 
 const deckData = require('./deckData.json');
 const cardData = require('./cardData.json');
 const userData = require('./userData.json');
+const categoryData = require('./categoryData.json');
 
 db.once('open', async () => {
   // clear database
   await Deck.deleteMany({});
   await User.deleteMany({});
+  await Category.deleteMany({});
 
   // bulk create
+  const categories = await Category.insertMany(categoryData);
   const decks = await Deck.insertMany(deckData);
   const users = await User.insertMany(userData);
   
@@ -23,6 +26,7 @@ db.once('open', async () => {
         {
           creator: users[i]._id, 
           $addToSet: {
+            categories: categories[i]._id, 
             cards: { ...cardData[j], deck: decks[i]._id }
           }
         }
