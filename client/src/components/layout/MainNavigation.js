@@ -30,6 +30,13 @@ const LoginButton = () => (
     </Button>
   </Menu.Item>
 );
+const HomeButton = () => (
+  <Menu.Item>
+    <Button as={Link} to="/" inverted color="blue">
+      Home
+    </Button>
+  </Menu.Item>
+)
 const SignupButton = () => (
   <Menu.Item>
     <Button as={Link} to="/signup" color="teal">
@@ -37,7 +44,7 @@ const SignupButton = () => (
     </Button>
   </Menu.Item>
 );
-const LogoutButton = (props) => (
+const LogoutButton = () => (
   <Menu.Item>
     <Icon name="log out" color="red" onClick={Auth.logout} />
   </Menu.Item>
@@ -49,12 +56,14 @@ const MainNavigation = () => {
       {Auth.isLoggedIn() ? (
         <>
           <DashboardButton />
+          <HomeButton />
           <SearchBar />
           <LogoutButton />
         </>
       ) : (
         <>
           <LoginButton />
+          <HomeButton />
           <SearchBar />
           <SignupButton />
         </>
