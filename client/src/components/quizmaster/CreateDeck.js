@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Form, Button, Checkbox } from 'semantic-ui-react';
+import { Form, Button } from 'semantic-ui-react';
 
 function CreateDeck({ handleChange, handleFormSubmit, formState, children }) {
     
@@ -27,14 +27,6 @@ function CreateDeck({ handleChange, handleFormSubmit, formState, children }) {
         />
       </Form.Field>
       <Form.Field>
-        {/* <label>Description</label>
-        <Form.Input 
-          placeholder='Description' 
-          name='description' 
-          type='text' 
-          onChange={handleChange} 
-          value={formState.description} 
-        /> */}
         {children}
       </Form.Field>
       <Button type='submit'>Create</Button>
