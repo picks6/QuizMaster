@@ -6,6 +6,12 @@ const categorySchema = new Schema(
             type: String,
             required: true,
         }
+    },
+    {
+        toJSON: {
+          getters: true,
+        },
+        id: false,
     }
 );
 
