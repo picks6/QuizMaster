@@ -26,7 +26,7 @@ db.once('open', async () => {
         {
           creator: users[i]._id, 
           $addToSet: {
-            category: categories[i]._id, 
+            categories: categories[i]._id, 
             cards: { ...cardData[j], deck: decks[i]._id }
           }
         }
