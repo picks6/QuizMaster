@@ -14,8 +14,8 @@ export const ADD_USER = gql`
     }
   }`;
 export const ADD_DECK = gql`
-  mutation AddDeck($title: String!, $category: String!, $description: String) {
-    addDeck(title: $title, category: $category, description: $description) {
+  mutation AddDeck($title: String!, $category: [ID]!, $description: String) {
+    addDeck(title: $title, categories: $category, description: $description) {
       _id
       title
       categories {
@@ -23,7 +23,10 @@ export const ADD_DECK = gql`
         category
       }
       description
-      creator
+      creator {
+        _id
+        username
+      }
       date_created
       cards {
         _id
@@ -39,7 +42,9 @@ export const ADD_CARD = gql`
         _id
         category
       }
-      creator
+      creator {
+        _id
+      }
       date_created
       cards {
         _id
@@ -95,8 +100,8 @@ export const UPDATE_USER = gql`
     }
   }`;
 export const UPDATE_DECK = gql`
-  mutation UpdateDeck($deckId: ID!, $description: String, $category: String, $title: String) {
-    updateDeck(deckId: $deckId, description: $description, category: $category, title: $title) {
+  mutation UpdateDeck($deckId: ID!, $description: String, $category: [ID], $title: String) {
+    updateDeck(deckId: $deckId, description: $description, categories: $category, title: $title) {
       title
       categories {
         _id
