@@ -3,8 +3,9 @@ import { Card } from "semantic-ui-react";
 
 import Landing from '../components/quizmaster/Landing';
 
-import { useLazyQuery } from "@apollo/client";
-import { GET_DECKS } from "../utils/queries";
+import { useLazyQuery, useQuery } from "@apollo/client";
+import { GET_DECKS, GET_CATEGORIES } from "../utils/queries";
+// import { set } from "../../../server/models/Card";
 // import gql from 'graphql-tag'
 
 const Search = ({ handleSubmit, updateSearch, search}) => (
@@ -20,8 +21,10 @@ const Search = ({ handleSubmit, updateSearch, search}) => (
 const LandingPage = () => {
   const [search, setSearch] = useState('');
   const [decks, setDecks] = useState('');
-  const [categories, setCategories] = useState('');
   const [getDecks, {}] = useLazyQuery(GET_DECKS);
+
+  const [categories, setCategories] = useState('');
+  const {loading, error, data } = useQuery(GET_CATEGORIES);
 
   const updateSearch = (event) => {
     const { name, value } = event.target;
@@ -35,6 +38,9 @@ const LandingPage = () => {
     setDecks(decks);
   }
   
+  if (loading) return <div>Loading</div>; 
+  if (error) return `Error! ${error.message}`;
+
   return (
     <>
       <Search 
@@ -49,7 +55,7 @@ const LandingPage = () => {
               <Card key={deck._id}>
                 <Card.Content>{deck.title}</Card.Content>
                 <Card.Content>
-                  {deck.category.map(category => `${category.category}`)}
+                  {deck.categories.map(category => `${category.category}`)}
                 </Card.Content>
               </Card>
             ))
