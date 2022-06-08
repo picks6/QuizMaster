@@ -1,51 +1,30 @@
 import React, { useState } from 'react'
 import Creatable from 'react-select/creatable'
-import {Card } from "semantic-ui-react";
+// import {Card } from "semantic-ui-react";
+import { useQuery } from '@apollo/client';
+import { GET_CATEGORIES } from '../../utils/queries';
 
-const categories = [
-  { label: 'Movie', value: 1 },
-  { label: 'Music', value: 2 },
-  { label: 'Sports', value: 3 },
-  { label: 'History', value: 4 }
-]
+const Category = ({ handleChange, categoryState }) => {
+  const { loading, error, data } = useQuery(GET_CATEGORIES);
 
-
-const DeckUpdate = props => {
-  const [categoryValue, setCategoryValue] = useState({category: '' })
-
-//   const handleClick = async (event) => {
-//     setCategoryValue({ editing: true })
-//   }
-
-  const handleChange = (field, value) => {
-    switch (field) {
-      case 'categories':
-        setCategoryValue(value)
-        break
-
-      default:
-        break
-    }
-  }
-
+  if (loading) return <div>Loading</div>; 
+  if (error) return `Error! ${error.message}`;
   
+  // console.log('categories:', data.categories);
+  const categories = data.categories.map(
+    ({ category, _id }) => {return { label: category, value: _id}}
+  );
+  console.log('categoryState:', categoryState);
   return (
-    <Card>
-        <div className='input'>
-           <Creatable
-            isClearable
-            isMulti
-            onChange={(value) => handleChange('categories', value)}
-            options={categories}
-            value={categoryValue}
-            />
-        </div>
-        {/* <Button color="teal" onClick={handleClick}>
-              Submit
-        </Button> */}
-    </Card>
- 
-  )
-    }
+    <Creatable
+     isClearable
+     isMulti
+     onChange={(value) => handleChange(value)}
+     options={categories}
+     value={categoryState}
+    />
 
-export default DeckUpdate
+  )
+};
+
+export default Category;
