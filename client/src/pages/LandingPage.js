@@ -75,7 +75,7 @@ const LandingPage = () => {
             <Card as={Link} to="/deck" state={deck} key={deck._id}>
               <Card.Content>{deck.title}</Card.Content>
               <Card.Content>
-                {deck.categories.map((category) => `${category.category}`)}
+                {deck.categories.map((category) => `${category.category} `)}
               </Card.Content>
             </Card>
           ))
