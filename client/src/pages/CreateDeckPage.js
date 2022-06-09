@@ -106,6 +106,7 @@ function CreateDeckPage() {
               formState={deckFormState}
             >
               <Category 
+                placeholder={'Add a Category'}
                 handleChange={handleDeckFormChange} 
                 categoryState={deckFormState.categories}
               />
