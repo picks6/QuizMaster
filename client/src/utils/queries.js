@@ -118,24 +118,23 @@ export const QUERY_CATEGORY = gql`
     }
   }`;
 
-export const QUERY_DECK_CATEGORY = gql`
-query deckCategory ($deckCategory: ID!) {
-  decks {
-    _id
-    title
-    categories  {
+export const QUERY_DECKS_CATEGORY = gql`
+  query DeckCategory($categoryID: [ID]!) {
+    deckCategory(categoryID: $categoryID) {
       _id
-      category
+      title
+      categories {
+        category
+      }
+      description
+      creator {
+        username
+      }
+      date_created
+      cards {
+        _id
+        sideA
+        sideB
+      }
     }
-    description
-    creator {
-      username
-    }
-    date_created
-    cards {
-      _id
-      sideA
-      sideB
-    }
-  }
-}`;
+  }`;
