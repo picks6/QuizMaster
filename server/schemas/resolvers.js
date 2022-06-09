@@ -19,8 +19,15 @@ const resolvers = {
       return await Deck.findOne({title: deckTitle})
     },
 //deck category
-    deckCategory: async(parent, {deckCategory}) =>{
-      return await Deck.find( {categories: {_id : deckCategory}});
+    deckCategory: async(parent, {categoryID}) =>{ // category: [ID]
+      console.log('args:', categoryID);
+      const selectors = categoryID.map(id => ({ categories: { _id: id } }));
+      console.log('deckCategory:', selectors);
+
+      return await Deck.find(
+        // { categories: { _id : deckCategory} }
+        { $or: selectors}
+      ).populate('categories creator');
     },
 
     card: async (parent, args) => {
