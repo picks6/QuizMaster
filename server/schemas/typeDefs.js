@@ -47,7 +47,7 @@ const typeDefs = gql`
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
-    addCategory(category: String!): Category
+    addCategories(categories: [String]!): [Category]
     addDeck(title: String!, categories: [ID]!, description: String): Deck
     addCard(deckId: ID!, sideA: String!, sideB: String!): Deck
 

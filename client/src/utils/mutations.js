@@ -13,6 +13,13 @@ export const ADD_USER = gql`
       }
     }
   }`;
+export const ADD_CATEGORIES = gql`
+  mutation AddCategories($categories: [String]!) {
+    addCategories(categories: $categories) {
+      _id
+      category
+    }
+  }`;
 export const ADD_DECK = gql`
   mutation AddDeck($title: String!, $category: [ID]!, $description: String) {
     addDeck(title: $title, categories: $category, description: $description) {

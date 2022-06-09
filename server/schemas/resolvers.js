@@ -57,16 +57,18 @@ const resolvers = {
       return { token, user };
     },
 
-    addCategory: async (parent, { category }) => {
-      return await Category.create({ category });
+    addCategories: async (parent, { categories }) => { // categories: [String]!
+      const categoryData = categories.map(category=> ({ category: category }));
+
+      return await Category.insertMany(categoryData);
     },
 
     addDeck: async (parent, {title, categories, description}, context) => {
-      console.log({title, description, categories})
+      console.log({title, description, categories}, context.user);
       const newDeck = await Deck.create(
         { title, description, categories, creator: context.user._id }
       );
-      return newDeck;
+      return await newDeck.populate('categories creator');
     },
     addCard: async (parent, {sideA, sideB, deckId}, context) => {
       return await Deck.findByIdAndUpdate(

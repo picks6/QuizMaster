@@ -6,11 +6,12 @@ import CreateCard from '../components/quizmaster/CreateCard';
 import CardForm from '../components/quizmaster/CardForm';
 
 import { useMutation } from '@apollo/client';
-import { ADD_DECK, ADD_CARD } from '../utils/mutations';
+import { ADD_CATEGORIES, ADD_DECK, ADD_CARD } from '../utils/mutations';
 import { Grid } from 'semantic-ui-react';
 
 function CreateDeckPage() {
-  const [categoryValue, setCategoryValue] = useState({category: '' })
+  // const [categoryValue, setCategoryValue] = useState({category: '' })
+  const [addCategories, {}] = useMutation(ADD_CATEGORIES);
 
   const [deckFormState, setDeckFormState] = useState(
     { title: '', categories: [], description: '' }
@@ -31,7 +32,7 @@ function CreateDeckPage() {
       console.log('event:', {name, value});
       setDeckFormState({ ...deckFormState, [name]: value });
     } else {
-      // console.log('state:', { ...deckFormState, categories: [...valueArr] });
+      console.log('state:', { ...deckFormState, categories: [...valueArr] });
       // const categories = valueArr.map(category => deckFormState.categories.push(category));
       // console.log('new array:', categories);
       setDeckFormState({ ...deckFormState, categories: [...valueArr] });
@@ -44,9 +45,39 @@ function CreateDeckPage() {
       categories: [...deckFormState.categories], 
       description: deckFormState.description
     });
+    let categories;
     try {
-      const categories = deckFormState.categories.map(category => category.value);
-      console.log('categories:', categories[0]);
+      const newCategories = deckFormState.categories.filter(category => category.__isNew__ === true);
+      console.log('newCategories:', newCategories);
+
+      if (newCategories.length) {
+        const args = newCategories.map(category => category.value);
+        // console.log('variables:', args);
+        
+        const { data } = await addCategories({ variables: { categories: args } });
+        // console.log('test:', data);
+
+        const addedCategories = data.addCategories;
+        console.log('addedCategories:', addedCategories);
+
+        categories = deckFormState.categories.map(
+          category => {
+            const index = addedCategories.findIndex(
+              element => {
+                // console.log(element.category, category.value);
+                return element.category === category.value;
+              }
+            )
+            // console.log(index);
+            return (index === -1) ? category.value : addedCategories[index]._id;
+          }
+        );
+        console.log('categories:', categories);
+        
+      } else {
+        categories = deckFormState.categories.map(category => category.value);
+        console.log('categories:', categories);
+      }
       const { data } = await addDeck(
         {
           variables: {
@@ -56,8 +87,8 @@ function CreateDeckPage() {
           }
         }
       );
-      // const newDeck = data.addDeck;
-      // console.log('ADD_DECK:', newDeck);
+      const newDeck = data.addDeck;
+      console.log('ADD_DECK:', newDeck);
       setDeck(data.addDeck);
     } catch (error) {
       console.log(error);

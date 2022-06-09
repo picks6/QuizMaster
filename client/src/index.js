@@ -21,7 +21,7 @@ import reportWebVitals from './reportWebVitals';
 // initialize Apollo Client
 const httpLink = new HttpLink({ uri: '/graphql'}); // create endpoint link
 const authLink = setContext( async (request, { headers }) => {
-  const token = localStorage.getItem('id_token'); // get auth token from local storage if it exists
+  const token = Auth.getToken(); // get auth token from local storage if it exists
   console.log('token:', token);
   return { 
     headers: { 

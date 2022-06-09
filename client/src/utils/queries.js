@@ -124,12 +124,11 @@ query deckCategory ($deckCategory: ID!) {
     _id
     title
     categories  {
-      _id (deckCategory: $deckCategory)
+      _id
       category
     }
     description
     creator {
-      _id
       username
     }
     date_created
