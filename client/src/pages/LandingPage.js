@@ -41,10 +41,13 @@ const LandingPage = () => {
   const handleSubmitSearch = async (event) => {
     console.log('test')
     event.preventDefault();
-    const query = await getDecks();
-    const decks = query.data.decks;
-    console.log("GET_DECKS:", decks);
-    setDecks(decks);
+    // const args
+    // const query = await getDecks();
+
+    // const decks = query.data.decks;
+
+    // console.log("GET_DECKS:", decks);
+    // setDecks(decks);
   };
 
   if (loading) return <div>Loading</div>;
@@ -55,6 +58,7 @@ const LandingPage = () => {
       <Form onSubmit={handleSubmitSearch}>
         <div className={classes.search__container}>
           <Category 
+            placeholder={'Select a Category'}
             handleChange={updateSearch}
             categoryState={categories}
           />

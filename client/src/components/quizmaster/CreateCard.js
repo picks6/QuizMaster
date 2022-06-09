@@ -8,7 +8,7 @@ const CreateCardHeader = ({ deck }) => (
       {deck.title}
     </Header>
     <Header as='h2'>
-      Category: {deck.category}
+      Category: {deck.categories.map(category => category.category)}
     </Header>
   </>
 )

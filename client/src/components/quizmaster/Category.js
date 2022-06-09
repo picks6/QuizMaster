@@ -4,7 +4,7 @@ import Creatable from 'react-select/creatable'
 import { useQuery } from '@apollo/client';
 import { GET_CATEGORIES } from '../../utils/queries';
 
-const Category = ({ handleChange, categoryState }) => {
+const Category = ({ handleChange, categoryState, placeholder }) => {
   const { loading, error, data } = useQuery(GET_CATEGORIES);
 
   if (loading) return <div>Loading</div>; 
@@ -17,7 +17,7 @@ const Category = ({ handleChange, categoryState }) => {
   // console.log('categoryState:', categoryState);
   return (
     <Creatable
-     placeholder='Select a Category' 
+     placeholder={placeholder} 
      isClearable
      isMulti
      onChange={(value) => handleChange( null, value)}
