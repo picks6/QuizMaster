@@ -18,6 +18,11 @@ const resolvers = {
     deckTitle: async(parent,{deckTitle}) =>{
       return await Deck.findOne({title: deckTitle})
     },
+//deck category
+    deckCategory: async(parent, {deckCategory}) =>{
+      return await Deck.find( {categories: {_id : deckCategory}});
+    },
+
     card: async (parent, args) => {
       if (args.cardId && args.deckId) { // for testing
         return await Deck.findById(
