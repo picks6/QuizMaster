@@ -117,3 +117,26 @@ export const QUERY_CATEGORY = gql`
       date_created
     }
   }`;
+
+export const QUERY_DECK_CATEGORY = gql`
+query deckCategory ($deckCategory: ID!) {
+  decks {
+    _id
+    title
+    categories  {
+      _id (deckCategory: $deckCategory)
+      category
+    }
+    description
+    creator {
+      _id
+      username
+    }
+    date_created
+    cards {
+      _id
+      sideA
+      sideB
+    }
+  }
+}`;
