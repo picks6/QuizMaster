@@ -6,7 +6,7 @@ import Landing from "../components/quizmaster/Landing";
 import Category from "../components/quizmaster/Category";
 
 import { useLazyQuery, useQuery } from "@apollo/client";
-import { GET_DECKS, GET_CATEGORIES } from "../utils/queries";
+import { QUERY_DECKS_CATEGORY, GET_DECKS, GET_CATEGORIES } from "../utils/queries";
 // import { set } from "../../../server/models/Card";
 // import gql from 'graphql-tag'
 
@@ -25,7 +25,7 @@ const Search = ({ handleSubmit, updateSearch, search }) => (
 const LandingPage = () => {
   const [search, setSearch] = useState("");
   const [decks, setDecks] = useState("");
-  const [getDecks, {}] = useLazyQuery(GET_DECKS);
+  const [getDecks, {}] = useLazyQuery(QUERY_DECKS_CATEGORY);
 
   const [categories, setCategories] = useState("");
   const { loading, error, data } = useQuery(GET_CATEGORIES);
@@ -41,13 +41,17 @@ const LandingPage = () => {
   const handleSubmitSearch = async (event) => {
     console.log('test')
     event.preventDefault();
-    // const args
-    // const query = await getDecks();
 
-    // const decks = query.data.decks;
+    const args = categories.map(category => category.value);
+    console.log(args);
+    const { data } = await getDecks(
+      { variables: { categoryID: args }}
+    );
 
-    // console.log("GET_DECKS:", decks);
-    // setDecks(decks);
+    const decks = data.deckCategory;
+
+    console.log("QUERY_DECKS_CATEGORY:", decks);
+    setDecks(decks);
   };
 
   if (loading) return <div>Loading</div>;
