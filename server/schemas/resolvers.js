@@ -57,7 +57,7 @@ const resolvers = {
     addDeck: async (parent, {title, categories, description}, context) => {
       console.log({title, description, categories})
       const newDeck = await Deck.create(
-        { title, description, categories  }
+        { title, description, categories, creator: context.user._id }
       );
       return newDeck;
     },
