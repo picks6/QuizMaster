@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Card } from "semantic-ui-react";
+import { Card, Form, Button } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 import Landing from "../components/quizmaster/Landing";
+import Category from "../components/quizmaster/Category";
 
 import { useLazyQuery, useQuery } from "@apollo/client";
 import { GET_DECKS, GET_CATEGORIES } from "../utils/queries";
@@ -28,11 +30,16 @@ const LandingPage = () => {
   const [categories, setCategories] = useState("");
   const { loading, error, data } = useQuery(GET_CATEGORIES);
 
-  const updateSearch = (event) => {
-    const { name, value } = event.target;
-    setSearch(value);
+  const updateSearch = (event, value) => {
+    if (event) {
+      const { name, value } = event.target;
+      setSearch(value);
+    } else {
+      setCategories(value);
+    }
   };
   const handleSubmitSearch = async (event) => {
+    console.log('test')
     event.preventDefault();
     const query = await getDecks();
     const decks = query.data.decks;
@@ -45,17 +52,19 @@ const LandingPage = () => {
 
   return (
     <>
-      <div className={classes.search__container}>
-        <Search
-          handleSubmit={handleSubmitSearch}
-          updateSearch={updateSearch}
-          search={search}
-        />
-      </div>
+      <Form onSubmit={handleSubmitSearch}>
+        <div className={classes.search__container}>
+          <Category 
+            handleChange={updateSearch}
+            categoryState={categories}
+          />
+        </div>
+        <Button type="submit">Search</Button>
+      </Form>
       <Card.Group>
         {decks.length ? (
           decks.map((deck) => (
-            <Card key={deck._id}>
+            <Card as={Link} to="/deck" state={deck} key={deck._id}>
               <Card.Content>{deck.title}</Card.Content>
               <Card.Content>
                 {deck.categories.map((category) => `${category.category}`)}

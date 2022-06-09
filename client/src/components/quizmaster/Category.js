@@ -17,6 +17,7 @@ const Category = ({ handleChange, categoryState }) => {
   // console.log('categoryState:', categoryState);
   return (
     <Creatable
+     placeholder='Select a Category' 
      isClearable
      isMulti
      onChange={(value) => handleChange( null, value)}
