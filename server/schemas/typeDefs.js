@@ -36,13 +36,13 @@ const typeDefs = gql`
 
   type Query {
     user: User
+    # category(categoryID: ID, category: String): Category
     categories: [Category]
-    category(categoryID: ID, category: String): Category
-    decks: [Deck]
-    deck(deckId: ID!): Deck
-    deckTitle(deckTitle: String!): Deck 
+    # deck(deckId: ID!): Deck
+    decks(deckTitle: String, categories: [ID]): [Deck]
+    decksTitle(deckTitle: String!): [Deck] 
+    decksCategory(categories: [ID]!): [Deck]
     card(deckId: ID!, cardId: ID!): Deck
-    deckCategory(categoryID: [ID]!) : [Deck]
   }
 
   type Mutation {
@@ -53,9 +53,11 @@ const typeDefs = gql`
 
     updateUser(username: String, email: String, password: String, deckId: ID): Auth
     login( username: String, email: String!, password: String!): Auth
-    updateCategory(categoryID: ID!, categories: [ID]!): Category
+    # updateCategory(categoryID: ID!, categories: [ID]!): Category
     updateDeck(deckId: ID!, title: String, categories: [ID], description: String): Deck
     updateCard(deckId: ID!, cardId: ID!, sideA: String!, sideB: String!): Deck
+
+    removeDeck()
   }
 `;
 

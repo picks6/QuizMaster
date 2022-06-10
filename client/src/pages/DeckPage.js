@@ -1,7 +1,7 @@
 import Deck from "../components/quizmaster/Deck";
 import { useLocation } from "react-router-dom";
 import { useQuery } from '@apollo/client';
-import { GET_DECKS } from '../utils/queries';
+import {  } from '../utils/queries';
 
 function DeckPage() { // expect deckId to be passed as a prop
   const location = useLocation();

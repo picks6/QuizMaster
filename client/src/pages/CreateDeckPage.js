@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import Category from '../components/quizmaster/Category';
+import Category from '../components/ui/Category';
 import CreateDeck from "../components/quizmaster/CreateDeck";
 import CreateCard from '../components/quizmaster/CreateCard';
 import CardForm from '../components/quizmaster/CardForm';
@@ -22,9 +22,7 @@ function CreateDeckPage() {
   const [cardState, setCardState] = useState({ editing: false });
   const [addCard, {}] = useMutation(ADD_CARD);
 
-  const [cardFormState, setCardFormState] = useState(
-    { sideA: '', sideB: '' }
-  );
+  const [cardFormState, setCardFormState] = useState({ sideA: '', sideB: '' });
 
   const handleDeckFormChange = (event, valueArr) => {
     if (event) {
