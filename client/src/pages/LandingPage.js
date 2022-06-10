@@ -3,7 +3,7 @@ import { Card, Form, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 import Landing from "../components/quizmaster/Landing";
-import Category from "../components/quizmaster/Category";
+import Category from "../components/ui/Category";
 
 import { useLazyQuery, useQuery } from "@apollo/client";
 import {
@@ -24,7 +24,7 @@ const LandingPage = () => {
   const [search, setSearch] = useState("");
   const [queryTitle, {}] = useLazyQuery(QUERY_DECKS_TITLE);
 
-  const updateSearch = (event, value) => {
+  const handleFormChange = (event, value) => {
     if (event) {
       const { name, value } = event.target;
       setSearch(value);
@@ -66,12 +66,12 @@ const LandingPage = () => {
         <div className={classes.search__container}>
           <Category 
             placeholder={'Select a Category'}
-            handleChange={updateSearch}
+            handleChange={handleFormChange}
             categoryState={categories}
           />
           <Form.Input 
             placeholder={'Search Decks...'}
-            onChange={updateSearch}
+            onChange={handleFormChange}
           />
         </div>
         <Button type="submit">Search</Button>
@@ -81,6 +81,7 @@ const LandingPage = () => {
           decks.map((deck) => (
             <Card as={Link} to="/deck" state={deck} key={deck._id}>
               <Card.Content>{deck.title}</Card.Content>
+              <Card.Content>{deck.description}</Card.Content>
               <Card.Content>
                 {deck.categories.map((category) => `${category.category} `)}
               </Card.Content>
