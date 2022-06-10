@@ -10,6 +10,8 @@ import { QUERY_DECKS_CATEGORY, GET_DECKS, GET_CATEGORIES } from "../utils/querie
 // import { set } from "../../../server/models/Card";
 // import gql from 'graphql-tag'
 
+import escapeRegExp from "../utils/escapeRegExp";
+
 import classes from "./LandingPage.module.css";
 
 const Search = ({ handleSubmit, updateSearch, search }) => (
@@ -39,19 +41,31 @@ const LandingPage = () => {
     }
   };
   const handleSubmitSearch = async (event) => {
-    console.log('test')
+    console.log('test', categories)
     event.preventDefault();
+    if (categories.length) {
+      const args = categories.map(category => category.value);
+      console.log(args);
+      const { data } = await getDecks(
+        { variables: { categories: args }}
+      );
+  
+      const decks = data.deckCategory;
+      console.log("QUERY_DECKS_CATEGORY:", decks);
+      if (search !== "") {
+        let re = new RegExp(escapeRegExp(search), 'i');
+        setDecks(
+          decks.filter(deck => re.test(deck.title))
+        );
+      } else {
+        setDecks(decks);
+      }  
+    } else if (search !== "") {
+      let re = new RegExp(escapeRegExp(search), 'i');
 
-    const args = categories.map(category => category.value);
-    console.log(args);
-    const { data } = await getDecks(
-      { variables: { categoryID: args }}
-    );
-
-    const decks = data.deckCategory;
-
-    console.log("QUERY_DECKS_CATEGORY:", decks);
-    setDecks(decks);
+    } else {
+      return
+    }
   };
 
   if (loading) return <div>Loading</div>;
@@ -65,6 +79,10 @@ const LandingPage = () => {
             placeholder={'Select a Category'}
             handleChange={updateSearch}
             categoryState={categories}
+          />
+          <Form.Input 
+            placeholder={'Search Decks...'}
+            onChange={updateSearch}
           />
         </div>
         <Button type="submit">Search</Button>
