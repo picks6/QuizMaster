@@ -85,7 +85,32 @@ const resolvers = {
 				},
 				{ new: true }
 			);
-		},
+    },
+    // Update User
+    updateUser: async (parent, args, context) => {
+      // args: { username: String, email: String, password: String, deck: ID }
+      if (context.user) {
+        return await User.findByIdAndUpdate(context.user._id, args, { new: true });
+      } 
+      if (args.deckId) { // for backend testing
+        return await User.findOneAndUpdate( // add Deck to User
+          { username: args.username}, { $addToSet: { decks: args.deckId } }, { new: true }
+        ).populate('decks');
+      }
+      throw new AuthenticationError('Not logged in');
+    },
+    login: async (parent, { username, email, password }) => {
+      const user = await User.findOne(
+        { $or: [{ username }, { email }] }
+      );
+      if (!user) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
+      const correctPw = await user.isCorrectPassword(password);
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
+      const token = signToken(user);
 
       return { token, user };
     },
@@ -123,19 +148,18 @@ const resolvers = {
         );
       }
     },
-    // // NEED TYPEDEFS:
-    // removeDeck: async (parent, args, context) => {
-    //   if (context.user) {
-    //     return Deck.findOneAndDelete({ creator: context.user._id });
-    //   }
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
-    // removeCard: async (parent, args, context) => {
-    //   if (context.user) {
-    //     return Card.findOneAndDelete({ creator: context.user._id });
-    //   }
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
+    removeDeck: async (parent, args, context) => {
+      if (context.user) {
+        return Deck.findOneAndDelete({ creator: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    removeCard: async (parent, args, context) => {
+      if (context.user) {
+        return Card.findOneAndDelete({ creator: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
   }
 };
 
