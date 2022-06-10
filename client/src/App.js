@@ -12,7 +12,7 @@ import LoginPage from "./pages/LoginPage";
 import DeckPage from "./pages/DeckPage";
 import CreateDeckPage from "./pages/CreateDeckPage";
 import CardFlipPage from "./pages/CardFlipPage";
-import Category from './components/quizmaster/Category'
+import Category from './components/ui/Category'
 
 function App() {
   return (

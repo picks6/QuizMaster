@@ -36,10 +36,9 @@ const typeDefs = gql`
 
   type Query {
     user: User
-    categories: [Category]
-    category(categoryID: ID, category: String): Category
+    #category(categoryID: ID, category: String): Category
     decks: [Deck]
-    deck(deckId: ID!): Deck
+    #deck(deckId: ID!): Deck
     deckTitle(deckTitle: String!): Deck 
     card(deckId: String!, cardId: String!): Deck
     deckCategory(categoryID: [ID]!) : [Deck]
@@ -53,9 +52,11 @@ const typeDefs = gql`
 
     updateUser(username: String, email: String, password: String, deckId: ID): Auth
     login( username: String, email: String!, password: String!): Auth
-    updateCategory(categoryID: ID!, categories: [ID]!): Category
+    # updateCategory(categoryID: ID!, categories: [ID]!): Category
     updateDeck(deckId: ID!, title: String, categories: [ID], description: String): Deck
     updateCard(deckId: ID!, cardId: ID!, sideA: String!, sideB: String!): Deck
+
+    removeDeck()
   }
 `;
 

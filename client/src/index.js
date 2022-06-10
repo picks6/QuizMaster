@@ -22,7 +22,7 @@ import reportWebVitals from './reportWebVitals';
 const httpLink = new HttpLink({ uri: '/graphql'}); // create endpoint link
 const authLink = setContext( async (request, { headers }) => {
   const token = Auth.getToken(); // get auth token from local storage if it exists
-  console.log('token:', token);
+  // console.log('token:', token);
   return { 
     headers: { 
       ...headers, 
@@ -36,11 +36,11 @@ const client = new ApolloClient( // configure client with links
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  // <React.StrictMode>
+  <React.StrictMode>
     <ApolloProvider client={client}> {/* connect Apollo Client*/}
       <App />
     </ApolloProvider>
-  // </React.StrictMode>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
