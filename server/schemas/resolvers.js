@@ -134,19 +134,18 @@ const resolvers = {
         );
       }
     },
-    // // NEED TYPEDEFS:
-    // removeDeck: async (parent, args, context) => {
-    //   if (context.user) {
-    //     return Deck.findOneAndDelete({ creator: context.user._id });
-    //   }
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
-    // removeCard: async (parent, args, context) => {
-    //   if (context.user) {
-    //     return Card.findOneAndDelete({ creator: context.user._id });
-    //   }
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
+    removeDeck: async (parent, args, context) => {
+      if (context.user) {
+        return Deck.findOneAndDelete({ creator: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    removeCard: async (parent, args, context) => {
+      if (context.user) {
+        return Card.findOneAndDelete({ creator: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
   }
 };
 

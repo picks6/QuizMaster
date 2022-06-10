@@ -57,7 +57,8 @@ const typeDefs = gql`
     updateDeck(deckId: ID!, title: String, categories: [ID], description: String): Deck
     updateCard(deckId: ID!, cardId: ID!, sideA: String!, sideB: String!): Deck
 
-    removeDeck()
+    removeDeck(deckId: ID!): Deck
+    removeCard(cardId: ID!): Deck
   }
 `;
 
