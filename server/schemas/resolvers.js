@@ -85,9 +85,6 @@ const resolvers = {
 				},
 				{ new: true }
 			);
-		},
-
-      return { token, user };
     },
     // // NOT USED:
     // updateCategory: async (parent, args, context) => { // args: { categoryId: ID!, category: String! }
