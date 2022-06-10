@@ -6,31 +6,23 @@ import Landing from "../components/quizmaster/Landing";
 import Category from "../components/quizmaster/Category";
 
 import { useLazyQuery, useQuery } from "@apollo/client";
-import { QUERY_DECKS_CATEGORY, GET_DECKS, GET_CATEGORIES } from "../utils/queries";
-// import { set } from "../../../server/models/Card";
-// import gql from 'graphql-tag'
-
-import escapeRegExp from "../utils/escapeRegExp";
+import {
+  QUERY_DECKS, 
+  QUERY_DECKS_CATEGORY, 
+  QUERY_DECKS_TITLE
+} from "../utils/queries";
 
 import classes from "./LandingPage.module.css";
 
-const Search = ({ handleSubmit, updateSearch, search }) => (
-  <form onSubmit={handleSubmit}>
-    <input
-      type="text"
-      onChange={updateSearch}
-      value={search}
-      placeholder="Search"
-    />
-  </form>
-);
 const LandingPage = () => {
-  const [search, setSearch] = useState("");
   const [decks, setDecks] = useState("");
-  const [getDecks, {}] = useLazyQuery(QUERY_DECKS_CATEGORY);
+  const [queryDecks, {}] = useLazyQuery(QUERY_DECKS);
 
   const [categories, setCategories] = useState("");
-  const { loading, error, data } = useQuery(GET_CATEGORIES);
+  const [queryCategory, {}] = useLazyQuery(QUERY_DECKS_CATEGORY);
+  
+  const [search, setSearch] = useState("");
+  const [queryTitle, {}] = useLazyQuery(QUERY_DECKS_TITLE);
 
   const updateSearch = (event, value) => {
     if (event) {
@@ -41,35 +33,32 @@ const LandingPage = () => {
     }
   };
   const handleSubmitSearch = async (event) => {
-    console.log('test', categories)
     event.preventDefault();
-    if (categories.length) {
+    // console.log('test', categories)
+    if (categories.length && search !== "") {
       const args = categories.map(category => category.value);
-      console.log(args);
-      const { data } = await getDecks(
-        { variables: { categories: args }}
-      );
-  
-      const decks = data.deckCategory;
-      console.log("QUERY_DECKS_CATEGORY:", decks);
-      if (search !== "") {
-        let re = new RegExp(escapeRegExp(search), 'i');
-        setDecks(
-          decks.filter(deck => re.test(deck.title))
-        );
-      } else {
-        setDecks(decks);
-      }  
+      // console.log(search, args);
+      const { data } = await queryDecks({ variables: { deckTitle: search, categories: args }});
+      // console.log("QUERY_DECKS:", data.decks);
+      setDecks(data.decks);
+      return;
+    } else if (categories.length) {
+      const args = categories.map(category => category.value);
+      // console.log(args);
+      const { data } = await queryCategory({ variables: { categories: args }});
+      // console.log("QUERY_DECKS_CATEGORY:", data.decksCategory);
+      setDecks(data.decksCategory);
+      return;
     } else if (search !== "") {
-      let re = new RegExp(escapeRegExp(search), 'i');
-
+      // console.log(search);
+      const { data } = await queryTitle({ variables: { deckTitle: search }});
+      // console.log("QUERY_DECKS_TITLE", data.decksTitle);
+      setDecks(data.decksTitle);
+      return;
     } else {
-      return
+      return;
     }
   };
-
-  if (loading) return <div>Loading</div>;
-  if (error) return `Error! ${error.message}`;
 
   return (
     <>
