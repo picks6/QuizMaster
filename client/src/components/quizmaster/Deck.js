@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Card, Button } from 'semantic-ui-react';
+import { Card, Button, Header } from 'semantic-ui-react';
 // import CardFlip from '../quizmaster/CardFlip';
 
 import CardFlip from '../quizmaster/CardFlip';
@@ -15,7 +15,10 @@ const Deck = ( { deck } ) => {
   // if (error) return `Error! ${error.message}`;
   console.log('deck:', deck);
   return (
-    <div>
+    <>
+      <Header>{deck.title}</Header>
+      <Header>created by: {deck.creator.username}</Header>
+      <Header>categories: {deck.categories.map((category) => `${category.category} `)}</Header>
       {
         deck.cards.map(
           (card) => (
@@ -27,7 +30,7 @@ const Deck = ( { deck } ) => {
           // <CardFlip sideA={el.sideA} sideB={el.sideB} />
         )
       }
-    </div>
+    </>
   )
 }
 
