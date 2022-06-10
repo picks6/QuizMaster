@@ -38,15 +38,12 @@ const resolvers = {
       // console.log('deckCategory:', selectors);
       return await Deck.find({ $or: selectors}).populate('categories creator');
     },
-    // // NOT USED:
-    // card: async (parent, args) => {
-    //   if (args.cardId && args.deckId) { // for testing
-    //     return await Deck.findById(
-    //       args.deckId, { cards: { $elemMatch: { _id: args.cardId} }}
-    //     );
-    //   }
-    //   // return await Card.find({deck: args.deck});
-    // },
+    card: async (parent, args) => {
+      return await Deck.findById(
+        args.deckId, { cards: { $elemMatch: { _id: args.cardId} }}
+      );
+      // return await Card.find({deck: args.deck});
+    },
   },
   Mutation: {
     addUser: async (parent, args) => { // args: { username: String!, email: String!, password: String! }

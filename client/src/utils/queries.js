@@ -117,15 +117,14 @@ export const QUERY_DECKS_CATEGORY = gql`
       }
     }
   }`;
-// // NOT USED:
-// export const QUERY_CARD = gql`
-//   query QueryCard($deckId: ID!, $cardId: ID!) {
-//     card(deckId: $deckId, cardId: $cardId) {
-//       cards {
-//         _id
-//         sideA
-//         sideB
-//         deck
-//       }
-//     }
-//   }`;
+export const QUERY_CARD = gql`
+  query QueryCard($deckId: ID!, $cardId: ID!) {
+    card(deckId: $deckId, cardId: $cardId) {
+      cards {
+        _id
+        sideA
+        sideB
+        deck
+      }
+    }
+  }`;

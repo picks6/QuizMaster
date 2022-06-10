@@ -42,7 +42,7 @@ const typeDefs = gql`
     decks(deckTitle: String, categories: [ID]): [Deck]
     decksTitle(deckTitle: String!): [Deck] 
     decksCategory(categories: [ID]!): [Deck]
-    # card(deckId: ID!, cardId: ID!): Deck
+    card(deckId: ID!, cardId: ID!): Deck
   }
 
   type Mutation {
@@ -56,6 +56,8 @@ const typeDefs = gql`
     # updateCategory(categoryID: ID!, categories: [ID]!): Category
     updateDeck(deckId: ID!, title: String, categories: [ID], description: String): Deck
     updateCard(deckId: ID!, cardId: ID!, sideA: String!, sideB: String!): Deck
+
+    removeDeck()
   }
 `;
 
