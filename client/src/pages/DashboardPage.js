@@ -1,66 +1,75 @@
-import React, { useState } from "react";
+import React, { 
+  useEffect, 
+  useReducer, 
+  useRef, 
+  useCallback 
+} from "react";
 import { Link } from "react-router-dom";
 import {
   Button,
+  Card,
   Divider,
   Form,
   Grid,
   Header,
   Icon,
-  Search,
   Segment,
 } from 'semantic-ui-react';
-import Category from "../components/quizmaster/Category";
+import Category from "../components/ui/Category";
+import Searcher from "../components/ui/Searcher";
 
 import Auth from "../utils/auth";
 
 import { useLazyQuery, useQuery } from "@apollo/client";
-import { QUERY_USER, QUERY_DECKS_CATEGORY } from "../utils/queries";
+import { QUERY_USER } from "../utils/queries";
 
 const DashboardPage = () => {
-  const [userState, setUser] = useState('');
+  // const [user, setUser] = useState("");
   const { loading, error, data } =useQuery(QUERY_USER);
-
-  const [decks, setDecks] = useState("");
-  const [getDecks, {}] = useLazyQuery(QUERY_DECKS_CATEGORY);
   
-  const [search, setSearch] = useState("");
-  const [categories, setCategories] = useState("");
+  // const [decks, setDecks] = useState("");
+  // const [search, setSearch] = useState("");
+  // const [categories, setCategories] = useState("");
 
-  const updateSearch = (event, value) => {
-    if (event) {
-      const { name, value } = event.target;
-      setSearch(value);
-    } else {
-      setCategories(value);
-    }
-  };
-  const handleSubmitSearch = async (event) => {
-    // console.log('test')
-    event.preventDefault();
+  // const updateSearch = (event, value) => {
+  //   // if (event) {
+  //   //   const { name, value } = event.target;
+  //   //   setSearch(value);
+  //   // } else {
+  //   //   setCategories(value);
+  //   // }
+  // };
+  // const handleSubmitSearch = async (event, data) => {
+  //   event.preventDefault();
+  //   // console.log('test');
 
-    const args = categories.map(category => category.value);
-    // console.log(args);
-    const { data } = await getDecks(
-      { variables: { categories: args }}
-    );
+  //   // const args = categories.map(category => category.value);
+  //   // console.log(args);
+  //   // const { data } = await getDecks(
+  //   //   { variables: { categories: args }}
+  //   // );
 
-    const decks = data.deckCategory;
+  //   // const decks = data.deckCategory;
 
-    // console.log("QUERY_DECKS_CATEGORY:", decks);
-    setDecks(decks);
-  };
-
+  //   // console.log("QUERY_DECKS_CATEGORY:", decks);
+  //   // setDecks(decks);
+  // };
   if (loading) return <div>Loading</div>; 
   if (error) return `Error! ${error.message}`;
-  // console.log(data);
-  // setUser(data); 
+
+  const user = data.user;
+  console.log('QUERY_USER:', user);
+
   return !(Auth.isLoggedIn()) 
     ? window.location.assign('/login') 
     : (
       <Segment placeholder>
         <Grid columns={3} textAlign='center'>
           <Grid.Row verticalAlign='middle'>
+            <Grid.Column>
+
+              <Header>User: {data.user.username}</Header>
+            </Grid.Column>
             <Grid.Column>
 
               <Header icon>Create a Deck:</Header>
@@ -71,20 +80,42 @@ const DashboardPage = () => {
             </Grid.Column>
             <Grid.Column>
 
-              <Form onSubmit={handleSubmitSearch}>
-                <Header>Your Decks: </Header>
-                <Search 
-                  placeholder="Search Your Decks:"
-                />
-                <Category 
+              <Form 
+                // onSubmit={handleSubmitSearch}
+              >
+                <Header>Quick Search: </Header>
+
+                {/* <Category 
                   placeholder={''}
                   handleChange={updateSearch}
                   categoryState={categories} 
+                /> */}
+                <Searcher 
+                  decks={user.decks}
                 />
                 <Button type="submit">Search</Button>
               </Form>
 
             </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row>
+            <Header>Decks:</Header>
+            <Card.Group>
+              {
+                user.decks.map(
+                  (deck) => (
+                    <Card as={Link} to="/deck" state={deck} key={deck._id}>
+                      <Card.Content>{deck.title}</Card.Content>
+                      <Card.Content>{deck.description}</Card.Content>
+                      <Card.Content>
+                        {deck.categories.map((category) => `${category.category} `)}
+                      </Card.Content>
+                    </Card>
+                  )
+                )
+              }
+            </Card.Group>
           </Grid.Row>
         </Grid>
       </Segment>
