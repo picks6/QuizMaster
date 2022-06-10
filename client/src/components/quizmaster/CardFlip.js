@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ReactCardFlip from "react-card-flip";
+// import Slider from 'react-touch-drag-slider'
 import { Card, Button, Header, Grid } from "semantic-ui-react";
 
 const CardFlip = ({card}) => {
@@ -33,7 +34,10 @@ const CardFlip = ({card}) => {
         </ReactCardFlip>
       </Grid.Column>
     </Grid>
+    
   );
 };
 
 export default CardFlip;
+
+
