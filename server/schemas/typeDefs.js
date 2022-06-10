@@ -37,11 +37,12 @@ const typeDefs = gql`
   type Query {
     user: User
     #category(categoryID: ID, category: String): Category
-    decks: [Deck]
+    categories: [Category]
+    decks(deckTitle: String, categories: [ID]): [Deck]
     #deck(deckId: ID!): Deck
-    deckTitle(deckTitle: String!): Deck 
+    decksTitle(deckTitle: String!): [Deck] 
+    decksCategory(categories: [ID]!): [Deck]
     card(deckId: String!, cardId: String!): Deck
-    deckCategory(categoryID: [ID]!) : [Deck]
   }
 
   type Mutation {
