@@ -38,11 +38,11 @@ const typeDefs = gql`
     user: User
     categories: [Category]
     category(categoryID: ID, category: String): Category
-    decks: [Deck]
     deck(deckId: ID!): Deck
-    deckTitle(deckTitle: String!): Deck 
+    decks(deckTitle: String, categories: [ID]): [Deck]
+    decksTitle(deckTitle: String!): [Deck] 
     card(deckId: ID!, cardId: ID!): Deck
-    deckCategory(categoryID: [ID]!) : [Deck]
+    decksCategory(categories: [ID]!) : [Deck]
   }
 
   type Mutation {

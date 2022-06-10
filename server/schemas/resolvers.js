@@ -9,25 +9,25 @@ const resolvers = {
         return await User.findById(user._id).populate({ path: 'decks', populate: 'cards' });
       }
     },
-    decks: async () => { // return all decks
-      return await Deck.find({}).populate('categories creator');
-    },
     deck: async(parent, {deckId}) => {
       return await Deck.findOne({ _id: deckId });
     },
-    deckTitle: async(parent,{deckTitle}) =>{
-      return await Deck.findOne({title: deckTitle})
-    },
-//deck category
-    deckCategory: async(parent, {categoryID}) =>{ // category: [ID]
-      console.log('args:', categoryID);
-      const selectors = categoryID.map(id => ({ categories: { _id: id } }));
-      console.log('deckCategory:', selectors);
-
+    decks: async (parent, {deckTitle, categories}) => { // { deckTitle: String, categories: [ID] }
+      // console.log('test:', deckTitle, categories);
+      const categorySelectors = categories.map(id => ({ categories: { _id: id } }));
       return await Deck.find(
-        // { categories: { _id : deckCategory} }
-        { $or: selectors}
+        { title: { $regex: deckTitle }, $or: categorySelectors }
       ).populate('categories creator');
+    },
+    decksTitle: async(parent, {deckTitle}) =>{
+      return await Deck.find({ title: { $regex: deckTitle }}).populate('categories creator');
+    },
+    //deck category
+    decksCategory: async(parent, {categories}) =>{ // category: [ID]
+      // console.log('args:', categories);
+      const selectors = categories.map(id => ({ categories: { _id: id } }));
+      // console.log('deckCategory:', selectors);
+      return await Deck.find({ $or: selectors}).populate('categories creator');
     },
 
     card: async (parent, args) => {

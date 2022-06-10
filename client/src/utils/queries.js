@@ -76,8 +76,8 @@ export const QUERY_DECK = gql`
   }`;
 
 export const QUERY_TITLE = gql`
-  query DeckTitle($deckTitle: String!) {
-    deckTitle(deckTitle: $deckTitle) {
+  query DecksTitle($deckTitle: String!) {
+    decksTitle(deckTitle: $deckTitle) {
       _id
       title
       categories {
@@ -106,21 +106,9 @@ export const QUERY_CARD = gql`
       }
     }
   }`;
-export const QUERY_CATEGORY = gql`
-  query DeckCategory($deckCategory: String!) {
-    deckCategory(deckCategory: $deckCategory) {
-      _id
-      title
-      category (category: $deckCategory)
-      description
-      creator
-      date_created
-    }
-  }`;
-
 export const QUERY_DECKS_CATEGORY = gql`
-  query DeckCategory($categoryID: [ID]!) {
-    deckCategory(categoryID: $categoryID) {
+  query DecksCategory($categories: [ID]!) {
+    decksCategory(categories: $categories) {
       _id
       title
       categories {
