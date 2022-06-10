@@ -41,7 +41,7 @@ const typeDefs = gql`
     decks: [Deck]
     deck(deckId: ID!): Deck
     deckTitle(deckTitle: String!): Deck 
-    card(deckId: ID!, cardId: ID!): Deck
+    card(deckId: String!, cardId: String!): Deck
     deckCategory(categoryID: [ID]!) : [Deck]
   }
 

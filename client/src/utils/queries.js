@@ -96,8 +96,9 @@ export const QUERY_TITLE = gql`
   }`;
 
 export const QUERY_CARD = gql`
-  query QueryCard($deckId: ID!, $cardId: ID!) {
+  query card($deckId: String!, $cardId: String!) {
     card(deckId: $deckId, cardId: $cardId) {
+      title 
       cards {
         _id
         sideA
