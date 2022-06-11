@@ -1,6 +1,7 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { Deck, Card, User, Category } = require('../models');
+const { Deck, Card, User, Category, Order } = require('../models');
 const { signToken } = require('../utils/auth');
+const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
 const resolvers = {
   Query: {
@@ -22,11 +23,18 @@ const resolvers = {
       throw new AuthenticationError('Not logged in');
     },
     checkout: async (parent, args, context) => {
+      console.log('test');
       const url = new URL(context.headers.referer).origin;
-      const order = new Order({ products: args.products });
+      // const order = new Order({ products: args.products });
+      console.log('url:', url);
       const line_items = [];
+      
+      const products = [
+        {"_id":"62a4b2a8076f279593d56f98","image":"canned-coffee.jpg","name":"Canned Coffee","price":1.99,"quantity":500,"purchaseQuantity":1},
+        {"_id":"62a4b2a8076f279593d56f98","image":"canned-coffee.jpg","name":"Canned Coffee","price":1.99,"quantity":500,"purchaseQuantity":1}
+      ];
 
-      const { products } = await order.populate('products');
+      // const { products } = await order.populate('products');
 
       for (let i = 0; i < products.length; i++) {
         const product = await stripe.products.create({
@@ -54,6 +62,8 @@ const resolvers = {
         success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${url}/`
       });
+      console.log('session');
+      console.log('session:', session);
 
       return { session: session.id };
     },
