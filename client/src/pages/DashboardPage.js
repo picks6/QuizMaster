@@ -61,68 +61,66 @@ const DashboardPage = () => {
   return !Auth.isLoggedIn() ? (
     window.location.assign("/login")
   ) : (
-    <DashboardWrapper>
-      <Segment inverted className="container" placeholder>
-        <Grid stackable columns={3} textAlign="center">
-          <Grid.Row verticalAlign="middle">
-            <Grid.Column>
-              <Header size="huge" inverted color="teal">
-                Welcome {data.user.username}
+    <Segment inverted className="container" placeholder>
+      <Grid stackable columns={3} textAlign="center">
+        <Grid.Row verticalAlign="middle">
+          <Grid.Column>
+            <Header size="huge" inverted color="teal">
+              Welcome {data.user.username}
+            </Header>
+          </Grid.Column>
+          <Grid.Column>
+            <Header size="large" inverted color="teal" icon>
+              Create a Deck:
+            </Header>
+            <Button as={Link} to="/create-deck" inverted color="teal">
+              <Icon name="plus" />
+            </Button>
+          </Grid.Column>
+          <Grid.Column className={classes.search}>
+            <Form
+            // onSubmit={handleSubmitSearch}
+            >
+              <Header size="large" inverted color="teal">
+                Quick Search:{" "}
               </Header>
-            </Grid.Column>
-            <Grid.Column>
-              <Header size="large" inverted color="teal" icon>
-                Create a Deck:
-              </Header>
-              <Button as={Link} to="/create-deck" inverted color="teal">
-                <Icon name="plus" />
-              </Button>
-            </Grid.Column>
-            <Grid.Column className={classes.search}>
-              <Form
-              // onSubmit={handleSubmitSearch}
-              >
-                <Header size="large" inverted color="teal">
-                  Quick Search:{" "}
-                </Header>
 
-                {/* <Category 
+              {/* <Category 
                   placeholder={''}
                   handleChange={updateSearch}
                   categoryState={categories} 
                 /> */}
-                <Searcher decks={user.decks} />
-                <Button inverted color="teal" type="submit">
-                  Search
-                </Button>
-              </Form>
-            </Grid.Column>
-          </Grid.Row>
+              <Searcher decks={user.decks} />
+              <Button inverted color="teal" type="submit">
+                Search
+              </Button>
+            </Form>
+          </Grid.Column>
+        </Grid.Row>
 
-          <Grid.Row>
-            <Header size="large" inverted color="teal">
-              Decks:
-            </Header>
-            <Card.Group>
-              {user.decks.map((deck) => (
-                <Card
-                  as={Link}
-                  to={`/deck/${deck._id}/edit`}
-                  state={deck}
-                  key={deck._id}
-                >
-                  <Card.Content>{deck.title}</Card.Content>
-                  <Card.Content>{deck.description}</Card.Content>
-                  <Card.Content>
-                    {deck.categories.map((category) => `${category.category} `)}
-                  </Card.Content>
-                </Card>
-              ))}
-            </Card.Group>
-          </Grid.Row>
-        </Grid>
-      </Segment>
-    </DashboardWrapper>
+        <Grid.Row>
+          <Header size="large" inverted color="teal">
+            Decks:
+          </Header>
+          <Card.Group>
+            {user.decks.map((deck) => (
+              <Card
+                as={Link}
+                to={`/deck/${deck._id}/edit`}
+                state={deck}
+                key={deck._id}
+              >
+                <Card.Content>{deck.title}</Card.Content>
+                <Card.Content>{deck.description}</Card.Content>
+                <Card.Content>
+                  {deck.categories.map((category) => `${category.category} `)}
+                </Card.Content>
+              </Card>
+            ))}
+          </Card.Group>
+        </Grid.Row>
+      </Grid>
+    </Segment>
   );
 };
 export default DashboardPage;
