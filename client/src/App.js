@@ -15,7 +15,7 @@ import DeckPage from "./pages/DeckPage";
 import CreateDeckPage from "./pages/CreateDeckPage";
 import CardFlipPage from "./pages/CardFlipPage";
 import Category from './components/ui/Category'
-import ProductDisplay from './components/cart/ProductDisplay'
+import ProductDisplay from './components/cart/Cart'
 
 function App() {
   return (
@@ -33,7 +33,7 @@ function App() {
             <Route path="/deck/:title/:id" element={<CardFlipPage />}/>
             <Route path="/category" element={<Category />}/>
             <Route path="/checkout" element={<ProductDisplay />}/>
-    
+
             {/* <Route path='/user/:userId' element={<User />}/> */}
           </Routes>
         </StoreProvider>
