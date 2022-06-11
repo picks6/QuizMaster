@@ -40,6 +40,9 @@ const deckSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'user',
     },
+    price: {
+      type: Number,
+    },
     cards: [cardSchema],
   }
 );
