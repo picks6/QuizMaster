@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./ProductDisplay.css";
+// import "./ProductDisplay.css";
 
 const ProductDisplay = () => (
   <section>
@@ -10,7 +10,7 @@ const ProductDisplay = () => (
       />
       <div className="description">
       <h3>Stubborn Attachments</h3>
-      <h5>$20.00</h5>
+      <h5>$0.00</h5>
       </div>
     </div>
     <form action="/create-checkout-session" method="POST">
