@@ -25,10 +25,9 @@ export const QUERY_USER = gql`
       }
     }
   }`;
-// not used
-export const GET_DECKS = gql`
-  query getDecks {
-    decks {
+export const QUERY_DECK = gql`
+  query Deck($deckId: ID!) {
+    deck(deckId: $deckId) {
       _id
       title
       categories {

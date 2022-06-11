@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import Slider from 'react-touch-drag-slider';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import styled, { createGlobalStyle, css } from 'styled-components';
 
 import CardFlip from '../components/quizmaster/CardFlip';
 import { useQuery } from '@apollo/client';
-import { QUERY_CARD } from '../utils/queries';
+import { QUERY_CARD, QUERY_DECK } from '../utils/queries';
 
 // define some basic styles
 const GlobalStyles = createGlobalStyle`
@@ -42,26 +42,27 @@ function CardFlipPage() {
   const location = useLocation();
   console.log('location:', location);
   const deck = location.state;
+  const params = useParams();
 
   const [index, setIndex] = useState(0);
-	const { loading, error, data } = useQuery(QUERY_CARD, {
-		// variables: { deckId, cardId },
-		variables: {
-			deckId: '629fe32a513cfd52ed0f2d3f',
-			cardId: '629fe32a513cfd52ed0f2d48',
-		}, // for testing
-	}); // returns single card
-	// Expect data: {
-	//   card: {
-	//     cards: [{ sideA, sideB, deck }]
-	//   }
-	// }
+	// const { loading, error, data } = useQuery(QUERY_CARD, {
+	// 	// variables: { deckId, cardId },
+	// 	variables: {
+	// 		deckId: '629fe32a513cfd52ed0f2d3f',
+	// 		cardId: '629fe32a513cfd52ed0f2d48',
+	// 	}, 
+	// }); // returns single card
+  const { loading, error, data } = useQuery(
+    QUERY_DECK, { variables: { deckId: params.id}}
+  )
 
 	if (loading) return <div>Loading</div>;
 	if (error) return <div>Error! {`${error.message}`}</div>;
 	console.log('data', data);
-	const card = data.card.cards;
-	console.log('QUERY_CARD:', card);
+	// const card = data.card.cards;
+	console.log('QUERY_CARD:', data.deck.cards);
+  console.log('params:', params);
+  const card = data.deck.cards;
 
 	const setFinishedIndex = (i) => {
 		console.log('finished dragging on slide', i);
@@ -95,11 +96,16 @@ function CardFlipPage() {
 					activeIndex={index}
 					threshHold={100}
 					transition={0.5}
-					// scaleOnDrag={true}
+					scaleOnDrag={true}
         >
 					{card.map((card, index) => (
 						<CardFlip card={card} key={index} />
 					))}
+          {/* {
+            data.deck.cards.map(
+              (card) => <CardFlip card={card} key={card._id} />
+            )
+          } */}
 				</Slider>
 			</AppStyles>
 		</>

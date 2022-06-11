@@ -39,7 +39,7 @@ const typeDefs = gql`
     #category(categoryID: ID, category: String): Category
     categories: [Category]
     decks(deckTitle: String, categories: [ID]): [Deck]
-    #deck(deckId: ID!): Deck
+    deck(deckId: ID!): Deck
     decksTitle(deckTitle: String!): [Deck] 
     decksCategory(categories: [ID]!): [Deck]
     card(deckId: String!, cardId: String!): Deck
