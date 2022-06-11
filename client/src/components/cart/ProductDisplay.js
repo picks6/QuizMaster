@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { loadStripe } from '@stripe/stripe-js';
+import { useQuery, useLazyQuery } from "@apollo/client";
+import { QUERY_CHECKOUT } from "../../utils/queries";
+
+import { idbPromise } from '../../utils/helpers';
+import Auth from "../../utils/auth";
+import { useStoreContext } from "../../utils/GlobalState";
+import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from '../../utils/actions';
 // import "./ProductDisplay.css";
 
-const ProductDisplay = () => (
+const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+
+const ProductDisplay = ({submitCheckout}) => (
   <section>
     <div className="product">
       <img
@@ -13,11 +23,11 @@ const ProductDisplay = () => (
       <h5>$0.00</h5>
       </div>
     </div>
-    <form action="/create-checkout-session" method="POST">
-      <button type="submit">
-        Checkout
-      </button>
-    </form>
+    
+    <button onClick={submitCheckout}>
+      Checkout
+    </button>
+
   </section>
 );
 
@@ -27,27 +37,68 @@ const Message = ({ message }) => (
   </section>
 );
 
-export default function App() {
+const Cart = () => {
   const [message, setMessage] = useState("");
+  const [state, dispatch] = useStoreContext();
+  const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT)
 
   useEffect(() => {
-    // Check to see if this is a redirect back from Checkout
-    const query = new URLSearchParams(window.location.search);
-
-    if (query.get("success")) {
-      setMessage("Order placed! You will receive an email confirmation.");
+    if (data) {
+      console.log(data);
+      stripePromise.then((res) => {
+        res.redirectToCheckout({ sessionId: data.checkout.session });
+      });
+    }
+  }, [data]);
+  useEffect(() => {
+    async function getCart() {
+      const cart = await idbPromise('cart', 'get');
+      dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart] });
     }
 
-    if (query.get("canceled")) {
-      setMessage(
-        "Order canceled -- continue to shop around and checkout when you're ready."
-      );
+    if (!state.cart.length) {
+      getCart();
     }
-  }, []);
+  }, [state.cart.length, dispatch]);
+
+  const toggleCart = () => dispatch({ type: TOGGLE_CART });
+  const calculateTotal = () => {
+    let sum = 0;
+    state.cart.forEach((item) => {
+      sum += item.price * item.purchaseQuantity;
+    });
+    return sum.toFixed(2);
+  };
+
+  const submitCheckout = async () => {
+    const productIds = [];
+
+    state.cart.forEach((item) => {
+      for (let i = 0; i < item.purchaseQuantity; i++) {
+        productIds.push(item._id);
+      }
+    });
+
+    await getCheckout({
+      variables: { products: productIds },
+    });
+    console.log('test:', data);
+  };
+
+  if (!state.cartOpen) {
+    return (
+      <div className="cart-closed" onClick={toggleCart}>
+        <span role="img" aria-label="trash">
+          🛒
+        </span>
+      </div>
+    );
+  };
 
   return message ? (
     <Message message={message} />
   ) : (
-    <ProductDisplay />
+    <ProductDisplay submitCheckout={submitCheckout} />
   );
-}
+};
+export default Cart;
