@@ -58,10 +58,10 @@ function CardFlipPage() {
 
 	if (loading) return <div>Loading</div>;
 	if (error) return <div>Error! {`${error.message}`}</div>;
-	console.log('data', data);
+	// console.log('data', data);
 	// const card = data.card.cards;
-	console.log('QUERY_CARD:', data.deck.cards);
-  console.log('params:', params);
+	// console.log('QUERY_CARD:', data.deck.cards);
+  // console.log('params:', params);
   const card = data.deck.cards;
 
 	const setFinishedIndex = (i) => {
@@ -101,11 +101,6 @@ function CardFlipPage() {
 					{card.map((card, index) => (
 						<CardFlip card={card} key={index} />
 					))}
-          {/* {
-            data.deck.cards.map(
-              (card) => <CardFlip card={card} key={card._id} />
-            )
-          } */}
 				</Slider>
 			</AppStyles>
 		</>

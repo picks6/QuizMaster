@@ -16,6 +16,9 @@ export const QUERY_USER = gql`
         }
         title
         description
+        creator {
+          username
+        }
         date_created
         cards {
           _id
