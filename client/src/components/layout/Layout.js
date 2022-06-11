@@ -9,7 +9,9 @@ function Layout(props) {
     <div>
       <MainNavigation />
       <Banner />
-      <main className={classes.main}>{props.children}</main>
+      <main id="app" className={classes.main}>
+        {props.children}
+      </main>
       <Footer />
     </div>
   );
