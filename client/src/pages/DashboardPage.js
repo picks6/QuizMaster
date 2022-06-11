@@ -69,6 +69,7 @@ const DashboardPage = () => {
             <Grid.Column>
 
               <Header>User: {data.user.username}</Header>
+              <Button>Edit Profile</Button>
             </Grid.Column>
             <Grid.Column>
 

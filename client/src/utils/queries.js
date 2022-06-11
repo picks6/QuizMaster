@@ -7,7 +7,6 @@ export const QUERY_USER = gql`
       _id
       username
       email
-      password
       decks {
         _id
         categories {
