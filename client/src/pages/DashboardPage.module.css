@@ -1,0 +1,8 @@
+.ui.placeholder.segment.container {
+    min-height: 50rem !important;
+    margin-top: 10rem;
+}
+
+.search {
+    margin-top: 20rem;
+}
