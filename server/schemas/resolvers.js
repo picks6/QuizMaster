@@ -29,7 +29,7 @@ const resolvers = {
         { title: { $regex: deckTitle }, $or: categorySelectors }
       ).populate('categories creator');
     },
-    decksTitle: async(parent, {deckTitle}) =>{
+    decksTitle: async(parent, {deckTitle}) => {
       return await Deck.find({ title: { $regex: deckTitle }}).populate('categories creator');
     },
     decksCategory: async(parent, {categories}) =>{ // category: [ID]

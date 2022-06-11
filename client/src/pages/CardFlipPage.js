@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Slider from 'react-touch-drag-slider';
+import { useLocation } from 'react-router-dom';
 import styled, { createGlobalStyle, css } from 'styled-components';
 
 import CardFlip from '../components/quizmaster/CardFlip';
@@ -37,13 +38,17 @@ const Button = styled.button`
 			  `}
 `;
 
-function CardFlipPage({ deckId, cardId }) {
-	// Card ID and Deck ID must be passed.
-	const { data } = useQuery(QUERY_CARD, {
+function CardFlipPage() {
+  const location = useLocation();
+  console.log('location:', location);
+  const deck = location.state;
+
+  const [index, setIndex] = useState(0);
+	const { loading, error, data } = useQuery(QUERY_CARD, {
 		// variables: { deckId, cardId },
 		variables: {
-			deckId: '62a36c836c16eec685783324',
-			cardId: '62a36ca36c16eec68578332a',
+			deckId: '629fe32a513cfd52ed0f2d3f',
+			cardId: '629fe32a513cfd52ed0f2d48',
 		}, // for testing
 	}); // returns single card
 	// Expect data: {
@@ -52,12 +57,11 @@ function CardFlipPage({ deckId, cardId }) {
 	//   }
 	// }
 
-	// if (loading) return <div>Loading</div>;
-	// if (error) return <div>Error! {`${error.message}`}</div>;
+	if (loading) return <div>Loading</div>;
+	if (error) return <div>Error! {`${error.message}`}</div>;
 	console.log('data', data);
 	const card = data.card.cards;
 	console.log('QUERY_CARD:', card);
-	const [index, setIndex] = useState(1);
 
 	const setFinishedIndex = (i) => {
 		console.log('finished dragging on slide', i);
@@ -91,7 +95,8 @@ function CardFlipPage({ deckId, cardId }) {
 					activeIndex={index}
 					threshHold={100}
 					transition={0.5}
-					scaleOnDrag={true}>
+					// scaleOnDrag={true}
+        >
 					{card.map((card, index) => (
 						<CardFlip card={card} key={index} />
 					))}
