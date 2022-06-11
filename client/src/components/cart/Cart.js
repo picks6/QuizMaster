@@ -6,39 +6,39 @@ import { QUERY_CHECKOUT } from "../../utils/queries";
 import { idbPromise } from '../../utils/helpers';
 import Auth from "../../utils/auth";
 import { useStoreContext } from "../../utils/GlobalState";
-import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from '../../utils/actions';
+import { TOGGLE_CART, REMOVE_FROM_CART } from '../../utils/actions';
 // import "./ProductDisplay.css";
 
 const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 
-const ProductDisplay = ({submitCheckout}) => (
-  <section>
-    <div className="product">
-      <img
-        src="https://i.imgur.com/EHyR2nP.png"
-        alt="The cover of Stubborn Attachments"
-      />
-      <div className="description">
-      <h3>Stubborn Attachments</h3>
-      <h5>$0.00</h5>
-      </div>
-    </div>
+// const ProductDisplay = ({submitCheckout}) => (
+//   <section>
+//     <div className="product">
+//       <img
+//         src="https://i.imgur.com/EHyR2nP.png"
+//         alt="The cover of Stubborn Attachments"
+//       />
+//       <div className="description">
+//       <h3>Stubborn Attachments</h3>
+//       <h5>$0.00</h5>
+//       </div>
+//     </div>
     
-    <button onClick={submitCheckout}>
-      Checkout
-    </button>
+//     <button onClick={submitCheckout}>
+//       Checkout
+//     </button>
 
-  </section>
-);
+//   </section>
+// );
 
-const Message = ({ message }) => (
-  <section>
-    <p>{message}</p>
-  </section>
-);
+// const Message = ({ message }) => (
+//   <section>
+//     <p>{message}</p>
+//   </section>
+// );
 
 const Cart = () => {
-  const [message, setMessage] = useState("");
+  // const [message, setMessage] = useState("");
   const [state, dispatch] = useStoreContext();
   const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT)
 
@@ -50,16 +50,16 @@ const Cart = () => {
       });
     }
   }, [data]);
-  useEffect(() => {
-    async function getCart() {
-      const cart = await idbPromise('cart', 'get');
-      dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart] });
-    }
+  // useEffect(() => {
+  //   async function getCart() {
+  //     const cart = await idbPromise('cart', 'get');
+  //     dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart] });
+  //   }
 
-    if (!state.cart.length) {
-      getCart();
-    }
-  }, [state.cart.length, dispatch]);
+  //   if (!state.cart.length) {
+  //     getCart();
+  //   }
+  // }, [state.cart.length, dispatch]);
 
   const toggleCart = () => dispatch({ type: TOGGLE_CART });
   const calculateTotal = () => {
@@ -95,10 +95,29 @@ const Cart = () => {
     );
   };
 
-  return message ? (
-    <Message message={message} />
-  ) : (
-    <ProductDisplay submitCheckout={submitCheckout} />
-  );
+  // return message ? (
+  //   <Message message={message} />
+  // ) : (
+  //   <ProductDisplay submitCheckout={submitCheckout} />
+  // );
+  return (
+    <section>
+      <div className="product">
+        <img
+          src="https://i.imgur.com/EHyR2nP.png"
+          alt="The cover of Stubborn Attachments"
+        />
+        <div className="description">
+        <h3>Stubborn Attachments</h3>
+        <h5>$0.00</h5>
+        </div>
+      </div>
+      
+      <button onClick={submitCheckout}>
+        Checkout
+      </button>
+    
+    </section>
+  )
 };
 export default Cart;
