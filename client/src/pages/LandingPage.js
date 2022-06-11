@@ -34,7 +34,6 @@ const LandingPage = () => {
       setSearch({ ...search, title: value });
     } else {
       console.log('value:', value)
-      const categories = [...search.categories, ...value]
       setSearch({ ...search, categories: [...value] });
     }
   };
@@ -65,7 +64,13 @@ const LandingPage = () => {
       return;
     }
   };
-
+  const LinkButton = ({deck}) => (
+    <Button 
+    as={Link} 
+    to={`/deck/${slugify(deck.title)}/${deck._id}`} 
+    state={deck}
+    />
+  )
   return (
     <>
       <Form onSubmit={handleSubmitSearch}>
@@ -86,18 +91,23 @@ const LandingPage = () => {
       <Card.Group>
         {decks.length ? (
           decks.map((deck) => (
-            <Card 
-              as={Link} 
-              to={`/deck/${slugify(deck.title)}/${deck._id}`} 
-              state={deck} 
-              key={deck._id}
-            >
+            <Card key={deck._id}>
               <Card.Content>{deck.title}</Card.Content>
               <Card.Content>{deck.description}</Card.Content>
               <Card.Content>
                 {deck.categories.map((category) => `${category.category} `)}
               </Card.Content>
-              <Button>if Deck.Price, render Deck.Price</Button>
+              {
+                deck.price ? (
+                  <Button.Group>
+                    <LinkButton deck={deck}></LinkButton>
+                    <Button.Or />
+                    <LinkButton deck={deck}></LinkButton>
+                  </Button.Group>
+                ) : (
+                  <LinkButton deck={deck}>if Deck.Price, render Deck.Price</LinkButton>
+                )
+              }
             </Card>
           ))
         ) : (
