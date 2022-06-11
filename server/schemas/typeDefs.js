@@ -15,6 +15,11 @@ const typeDefs = gql`
   type Checkout {
     session: ID
   }
+  type Order {
+    _id: ID
+    purchaseDate: String
+    products: [Product]
+  }
 
   type Category {
     _id: ID
