@@ -30,12 +30,14 @@ function CreateDeck({ handleChange, handleFormSubmit, formState, children }) {
           value={formState.description} 
         />
       </Form.Field>
-      <Checkbox onChange={() => setPaywall(!paywall)}>Paywall Deck</Checkbox>
-      {
-        paywall ? (
-          <Form.Input placeholder='Price' type='text'/>
-        ): <></>
-      }
+      <Form.Field>
+        <Checkbox onChange={() => setPaywall(!paywall)}>Paywall Deck</Checkbox>
+        {
+          paywall ? (
+            <Form.Input placeholder='Price' type='text'/>
+          ): <></>
+        }
+      </Form.Field>
       <Button type='submit'>Create</Button>
     </Form>
   )
