@@ -7,7 +7,6 @@ export const QUERY_USER = gql`
       _id
       username
       email
-      password
       decks {
         _id
         categories {
@@ -26,6 +25,12 @@ export const QUERY_USER = gql`
           sideB
         }
       }
+    }
+  }`;
+export const QUERY_CHECKOUT = gql`
+  query getCheckout($products: [ID]!) {
+    checkout(products: $products) {
+      session
     }
   }`;
 export const QUERY_DECK = gql`
