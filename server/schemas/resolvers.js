@@ -18,10 +18,9 @@ const resolvers = {
     categories: async () => { // return all categories
       return await Category.find({});
     },
-    // //  NOT USED:
-    // deck: async(parent, {deckId}) => {
-    //   return await Deck.findOne({ _id: deckId });
-    // },
+    deck: async(parent, {deckId}) => {
+      return await Deck.findOne({ _id: deckId });
+    },
     decks: async (parent, {deckTitle, categories}) => { // { deckTitle: String, categories: [ID] }
       // console.log('test:', deckTitle, categories);
       const categorySelectors = categories.map(id => ({ categories: { _id: id } }));
@@ -29,7 +28,7 @@ const resolvers = {
         { title: { $regex: deckTitle }, $or: categorySelectors }
       ).populate('categories creator');
     },
-    decksTitle: async(parent, {deckTitle}) =>{
+    decksTitle: async(parent, {deckTitle}) => {
       return await Deck.find({ title: { $regex: deckTitle }}).populate('categories creator');
     },
     decksCategory: async(parent, {categories}) =>{ // category: [ID]

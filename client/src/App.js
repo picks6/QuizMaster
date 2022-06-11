@@ -24,9 +24,9 @@ function App() {
           <Route path="/dashboard" element={<DashboardPage />}/>
           <Route path="/signup" element={<SignupPage />}/>
           <Route path="/login" element={<LoginPage />}/>
-          <Route path="/deck" element={<DeckPage />}/>
+          <Route path="/deck/:id/edit" element={<DeckPage />}/>
           <Route path="/create-deck" element={<CreateDeckPage />}/>
-          <Route path="/cardflip" element={<CardFlipPage />}/>
+          <Route path="/deck/:title/:id" element={<CardFlipPage />}/>
           <Route path="/category" element={<Category />}/>
 
           {/* <Route path='/user/:userId' element={<User />}/> */}

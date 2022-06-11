@@ -13,6 +13,7 @@ import {
 } from "../utils/queries";
 
 import classes from "./LandingPage.module.css";
+const slugify = require('slugify');
 
 const LandingPage = () => {
   const [decks, setDecks] = useState("");
@@ -79,7 +80,12 @@ const LandingPage = () => {
       <Card.Group>
         {decks.length ? (
           decks.map((deck) => (
-            <Card as={Link} to="/deck" state={deck} key={deck._id}>
+            <Card 
+              as={Link} 
+              to={`/deck/${slugify(deck.title)}/${deck._id}`} 
+              state={deck} 
+              key={deck._id}
+            >
               <Card.Content>{deck.title}</Card.Content>
               <Card.Content>{deck.description}</Card.Content>
               <Card.Content>

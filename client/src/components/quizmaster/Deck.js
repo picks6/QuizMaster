@@ -16,15 +16,19 @@ const Deck = ( { deck } ) => {
   console.log('deck:', deck);
   return (
     <>
-      <Header>{deck.title}</Header>
-      <Header>created by: {deck.creator.username}</Header>
-      <Header>categories: {deck.categories.map((category) => `${category.category} `)}</Header>
+      <Card>
+        <Card.Content>{deck.title}</Card.Content>
+        <Card.Content>created by: {deck.creator.username}</Card.Content>
+        <Card.Content>categories: {deck.categories.map((category) => `${category.category} `)}</Card.Content>
+        <Button>Edit</Button>
+      </Card>
       {
         deck.cards.map(
           (card) => (
             <Card key={card._id}>
               <Card.Content>{card.sideA}</Card.Content>
               <Card.Content>{card.sideB}</Card.Content>
+              <Button>Edit</Button>
             </Card>
           )
           // <CardFlip sideA={el.sideA} sideB={el.sideB} />

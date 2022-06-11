@@ -105,7 +105,7 @@ const DashboardPage = () => {
               {
                 user.decks.map(
                   (deck) => (
-                    <Card as={Link} to="/deck" state={deck} key={deck._id}>
+                    <Card as={Link} to={`/deck/${deck._id}/edit`} state={deck} key={deck._id}>
                       <Card.Content>{deck.title}</Card.Content>
                       <Card.Content>{deck.description}</Card.Content>
                       <Card.Content>
