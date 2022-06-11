@@ -96,7 +96,7 @@ function CardFlipPage() {
 					activeIndex={index}
 					threshHold={100}
 					transition={0.5}
-					scaleOnDrag={true}
+					// scaleOnDrag={true}
         >
 					{card.map((card, index) => (
 						<CardFlip card={card} key={index} />
