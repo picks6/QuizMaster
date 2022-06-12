@@ -4,26 +4,46 @@ import { Link } from 'react-router-dom';
 import { useStoreContext } from '../../utils/GlobalState';
 
 import Cart from '../Cart/Cart';
-
+import { idbPromise } from '../../utils/helpers';
+import Auth from '../../utils/auth';
 import CardWrapper from "../../components/ui/CardWrapper";
 const slugify = require("slugify");
 
 const Landing = ({decks}) => {
   const [state, dispatch] = useStoreContext();
 
-  const LinkButton = ({deck, children}) => (
+  // const handleCheckout = async ({deck}) => {
+  //   console.log('deck:', deck);
+  //   const cart = await idbPromise('cart', 'put', {_id: deck._id});
+  //   console.log('cart:', cart);
+  // }
+  const DeckLink = ({deck, children}) => (
     <Button 
       as={Link} 
       to={`/deck/${slugify(deck.title)}/${deck._id}`} 
       state={deck}
     >{children}</Button>
   );
-
+  const CheckoutLink = (deck) => {
+    const url = Auth.isLoggedIn ? "/checkout" : "/signup";
+    return (
+      <Button 
+        animated
+        as={Link}
+        to={url}
+        state={deck}
+        // onClick={()=>handleCheckout(deck)}
+      >
+        <Button.Content visible>Buy</Button.Content>
+        <Button.Content hidden>Price</Button.Content>
+      </Button>
+    )
+  };
   const PaywallButtons = ({deck}) => (
     <Button.Group>
-      <LinkButton deck={deck}>preview deck</LinkButton>
+      <DeckLink deck={deck}>preview deck</DeckLink>
       <Button.Or />
-      <Cart deck={deck} />
+      <CheckoutLink deck={deck} />
     </Button.Group>
   );
   const DeckPreview = ({deck}) => (
@@ -46,7 +66,7 @@ const Landing = ({decks}) => {
               {
                 !deck.price 
                   ? <PaywallButtons deck={deck} />
-                  : <LinkButton deck={deck}>if Deck.Price, render Deck.Price</LinkButton>
+                  : <DeckLink deck={deck}>if Deck.Price, render Deck.Price</DeckLink>
               }
             </Card>
           ))
