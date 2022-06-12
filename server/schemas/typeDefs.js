@@ -7,6 +7,7 @@ const typeDefs = gql`
     email: String
     password: String
     decks: [Deck]
+    permissions: [ID]
   }
   type Auth {
     token: ID!
