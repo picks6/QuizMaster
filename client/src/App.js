@@ -14,8 +14,13 @@ import LoginPage from "./pages/LoginPage";
 import DeckPage from "./pages/DeckPage";
 import CreateDeckPage from "./pages/CreateDeckPage";
 import CardFlipPage from "./pages/CardFlipPage";
+<<<<<<< HEAD
 import Category from "./components/ui/Category";
 import Cart from "./components/cart/Cart";
+=======
+import Category from './components/ui/Category'
+import Cart from './components/cart/Cart'
+>>>>>>> 135419f375b785ff8a161a403e90c44b4818a568
 
 function App() {
   return (
