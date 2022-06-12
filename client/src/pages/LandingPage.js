@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Card, Form, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
-import { useStoreContext } from "../utils/GlobalState";
+// import { useStoreContext } from "../utils/GlobalState";
 import { ADD_TO_CART } from "../utils/actions";
 import { useLazyQuery, useQuery } from "@apollo/client";
 import {
@@ -19,7 +19,7 @@ import classes from "./LandingPage.module.css";
 // const slugify = require("slugify");
 
 const LandingPage = () => {
-  const [state, dispatch] = useStoreContext();
+  // const [state, dispatch] = useStoreContext();
 
   const [decks, setDecks] = useState("");
   const [queryDecks, {}] = useLazyQuery(QUERY_DECKS);
@@ -65,13 +65,13 @@ const LandingPage = () => {
       return;
     }
   };
-  const LinkButton = ({deck, children}) => (
-    <Button 
-    as={Link} 
-    to={`/deck/${slugify(deck.title)}/${deck._id}`} 
-    state={deck}
-    >{children}</Button>
-  )
+  // const LinkButton = ({deck, children}) => (
+  //   <Button 
+  //   as={Link} 
+  //   to={`/deck/${slugify(deck.title)}/${deck._id}`} 
+  //   state={deck}
+  //   >{children}</Button>
+  // )
   return (
     <>
       <Form size="big" className={classes.form} onSubmit={handleSubmitSearch}>
@@ -93,6 +93,7 @@ const LandingPage = () => {
           Search
         </Button>
       </Form>
+      <Landing decks={decks} />
       {/* <CardWrapper>
         <Card.Group>
           {decks.length ? (
@@ -121,7 +122,6 @@ const LandingPage = () => {
           )}
         </Card.Group>
       </CardWrapper> */}
-      <Landing decks={decks} />
     </>
   );
 };

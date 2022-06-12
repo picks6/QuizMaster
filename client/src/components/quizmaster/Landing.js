@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Card, Form, Button } from "semantic-ui-react";
 import { Link } from 'react-router-dom';
+import { useStoreContext } from '../../utils/GlobalState';
 
 import CardWrapper from "../../components/ui/CardWrapper";
 const slugify = require("slugify");
 
 const Landing = ({decks}) => {
+  const [state, dispatch] = useStoreContext();
+
   const LinkButton = ({deck, children}) => (
     <Button 
       as={Link} 
@@ -15,9 +18,13 @@ const Landing = ({decks}) => {
   );
   const PaywallButtons = ({deck}) => (
     <Button.Group>
-      <LinkButton deck={deck}>view deck</LinkButton>
+      <LinkButton deck={deck}>preview deck</LinkButton>
       <Button.Or />
-      <Button>Price</Button>
+      <Button animated>
+        {/* TODO: CONNECT TO CART TO BE RENDERED AS A MODAL */}
+        <Button.Content visible>Buy</Button.Content>
+        <Button.Content hidden>Price</Button.Content>
+      </Button>
     </Button.Group>
   );
   const DeckPreview = ({deck}) => (
@@ -39,12 +46,8 @@ const Landing = ({decks}) => {
               <DeckPreview deck={deck} />
               {
                 deck.price 
-                ? <PaywallButtons deck={deck} />
-                : (
-                  <LinkButton deck={deck}>
-                    if Deck.Price, render Deck.Price
-                  </LinkButton>
-                )
+                  ? <PaywallButtons deck={deck} />
+                  : <LinkButton deck={deck}>if Deck.Price, render Deck.Price</LinkButton>
               }
             </Card>
           ))
