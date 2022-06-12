@@ -89,3 +89,20 @@ input {
 }
 
 
+.ui.checkbox input.hidden+label {
+  color: aqua;
+  margin-left: 1rem;
+}
+
+.ui.card {
+  color: #0d19a3;
+  font-weight: 700;
+}
+
+.ui.header {
+  color: #0d19a3;
+  font-weight: 700;
+  padding-top: 1rem;
+}
+
+
