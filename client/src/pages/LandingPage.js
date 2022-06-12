@@ -15,8 +15,8 @@ import Landing from "../components/quizmaster/Landing";
 import Category from "../components/ui/Category";
 
 import classes from "./LandingPage.module.css";
-import CardWrapper from "../components/ui/CardWrapper";
-const slugify = require("slugify");
+// import CardWrapper from "../components/ui/CardWrapper";
+// const slugify = require("slugify");
 
 const LandingPage = () => {
   const [state, dispatch] = useStoreContext();
@@ -65,12 +65,12 @@ const LandingPage = () => {
       return;
     }
   };
-  const LinkButton = ({deck, value}) => (
+  const LinkButton = ({deck, children}) => (
     <Button 
     as={Link} 
     to={`/deck/${slugify(deck.title)}/${deck._id}`} 
     state={deck}
-    >{value}</Button>
+    >{children}</Button>
   )
   return (
     <>
@@ -93,7 +93,7 @@ const LandingPage = () => {
           Search
         </Button>
       </Form>
-      <CardWrapper>
+      {/* <CardWrapper>
         <Card.Group>
           {decks.length ? (
             decks.map((deck) => (
@@ -107,12 +107,12 @@ const LandingPage = () => {
                   deck.price 
                   ? (
                     <Button.Group>
-                      <LinkButton deck={deck} value={"view deck"} />
+                      <LinkButton deck={deck}>view deck</LinkButton>
                       <Button.Or />
                       <Button>Price</Button>
                     </Button.Group>
                     ) 
-                  : <LinkButton deck={deck} value={"if Deck.Price, render Deck.Price"} />
+                  : <LinkButton deck={deck}>if Deck.Price, render Deck.Price</LinkButton>
                 }
               </Card>
             ))
@@ -120,7 +120,8 @@ const LandingPage = () => {
             <></>
           )}
         </Card.Group>
-      </CardWrapper>
+      </CardWrapper> */}
+      <Landing decks={decks} />
     </>
   );
 };
