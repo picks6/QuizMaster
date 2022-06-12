@@ -39,10 +39,19 @@ const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 // );
 
 const Cart = ({deck, children}) => {
-  // const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("");
   const [open, setOpen] = React.useState(false);
   const [state, dispatch] = useStoreContext();
-  const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT)
+  const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
+
+  useEffect(() => {
+    const newCart = async () => {
+      console.log('deck:', deck);
+      const cart = await idbPromise('cart', 'put', {_id: deck._id});
+      return cart;
+    };
+    console.log('cart:', newCart);
+  }, []);
 
   useEffect(() => {
     if (data) {
@@ -52,18 +61,33 @@ const Cart = ({deck, children}) => {
       });
     }
   }, [data]);
-  // useEffect(() => {
-  //   async function getCart() {
-  //     const cart = await idbPromise('cart', 'get');
-  //     dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart] });
-  //   }
+  useEffect(() => {
+    // Check to see if this is a redirect back from Checkout
+    const query = new URLSearchParams(window.location.search);
 
-  //   if (!state.cart.length) {
-  //     getCart();
-  //   }
-  // }, [state.cart.length, dispatch]);
+    if (query.get("success")) {
+      setMessage("Order placed! You will receive an email confirmation.");
+    }
+
+    if (query.get("canceled")) {
+      setMessage(
+        "Order canceled -- continue to shop around and checkout when you're ready."
+      );
+    }
+  }, []);
+  useEffect(() => {
+    async function getCart() {
+      const cart = await idbPromise('cart', 'get');
+      // dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart] });
+    }
+
+    if (!state.cart.length) {
+      getCart();
+    }
+  }, [state.cart.length, dispatch]);
 
   const toggleCart = () => dispatch({ type: TOGGLE_CART });
+
   // const calculateTotal = () => {
   //   let sum = 0;
   //   state.cart.forEach((item) => {
@@ -96,57 +120,57 @@ const Cart = ({deck, children}) => {
   //     </div>
   //   );
   // };
-
-  // return message ? (
-  //   <Message message={message} />
-  // ) : (
-  //   <ProductDisplay submitCheckout={submitCheckout} />
-  // );
-
-  return (
-    // <section>
-    //   <div className="product">
-    //     <img
-    //       src="https://i.imgur.com/EHyR2nP.png"
-    //       alt="The cover of Stubborn Attachments"
-    //     />
-    //     <div className="description">
-    //     <h3>Stubborn Attachments</h3>
-    //     <h5>$0.00</h5>
-    //     </div>
-    //   </div>
+  const Message = ({ message }) => (
+    <section>
+      <p>{message}</p>
+    </section>
+  );
+  return message ? (<Message message={message} />) : (
+    <section>
+      <div className="product">
+        <img
+          src="https://i.imgur.com/EHyR2nP.png"
+          alt="The cover of Stubborn Attachments"
+        />
+        <div className="description">
+        <h3>Stubborn Attachments</h3>
+        <h5>$0.00</h5>
+        </div>
+      </div>
       
-      // <button onClick={submitCheckout}>
-      //   Checkout
-      // </button>
+      <button onClick={submitCheckout}>
+        Checkout
+      </button>
     
-    // </section>
-    <Modal 
-      onOpen={()=>setOpen(true)} 
-      onClose={()=>setOpen(false)} 
-      open={open} 
-      trigger={
-        <Button animated>
-          <Button.Content visible>Buy</Button.Content>
-          <Button.Content hidden>Price</Button.Content>
-        </Button>
-      } 
-    >
-      <Modal.Header>Checkout: 🛒</Modal.Header>
-      <Modal.Content>
-        <Modal.Description>
-          <Header>Deck: {deck.title}</Header>
-          <p>By: {deck.creator.username}</p>
-          <p>Categories: {deck.categories.map((category) => `${category.category} `)}</p>
-          {/* <p>Price: {deck.price}</p> */}
-        </Modal.Description>
-      </Modal.Content>
-      <Modal.Actions>
-        <Button onClick={submitCheckout}>
-          Checkout
-        </Button>
-      </Modal.Actions>
-    </Modal>
+    </section>
+    // message ? (<Message message={message} />) : (
+    //   <Modal 
+    //     onOpen={()=>setOpen(true)} 
+    //     onClose={()=>setOpen(false)} 
+    //     open={open} 
+    //     trigger={
+    //       <Button animated>
+    //         <Button.Content visible>Buy</Button.Content>
+    //         <Button.Content hidden>Price</Button.Content>
+    //       </Button>
+    //     } 
+    //   >
+    //     <Modal.Header>Checkout: 🛒</Modal.Header>
+    //     <Modal.Content>
+    //       <Modal.Description>
+    //         <Header>Deck: {deck.title}</Header>
+    //         <p>By: {deck.creator.username}</p>
+    //         <p>Categories: {deck.categories.map((category) => `${category.category} `)}</p>
+    //         {/* <p>Price: {deck.price}</p> */}
+    //       </Modal.Description>
+    //     </Modal.Content>
+    //     <Modal.Actions>
+    //       <Button onClick={submitCheckout}>
+    //         Checkout
+    //       </Button>
+    //     </Modal.Actions>
+    //   </Modal>
+    // )
   )
 };
 export default Cart;
