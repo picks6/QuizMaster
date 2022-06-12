@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
-import { Form, Button, Checkbox } from 'semantic-ui-react';
+import { Form, Button, Checkbox, Label } from 'semantic-ui-react';
 
 function CreateDeck({ handleChange, handleFormSubmit, formState, children }) {
-  const [paywall, setPaywall] = useState(false);
+  const [paywall, setPaywall] = useState(true);
   return (
     <Form onSubmit={handleFormSubmit}>
       <Form.Field>
@@ -31,10 +31,21 @@ function CreateDeck({ handleChange, handleFormSubmit, formState, children }) {
         />
       </Form.Field>
       <Form.Field>
-        <Checkbox onChange={() => setPaywall(!paywall)}>Paywall Deck</Checkbox>
+        <Checkbox 
+          onChange={() => setPaywall(!paywall)} 
+          label="Make Deck Public"
+        />
         {
           paywall ? (
-            <Form.Input placeholder='Price' type='text'/>
+            <>
+              <Label>Set Price</Label>
+              <Form.Input 
+                placeholder='$0.99'
+                name='price' 
+                type='text'
+                onChange={handleChange}
+              />
+            </>
           ): <></>
         }
       </Form.Field>
