@@ -6,16 +6,17 @@ import { useStoreContext } from "../utils/GlobalState";
 import { ADD_TO_CART } from "../utils/actions";
 import { useLazyQuery, useQuery } from "@apollo/client";
 import {
-  QUERY_DECKS, 
-  QUERY_DECKS_CATEGORY, 
-  QUERY_DECKS_TITLE
+  QUERY_DECKS,
+  QUERY_DECKS_CATEGORY,
+  QUERY_DECKS_TITLE,
 } from "../utils/queries";
 
 import Landing from "../components/quizmaster/Landing";
 import Category from "../components/ui/Category";
 
 import classes from "./LandingPage.module.css";
-const slugify = require('slugify');
+import CardWrapper from "../components/ui/CardWrapper";
+const slugify = require("slugify");
 
 const LandingPage = () => {
   const [state, dispatch] = useStoreContext();
@@ -50,7 +51,7 @@ const LandingPage = () => {
     } else if (search.categories.length) {
       const args = search.categories.map(category => category.value);
       // console.log(args);
-      const { data } = await queryCategory({ variables: { categories: args }});
+      const { data } = await queryCategory({ variables: { categories: args } });
       // console.log("QUERY_DECKS_CATEGORY:", data.decksCategory);
       setDecks(data.decksCategory);
       return;
@@ -73,47 +74,53 @@ const LandingPage = () => {
   )
   return (
     <>
-      <Form onSubmit={handleSubmitSearch}>
+      <Form size="big" className={classes.form} onSubmit={handleSubmitSearch}>
         <div className={classes.search__container}>
-          <Category 
-            placeholder={'Select a Category'}
+          <Category
+            placeholder={"Select a Category"}
             handleChange={handleFormChange}
             categoryState={search.categories}
           />
-          <Form.Input 
-            placeholder={'Search Decks...'}
-            onChange={handleFormChange} 
+        </div>
+        <div className={classes.search__container}>
+          <Form.Input
+            placeholder={"Search Decks..."}
+            onChange={handleFormChange}
             value={search.title}
           />
         </div>
-        <Button type="submit">Search</Button>
+        <Button inverted color="teal" type="submit">
+          Search
+        </Button>
       </Form>
-      <Card.Group>
-        {decks.length ? (
-          decks.map((deck) => (
-            <Card key={deck._id}>
-              <Card.Content>{deck.title}</Card.Content>
-              <Card.Content>{deck.description}</Card.Content>
-              <Card.Content>
-                {deck.categories.map((category) => `${category.category} `)}
-              </Card.Content>
-              {
-                deck.price ? (
-                  <Button.Group>
-                    <LinkButton deck={deck}></LinkButton>
-                    <Button.Or />
-                    <LinkButton deck={deck}></LinkButton>
-                  </Button.Group>
-                ) : (
-                  <LinkButton deck={deck}>if Deck.Price, render Deck.Price</LinkButton>
-                )
-              }
-            </Card>
-          ))
-        ) : (
-          <></>
-        )}
-      </Card.Group>
+      <CardWrapper>
+        <Card.Group>
+          {decks.length ? (
+            decks.map((deck) => (
+              <Card color="blue" key={deck._id}>
+                <Card.Content>{deck.title}</Card.Content>
+                <Card.Content>{deck.description}</Card.Content>
+                <Card.Content>
+                  {deck.categories.map((category) => `${category.category} `)}
+                </Card.Content>
+                {
+                  deck.price ? (
+                    <Button.Group>
+                      <LinkButton deck={deck}></LinkButton>
+                      <Button.Or />
+                      <LinkButton deck={deck}></LinkButton>
+                    </Button.Group>
+                  ) : (
+                    <LinkButton deck={deck}>if Deck.Price, render Deck.Price</LinkButton>
+                  )
+                }
+              </Card>
+            ))
+          ) : (
+            <></>
+          )}
+        </Card.Group>
+      </CardWrapper>
     </>
   );
 };
