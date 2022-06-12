@@ -142,6 +142,10 @@ const resolvers = {
 				categories,
 				creator: context.user._id,
 			});
+      // console.log('newDeck:', newDeck);
+      // const updatedUser = 
+      await User.findByIdAndUpdate(context.user._id, {$addToSet: { decks: newDeck._id}});
+      // console.log('user:', updatedUser);
 			return await newDeck.populate('categories creator');
 		},
 		addCard: async (parent, { sideA, sideB, deckId }, context) => {
@@ -156,10 +160,16 @@ const resolvers = {
     },
     // Update User
     updateUser: async (parent, args, context) => {
-      // args: { username: String, email: String, password: String, deck: ID }
-      if (context.user) {
-        return await User.findByIdAndUpdate(context.user._id, args, { new: true });
-      } 
+      // args: { username: String, email: String, password: String, deck: ID, permission: ID }
+      // if (context.user) {
+      //   return await User.findByIdAndUpdate(context.user._id, args, { new: true });
+      // } 
+      if (args.permission) {
+        console.log(context.user.id, args)
+        // return await User.findByIdAndUpdate(
+        //   context.user._id,
+        // )
+      }
       if (args.deckId) { // for backend testing
         return await User.findOneAndUpdate( // add Deck to User
           { username: args.username}, { $addToSet: { decks: args.deckId } }, { new: true }
