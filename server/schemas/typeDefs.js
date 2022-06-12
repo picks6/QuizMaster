@@ -7,10 +7,19 @@ const typeDefs = gql`
     email: String
     password: String
     decks: [Deck]
+    permissions: [ID]
   }
   type Auth {
     token: ID!
     user: User
+  }
+  type Checkout {
+    session: ID
+  }
+  type Order {
+    _id: ID
+    purchaseDate: String
+    products: [ID]
   }
 
   type Category {
@@ -36,6 +45,8 @@ const typeDefs = gql`
 
   type Query {
     user: User
+    order(_id: ID!): Order
+    checkout(products: [ID]!): Checkout
     #category(categoryID: ID, category: String): Category
     categories: [Category]
     decks(deckTitle: String, categories: [ID]): [Deck]
@@ -47,6 +58,7 @@ const typeDefs = gql`
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
+    addOrder(products: [ID]!): Order
     addCategories(categories: [String]!): [Category]
     addDeck(title: String!, categories: [ID]!, description: String): Deck
     addCard(deckId: ID!, sideA: String!, sideB: String!): Deck

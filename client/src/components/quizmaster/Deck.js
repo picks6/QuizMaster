@@ -29,6 +29,7 @@ const Deck = ( { deck } ) => {
               <Card.Content>{card.sideA}</Card.Content>
               <Card.Content>{card.sideB}</Card.Content>
               <Button>Edit</Button>
+              <Button>Delete</Button>
             </Card>
           )
           // <CardFlip sideA={el.sideA} sideB={el.sideB} />

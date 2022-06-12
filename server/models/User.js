@@ -32,6 +32,12 @@ const userSchema = new Schema(
                 ref: 'deck',
             }
         ],
+        permissions: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'deck'
+            }
+        ]
     },
 );
 

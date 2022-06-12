@@ -3,14 +3,15 @@ import React, { useState } from 'react';
 import { Header, Button, Card} from 'semantic-ui-react';
 
 const CreateCardHeader = ({ deck }) => (
-  <>
+  <Card>
     <Header as='h1'>
       {deck.title}
     </Header>
     <Header as='h2'>
       Category: {deck.categories.map(category => category.category)}
     </Header>
-  </>
+    <Button>Edit Deck information</Button>
+  </Card>
 )
 const CreateCard = ({ deck, handleClick, cardState, children }) => (
   <>
