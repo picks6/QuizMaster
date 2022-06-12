@@ -3,7 +3,7 @@ import { Card, Form, Button } from "semantic-ui-react";
 import { Link } from 'react-router-dom';
 import { useStoreContext } from '../../utils/GlobalState';
 
-import Cart from '../Cart/Cart';
+import Cart from '../cart/Cart';
 import { idbPromise } from '../../utils/helpers';
 import Auth from '../../utils/auth';
 import CardWrapper from "../../components/ui/CardWrapper";

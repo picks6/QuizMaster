@@ -15,7 +15,7 @@ import DeckPage from "./pages/DeckPage";
 import CreateDeckPage from "./pages/CreateDeckPage";
 import CardFlipPage from "./pages/CardFlipPage";
 import Category from './components/ui/Category'
-import Cart from './components/Cart/Cart'
+import Cart from './components/cart/Cart'
 
 function App() {
   return (
