@@ -1,7 +1,7 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import { StoreProvider } from './utils/GlobalState';
+import { StoreProvider } from "./utils/GlobalState";
 
 import Layout from "./components/layout/Layout";
 
@@ -14,16 +14,20 @@ import LoginPage from "./pages/LoginPage";
 import DeckPage from "./pages/DeckPage";
 import CreateDeckPage from "./pages/CreateDeckPage";
 import CardFlipPage from "./pages/CardFlipPage";
+
 import Category from './components/ui/Category'
 import Cart from './components/cart/Cart'
 
+import TestDeck from './components/quizmaster/testDeck'
+
+
 function App() {
   return (
-
     <Router>
       <Layout>
         <StoreProvider>
           <Routes>
+
             <Route path="/" element={<LandingPage />}/>
             <Route path="/dashboard" element={<DashboardPage />}/>
             <Route path="/signup" element={<SignupPage />}/>
@@ -33,18 +37,15 @@ function App() {
             <Route path="/deck/:title/:id" element={<CardFlipPage />}/>
             <Route path="/category" element={<Category />}/>
             <Route path="/checkout" element={<Cart />}/>
+            <Route path="/testdeck" element={<TestDeck />}/>
+
 
             {/* <Route path='/user/:userId' element={<User />}/> */}
           </Routes>
         </StoreProvider>
       </Layout>
-     
     </Router>
-
   );
 }
 
 export default App;
-
-
-

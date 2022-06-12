@@ -1,8 +1,32 @@
-.search__container {
-    margin-top: .7rem;
-    margin-bottom: 2rem;
+.checkbox {
+    margin-bottom: 5rem;
+    margin-top: 1rem;
+    padding-right: 2rem;
 }
 
-.checkbox {
-    padding-right: 1rem;
+.label {
+    color:aqua !important;
 }
+
+.label__container {
+    padding-top: 1rem;
+}
+
+.price__container {
+    padding-bottom: 4rem;
+    padding-top: .7rem;
+}
+
+.search__container {
+    margin-top: .7rem;
+    margin-bottom: 5rem;
+}
+
+
+
+  
+ 
+
+
+
+
