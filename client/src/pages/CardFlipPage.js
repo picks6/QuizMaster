@@ -40,9 +40,9 @@ const Button = styled.button`
 `;
 
 function CardFlipPage() {
-  const location = useLocation();
-  console.log("location:", location);
-  const deck = location.state;
+  // const location = useLocation();
+  // console.log("location:", location);
+  // const deck = location.state;
   const params = useParams();
 
   const [index, setIndex] = useState(0);
@@ -69,11 +69,9 @@ function CardFlipPage() {
     console.log("finished dragging on slide", i);
     setIndex(i);
   };
-
   const next = () => {
     if (index < card.length - 1) setIndex(index + 1);
   };
-
   const previous = () => {
     if (index > 0) setIndex(index - 1);
   };

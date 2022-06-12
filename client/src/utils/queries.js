@@ -77,11 +77,6 @@ export const QUERY_DECKS = gql`
         username
       }
       date_created
-      cards {
-        _id
-        sideA
-        sideB
-      }
     }
   }`;
 export const QUERY_DECKS_TITLE = gql`
@@ -98,11 +93,6 @@ export const QUERY_DECKS_TITLE = gql`
         username
       }
       date_created
-      cards {
-        _id
-        sideA
-        sideB
-      }
     }
   }`;
 
@@ -143,10 +133,5 @@ export const QUERY_DECKS_CATEGORY = gql`
         username
       }
       date_created
-      cards {
-        _id
-        sideA
-        sideB
-      }
     }
   }`;
