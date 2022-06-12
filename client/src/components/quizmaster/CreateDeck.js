@@ -1,57 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { Form, Button, Checkbox, Label } from 'semantic-ui-react';
+import { Form, Button, Checkbox, Label } from "semantic-ui-react";
+
+import classes from "./CreateDeck.module.css";
 
 function CreateDeck({ handleChange, handleFormSubmit, formState, children }) {
   const [paywall, setPaywall] = useState(true);
   return (
     <Form onSubmit={handleFormSubmit}>
       <Form.Field>
-        <label>Title</label>
-        <Form.Input 
-          placeholder='Title' 
-          name='title' 
-          type='text'
-          onChange={handleChange} 
-          value={formState.title} 
-        />
+        <div className="ui teal label ui big label">
+          <label>Title</label>
+        </div>
+        <div className={classes.search__container}>
+          <Form.Input
+            placeholder="Title"
+            name="title"
+            type="text"
+            onChange={handleChange}
+            value={formState.title}
+          />
+        </div>
       </Form.Field>
       <Form.Field>
-        <label>Category</label>
-        {children}
+        <div className="ui teal label ui big label">
+          <label>Category</label>
+        </div>
+        <div className={classes.search__container}>{children}</div>
       </Form.Field>
       <Form.Field>
-        <label>Description</label>
-        <Form.Input 
-          placeholder='Description' 
-          name='description' 
-          type='text' 
-          onChange={handleChange} 
-          value={formState.description} 
-        />
+        <div className="ui teal label ui big label">
+          <label>Description</label>
+        </div>
+        <div className={classes.search__container}>
+          <Form.Input
+            placeholder="Description"
+            name="description"
+            type="text"
+            onChange={handleChange}
+            value={formState.description}
+          />
+        </div>
       </Form.Field>
-      <Form.Field>
-        <Checkbox 
-          onChange={() => setPaywall(!paywall)} 
-          label="Make Deck Public"
-        />
-        {
-          paywall ? (
-            <>
-              <Label>Set Price</Label>
-              <Form.Input 
-                placeholder='$0.99'
-                name='price' 
-                type='text'
-                onChange={handleChange}
-              />
-            </>
-          ): <></>
-        }
-      </Form.Field>
-      <Button type='submit'>Create</Button>
+      <span className={classes.checkbox}>
+        <Checkbox label="Make Deck Public" onChange={() => setPaywall(!paywall)} />
+      </span>
+      {
+        paywall ? (
+          <>
+            <Label>Set Price</Label>
+            <Form.Input 
+              placeholder='$0.99'
+              name='price' 
+              type='text'
+              onChange={handleChange}
+            />
+          </>
+        ) : <></>
+      }
+      <Button inverted type="submit" color="teal" size="big">
+        Create
+      </Button>
     </Form>
-  )
+  );
 }
 
 export default CreateDeck;
