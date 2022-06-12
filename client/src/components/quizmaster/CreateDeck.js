@@ -4,6 +4,8 @@ import { Form, Button, Checkbox, Label } from "semantic-ui-react";
 
 import classes from "./CreateDeck.module.css";
 
+import "../../index.css";
+
 function CreateDeck({ handleChange, handleFormSubmit, formState, children }) {
   const [paywall, setPaywall] = useState(true);
   return (
@@ -42,22 +44,29 @@ function CreateDeck({ handleChange, handleFormSubmit, formState, children }) {
           />
         </div>
       </Form.Field>
-      <span className={classes.checkbox}>
-        <Checkbox label="Make Deck Public" onChange={() => setPaywall(!paywall)} />
-      </span>
-      {
-        paywall ? (
-          <>
-            <Label>Set Price</Label>
-            <Form.Input 
-              placeholder='$0.99'
-              name='price' 
-              type='text'
-              onChange={handleChange}
-            />
-          </>
-        ) : <></>
-      }
+      <div className={`${classes.checkbox} ui checkbox`}>
+        <Checkbox
+          id="text"
+          label="Make Deck Public"
+          onChange={() => setPaywall(!paywall)}
+        />
+      </div>
+      {paywall ? (
+        <>
+          <div>
+            <Label className="ui teal label ui big label">Set Price</Label>
+          </div>
+          <Form.Input
+            className={classes.price__container}
+            placeholder="$0.99"
+            name="price"
+            type="text"
+            onChange={handleChange}
+          />
+        </>
+      ) : (
+        <></>
+      )}
       <Button inverted type="submit" color="teal" size="big">
         Create
       </Button>
