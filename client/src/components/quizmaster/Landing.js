@@ -3,6 +3,8 @@ import { Card, Form, Button } from "semantic-ui-react";
 import { Link } from 'react-router-dom';
 import { useStoreContext } from '../../utils/GlobalState';
 
+import Cart from '../Cart/Cart';
+
 import CardWrapper from "../../components/ui/CardWrapper";
 const slugify = require("slugify");
 
@@ -16,15 +18,12 @@ const Landing = ({decks}) => {
       state={deck}
     >{children}</Button>
   );
+
   const PaywallButtons = ({deck}) => (
     <Button.Group>
       <LinkButton deck={deck}>preview deck</LinkButton>
       <Button.Or />
-      <Button animated>
-        {/* TODO: CONNECT TO CART TO BE RENDERED AS A MODAL */}
-        <Button.Content visible>Buy</Button.Content>
-        <Button.Content hidden>Price</Button.Content>
-      </Button>
+      <Cart deck={deck} />
     </Button.Group>
   );
   const DeckPreview = ({deck}) => (
@@ -45,7 +44,7 @@ const Landing = ({decks}) => {
             <Card color="blue" key={deck._id}>
               <DeckPreview deck={deck} />
               {
-                deck.price 
+                !deck.price 
                   ? <PaywallButtons deck={deck} />
                   : <LinkButton deck={deck}>if Deck.Price, render Deck.Price</LinkButton>
               }
