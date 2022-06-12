@@ -16,6 +16,7 @@ import CreateDeckPage from "./pages/CreateDeckPage";
 import CardFlipPage from "./pages/CardFlipPage";
 import Category from './components/ui/Category'
 import Cart from './components/cart/Cart'
+import TestDeck from './components/quizmaster/testDeck'
 
 function App() {
   return (
@@ -33,6 +34,8 @@ function App() {
             <Route path="/deck/:title/:id" element={<CardFlipPage />}/>
             <Route path="/category" element={<Category />}/>
             <Route path="/checkout" element={<Cart />}/>
+            <Route path="/testdeck" element={<TestDeck />}/>
+            
 
             {/* <Route path='/user/:userId' element={<User />}/> */}
           </Routes>
