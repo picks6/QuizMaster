@@ -65,12 +65,12 @@ const LandingPage = () => {
       return;
     }
   };
-  const LinkButton = ({deck}) => (
+  const LinkButton = ({deck, value}) => (
     <Button 
     as={Link} 
     to={`/deck/${slugify(deck.title)}/${deck._id}`} 
     state={deck}
-    />
+    >{value}</Button>
   )
   return (
     <>
@@ -104,15 +104,15 @@ const LandingPage = () => {
                   {deck.categories.map((category) => `${category.category} `)}
                 </Card.Content>
                 {
-                  deck.price ? (
+                  deck.price 
+                  ? (
                     <Button.Group>
-                      <LinkButton deck={deck}></LinkButton>
+                      <LinkButton deck={deck} value={"view deck"} />
                       <Button.Or />
-                      <LinkButton deck={deck}></LinkButton>
+                      <Button>Price</Button>
                     </Button.Group>
-                  ) : (
-                    <LinkButton deck={deck}>if Deck.Price, render Deck.Price</LinkButton>
-                  )
+                    ) 
+                  : <LinkButton deck={deck} value={"if Deck.Price, render Deck.Price"} />
                 }
               </Card>
             ))
