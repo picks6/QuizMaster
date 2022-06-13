@@ -75,23 +75,30 @@ export const EditCard = ({ state, card, handleChange, handleSubmit }) => {
     </Action>
   )
 }
-export const Delete = ({ header, action, stateId }) => {
-  const [removeCard, {}] = useMutation(REMOVE_CARD);
-  const [removeDeck, {}] = useMutation(REMOVE_DECK);
+export const Delete = ({ header, action, stateId, handleDelete }) => {
   const [confirmDelete, setConfirmDelete] = useState(false);
 
-  const handleConfirm = async (action, stateId) => {
-    try {
-      if (action === 'REMOVE_DECK') {
-
-      };
-      if (action === 'REMOVE_CARD') {
-        
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // const handleDelete = async (action, stateId) => {
+  //   console.log(action, stateId);
+  //   try {
+  //     if (action === 'REMOVE_DECK') {
+  //       const { data } = await removeDeck(
+  //         {variables: { deckId: stateId}}
+  //       );
+  //       console.log('removeDeck:', data);
+  //       setConfirmDelete(false);
+  //     };
+  //     if (action === 'REMOVE_CARD') {
+  //       const { data } = await removeCard(
+  //         {variables: { cardId: stateId}}
+  //       );
+  //       console.log('removeCard:', data);
+  //       setConfirmDelete(false);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   return (
     <Action 
       state={confirmDelete} 
@@ -99,7 +106,13 @@ export const Delete = ({ header, action, stateId }) => {
       icon={'trash alternate'} 
       header={header}
     >
-      <Button onClick={handleConfirm}>Delete</Button>
+      <Button 
+        onClick={ async () => {
+          console.log('test');
+          await handleDelete(action, stateId);
+          setConfirmDelete(false);
+        }}
+      >Delete</Button>
       <Button onClick={() => setConfirmDelete(false)}>Cancel</Button>
     </Action>
 

@@ -232,13 +232,19 @@ const resolvers = {
     },
     removeDeck: async (parent, args, context) => {
       if (context.user) {
-        return Deck.findOneAndDelete({ creator: context.user._id });
+        return Deck.findOneAndDelete(
+          { _id: args.deckId }
+        );
       }
       throw new AuthenticationError('You need to be logged in!');
     },
     removeCard: async (parent, args, context) => {
       if (context.user) {
-        return Card.findOneAndDelete({ creator: context.user._id });
+        const deleted = await Deck.findOneAndDelete(
+          { "cards._id": args.cardId }
+        );
+        console.log(deleted);
+        return deleted;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
