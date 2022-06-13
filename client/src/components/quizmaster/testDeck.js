@@ -107,7 +107,7 @@ function TestDeck() {
   return (
     <div className="Deck">
       <header className="Deck-header">
-        <Button onClick={onAddDeck}>Add a new Deck</Button>
+        {/* <Button onClick={onAddDeck}>Add a new Deck</Button> */}
         <Table columns={columns} dataSource={dataSource}></Table>
         <Modal
           title="Edit Deck"

@@ -9,7 +9,7 @@ import { idbPromise } from '../../utils/helpers';
 import Auth from "../../utils/auth";
 import { useLocation } from "react-router-dom";
 import { useStoreContext } from "../../utils/GlobalState";
-import { TOGGLE_CART, REMOVE_FROM_CART } from '../../utils/actions';
+import { SET_PERMISSIONS } from '../../utils/actions';
 // import "./ProductDisplay.css";
 
 const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
