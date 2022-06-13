@@ -3,12 +3,12 @@ import { Header, Button, Card } from "semantic-ui-react";
 
 import { EditDeck, EditCard, Delete } from "./Actions";
 
-export const CreateCardHeader = ({ deck, handleChange, handleSubmit, handleCancel }) => (
+export const CreateCardHeader = ({ deck, state, handleChange, handleSubmit, handleCancel }) => (
   <Card>
     <Card.Content>
       <Header as="h1">{deck.title}</Header>
       <EditDeck
-        state={deck}
+        state={state}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
         handleCancel={handleCancel}
