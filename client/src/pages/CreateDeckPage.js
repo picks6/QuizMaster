@@ -7,7 +7,14 @@ import CardForm from "../components/quizmaster/CardForm";
 
 import { useMutation, useLazyQuery } from "@apollo/client";
 import { QUERY_DECK } from "../utils/queries";
-import { ADD_CATEGORIES, ADD_DECK, ADD_CARD, UPDATE_DECK, UPDATE_CARD } from "../utils/mutations";
+import { 
+  ADD_CATEGORIES, 
+  ADD_DECK, 
+  ADD_CARD, 
+  UPDATE_DECK, 
+  UPDATE_CARD,
+  REMOVE_DECK,
+  REMOVE_CARD } from "../utils/mutations";
 import { Grid, Segment } from "semantic-ui-react";
 import "../index.css";
 
@@ -22,6 +29,8 @@ function CreateDeckPage() {
   const [deck, setDeck] = useState(false);
   const [addDeck, {}] = useMutation(ADD_DECK);
   const [updateDeck, {}] = useMutation(UPDATE_DECK);
+  const [removeCard, {}] = useMutation(REMOVE_CARD);
+  const [removeDeck, {}] = useMutation(REMOVE_DECK);
 
   useEffect(() => {
     const getDeck = async () => {
@@ -166,6 +175,28 @@ function CreateDeckPage() {
     return;
   };
 
+  const handleDelete = async (action, stateId) => {
+    console.log(action, stateId);
+    try {
+      if (action === 'REMOVE_DECK') {
+        const { data } = await removeDeck(
+          {variables: { deckId: stateId}}
+        );
+        console.log('removeDeck:', data);
+        return;
+      };
+      if (action === 'REMOVE_CARD') {
+        const { data } = await removeCard(
+          {variables: { cardId: stateId}}
+        );
+        console.log('removeCard:', data);
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (!deck) {
     return (
       <Grid columns={3} textAlign="center">
@@ -196,6 +227,7 @@ function CreateDeckPage() {
               state={deckFormState}
               handleChange={handleDeckFormChange} 
               handleSubmit={handleDeckFormSubmit}
+              handleDelete={handleDelete}
             />
             <CreateCard
               deck={deck}
@@ -203,6 +235,7 @@ function CreateDeckPage() {
               handleSubmit={handleCardFormSubmit}
               handleClick={handleClick}
               cardState={cardState}
+              handleDelete={handleDelete}
             >
               <CardForm
                 handleChange={handleCardFormChange}

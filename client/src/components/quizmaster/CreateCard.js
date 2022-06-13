@@ -3,7 +3,7 @@ import { Header, Button, Card } from "semantic-ui-react";
 
 import { EditDeck, EditCard, Delete } from "./Actions";
 
-export const CreateCardHeader = ({ deck, state, handleChange, handleSubmit, handleCancel }) => (
+export const CreateCardHeader = ({ deck, state, handleChange, handleSubmit, handleCancel, handleDelete }) => (
   <Card>
     <Card.Content>
       <Card.Header>
@@ -18,6 +18,7 @@ export const CreateCardHeader = ({ deck, state, handleChange, handleSubmit, hand
           action={'REMOVE_DECK'}
           stateId={deck._id}
           header={'Are you sure you want to delete this Deck?'}
+          handleDelete={handleDelete}
         />
       </Card.Header>
       <Header as="h2">
@@ -29,7 +30,7 @@ export const CreateCardHeader = ({ deck, state, handleChange, handleSubmit, hand
     </Card.Content>
   </Card>
 );
-export const CreateCard = ({ deck, handleChange, handleSubmit, handleClick, cardState, children }) => (
+export const CreateCard = ({ deck, handleChange, handleSubmit, handleClick, handleDelete, cardState, children }) => (
   <>
     <Card.Group>
       {deck.cards.length ? (
@@ -46,6 +47,7 @@ export const CreateCard = ({ deck, handleChange, handleSubmit, handleClick, card
                 action={'REMOVE_CARD'}
                 stateId={card._id}
                 header={'Delete this card?'}
+                handleDelete={handleDelete}
               />
             </Card.Content>
             <Card.Content>
