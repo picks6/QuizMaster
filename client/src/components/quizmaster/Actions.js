@@ -31,7 +31,7 @@ export const EditDeck = ({ state, handleChange, handleSubmit, handleCancel}) => 
       <CreateDeck 
         handleChange={handleChange}
         handleSubmit={handleSubmit}
-        handleCancel={handleCancel}
+        handleCancel={() => setEditingDeck(false)}
         state={state}
         // styles={styles}
       >
@@ -58,7 +58,7 @@ export const EditCard = ({ state, handleChange, handleSubmit, handleCancel }) =>
         state={state}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
-        handleCancel={handleCancel}
+        handleCancel={() => setEditingCard(false)}
       />
     </Action>
   )
@@ -73,7 +73,7 @@ export const Delete = ({ handleConfirm, handleCancel, header }) => {
       header={header}
     >
       <Button onClick={handleConfirm}>Delete</Button>
-      <Button onClick={handleCancel}>Cancel</Button>
+      <Button onClick={() => setConfirmDelete(false)}>Cancel</Button>
     </Action>
 
   )

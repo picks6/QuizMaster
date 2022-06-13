@@ -4,7 +4,7 @@ import DeckForm from "./DeckForm";
 import classes from "./CreateDeck.module.css";
 import "../../index.css";
 
-export const CreateDeck = ({ state, handleChange, handleSubmit, children }) => {
+export const CreateDeck = ({ state, handleChange, handleSubmit, handleCancel, children }) => {
   const styles = {
     label: "ui teal label ui big label",
     search__container: classes.search__container,
@@ -15,6 +15,7 @@ export const CreateDeck = ({ state, handleChange, handleSubmit, children }) => {
     <DeckForm 
       handleChange={handleChange}
       handleSubmit={handleSubmit}
+      handleCancel={handleCancel}
       state={state}
       children={children}
       styles={styles}
