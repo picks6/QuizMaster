@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 import Category from "../components/ui/Category";
-import CreateDeck from "../components/quizmaster/CreateDeck";
-import CreateCard from "../components/quizmaster/CreateCard";
+import { CreateDeck } from "../components/quizmaster/CreateDeck";
+import { CreateCard, CreateCardHeader } from "../components/quizmaster/CreateCard";
 import CardForm from "../components/quizmaster/CardForm";
 
 import { useMutation } from "@apollo/client";
@@ -18,19 +18,20 @@ function CreateDeckPage() {
     title: "",
     categories: [],
     description: "",
+    price: null
   });
+  const [cardFormState, setCardFormState] = useState({ sideA: "", sideB: "" });
+  
   const [deck, setDeck] = useState("");
   const [addDeck, {}] = useMutation(ADD_DECK);
 
   const [cardState, setCardState] = useState({ editing: false });
   const [addCard, {}] = useMutation(ADD_CARD);
 
-  const [cardFormState, setCardFormState] = useState({ sideA: "", sideB: "" });
-
   const handleDeckFormChange = (event, valueArr) => {
     if (event) {
       const { name, value } = event.target;
-      console.log("event:", { name, value });
+      // console.log("event:", { name, value });
       setDeckFormState({ ...deckFormState, [name]: value });
     } else {
       console.log("state:", { ...deckFormState, categories: [...valueArr] });
@@ -41,29 +42,27 @@ function CreateDeckPage() {
   };
   const handleDeckFormSubmit = async (event) => {
     event.preventDefault();
-    console.log("test:", {
-      title: deckFormState.title,
-      categories: [...deckFormState.categories],
-      description: deckFormState.description,
-    });
+    // console.log("test:", {
+    //   title: deckFormState.title,
+    //   categories: [...deckFormState.categories],
+    //   description: deckFormState.description,
+    // });
     let categories;
     try {
       const newCategories = deckFormState.categories.filter(
         (category) => category.__isNew__ === true
       );
-      console.log("newCategories:", newCategories);
+      // console.log("newCategories:", newCategories);
 
       if (newCategories.length) {
         const args = newCategories.map((category) => category.value);
         // console.log('variables:', args);
 
-        const { data } = await addCategories({
-          variables: { categories: args },
-        });
+        const { data } = await addCategories({ variables: { categories: args }});
         // console.log('test:', data);
 
         const addedCategories = data.addCategories;
-        console.log("addedCategories:", addedCategories);
+        // console.log("addedCategories:", addedCategories);
 
         categories = deckFormState.categories.map((category) => {
           const index = addedCategories.findIndex((element) => {
@@ -73,10 +72,10 @@ function CreateDeckPage() {
           // console.log(index);
           return index === -1 ? category.value : addedCategories[index]._id;
         });
-        console.log("categories:", categories);
+        // console.log("categories:", categories);
       } else {
         categories = deckFormState.categories.map((category) => category.value);
-        console.log("categories:", categories);
+        // console.log("categories:", categories);
       }
       const { data } = await addDeck({
         variables: {
@@ -86,7 +85,7 @@ function CreateDeckPage() {
         },
       });
       const newDeck = data.addDeck;
-      console.log("ADD_DECK:", newDeck);
+      // console.log("ADD_DECK:", newDeck);
       setDeck(data.addDeck);
     } catch (error) {
       console.log(error);
@@ -131,8 +130,8 @@ function CreateDeckPage() {
           <Grid.Column>
             <CreateDeck
               handleChange={handleDeckFormChange}
-              handleFormSubmit={handleDeckFormSubmit}
-              formState={deckFormState}
+              handleSubmit={handleDeckFormSubmit}
+              state={deckFormState}
             >
               <Category
                 placeholder={"Add a Category"}
@@ -149,6 +148,7 @@ function CreateDeckPage() {
       <Grid columns={3} textAlign="center">
         <Grid.Row verticalAlign="middle">
           <Grid.Column>
+            <CreateCardHeader deck={deck} />
             <CreateCard
               deck={deck}
               handleClick={handleClick}
