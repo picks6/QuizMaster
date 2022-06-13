@@ -18,7 +18,7 @@ import Auth from "../utils/auth";
 import TestDeck from "../components/quizmaster/testDeck";
 import { useLazyQuery, useQuery } from "@apollo/client";
 import { QUERY_USER } from "../utils/queries";
-import DashboardWrapper from "../components/ui/DashboardWrapper";
+import "../index.css";
 import "./DashboardPage.module.css";
 import classes from "./DashboardPage.module.css";
 import { SET_PERMISSIONS } from "../utils/actions";
@@ -31,11 +31,14 @@ const DashboardPage = () => {
   useEffect(() => {
     const setPermissions = async () => {
       if (data) {
-        await dispatch({ type: SET_PERMISSIONS, permissions: data.user.permissions });
-      };
+        await dispatch({
+          type: SET_PERMISSIONS,
+          permissions: data.user.permissions,
+        });
+      }
     };
     setPermissions();
-  }, [data])
+  }, [data]);
   // const [decks, setDecks] = useState("");
   // const [search, setSearch] = useState("");
   // const [categories, setCategories] = useState("");
