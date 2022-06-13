@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Modal, Icon, Button } from 'semantic-ui-react';
 
 import { DeckForm } from "./DeckForm";
+import { REMOVE_DECK, REMOVE_CARD } from "../../utils/mutations";
+import { useMutation } from "@apollo/client";
 import Category from "../ui/Category";
 import CardForm from "./CardForm";
 
@@ -19,7 +21,7 @@ const Action = ({ state, setState, icon, header, children }) => (
   </Modal>
 );
 
-export const EditDeck = ({ state, handleChange, handleSubmit, handleCancel}) => {
+export const EditDeck = ({ state, handleChange, handleSubmit}) => {
   const [editingDeck, setEditingDeck] = useState(false);
   return (
     <Action 
@@ -30,7 +32,12 @@ export const EditDeck = ({ state, handleChange, handleSubmit, handleCancel}) => 
     >
       <DeckForm 
         handleChange={handleChange}
-        handleSubmit={handleSubmit}
+        handleSubmit={
+          async (event) => {
+            await handleSubmit(event, 'UPDATE_DECK');
+            setEditingDeck(false);
+          }
+        }
         handleCancel={() => setEditingDeck(false)}
         state={state}
         // styles={styles}
@@ -45,7 +52,7 @@ export const EditDeck = ({ state, handleChange, handleSubmit, handleCancel}) => 
   )
 };
 
-export const EditCard = ({ state, handleChange, handleSubmit, handleCancel }) => {
+export const EditCard = ({ state, card, handleChange, handleSubmit }) => {
   const [editingCard, setEditingCard] = useState(false);
   return (
     <Action 
@@ -57,14 +64,34 @@ export const EditCard = ({ state, handleChange, handleSubmit, handleCancel }) =>
       <CardForm 
         state={state}
         handleChange={handleChange}
-        handleSubmit={handleSubmit}
+        handleSubmit={
+          async (event) => {
+            await handleSubmit(event, 'UPDATE_CARD', card._id);
+            setEditingCard(false);
+          }
+        }
         handleCancel={() => setEditingCard(false)}
       />
     </Action>
   )
 }
-export const Delete = ({ handleConfirm, handleCancel, header }) => {
+export const Delete = ({ header, action, stateId }) => {
+  const [removeCard, {}] = useMutation(REMOVE_CARD);
+  const [removeDeck, {}] = useMutation(REMOVE_DECK);
   const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const handleConfirm = async (action, stateId) => {
+    try {
+      if (action === 'REMOVE_DECK') {
+
+      };
+      if (action === 'REMOVE_CARD') {
+        
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <Action 
       state={confirmDelete} 

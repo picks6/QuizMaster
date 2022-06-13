@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Category from "../components/ui/Category";
-import { CreateDeck } from "../components/quizmaster/CreateDeck";
+import { DeckForm } from "../components/quizmaster/DeckForm";
 import { CreateCard, CreateCardHeader } from "../components/quizmaster/CreateCard";
 import CardForm from "../components/quizmaster/CardForm";
 
@@ -91,6 +91,7 @@ function CreateDeckPage() {
         categories = deckFormState.categories.map((category) => category.value);
         // console.log("categories:", categories);
       }
+
       if (!params) {
         const { data } = await addDeck({
           variables: {
@@ -154,7 +155,7 @@ function CreateDeckPage() {
       <Grid columns={3} textAlign="center">
         <Grid.Row verticalAlign="middle">
           <Grid.Column>
-            <CreateDeck
+            <DeckForm
               handleChange={handleDeckFormChange}
               handleSubmit={handleDeckFormSubmit}
               state={deckFormState}
@@ -164,7 +165,7 @@ function CreateDeckPage() {
                 handleChange={handleDeckFormChange}
                 categoryState={deckFormState.categories}
               />
-            </CreateDeck>
+            </DeckForm>
           </Grid.Column>
         </Grid.Row>
       </Grid>
