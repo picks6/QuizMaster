@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Icon } from 'semantic-ui-react';
+import { Modal, Icon, Button } from 'semantic-ui-react';
 
 export const Action = ({ state, setState, name, header, children }) => (
   <Modal 
@@ -14,3 +14,10 @@ export const Action = ({ state, setState, name, header, children }) => (
     </Modal.Content>
   </Modal>
 );
+
+export const ConfirmDelete = ({ handleConfirm, handleCancel }) => (
+  <>
+    <Button onClick={handleConfirm}>Confirm</Button>
+    <Button onClick={handleCancel}>Cancel</Button>
+  </>
+)

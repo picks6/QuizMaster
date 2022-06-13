@@ -115,8 +115,8 @@ function DeckPage() { // expect deckId to be passed as a prop
   return (
     <section>
       <Deck 
-        handleChange={handleDeckFormChange}
-        handleSubmit={handleDeckFormSubmit}
+        handleDeckFormChange={handleDeckFormChange}
+        handleDeckFormSubmit={handleDeckFormSubmit}
         deck={deck} 
       />
     </section>

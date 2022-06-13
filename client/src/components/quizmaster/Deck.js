@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { Card, Button, Header, Form, Modal, Icon } from 'semantic-ui-react';
 // import CardFlip from '../quizmaster/CardFlip';
 
-import { Action } from './Action';
+import { Action, ConfirmDelete } from './Actions';
 import { CreateDeck } from './CreateDeck';
 import DeckForm from './DeckForm';
 import Category from '../ui/Category';
@@ -10,7 +10,7 @@ import Category from '../ui/Category';
 // import { useQuery } from '@apollo/client';
 // import { GET_DECKS, QUERY_DECK } from '../../utils/queries';
 
-const Deck = ( { deck, handleChange, handleSubmit } ) => {
+const Deck = ( { deck, handleDeckFormChange, handleDeckFormSubmit } ) => {
   // const { loading, error, data } = useQuery(GET_DECKS);
   // console.log('GET_DECKS:', data);
   // const cards = data.cards
@@ -35,14 +35,14 @@ const Deck = ( { deck, handleChange, handleSubmit } ) => {
             header={'Edit Deck Information:'}
           >
             <CreateDeck 
-              handleChange={handleChange}
-              handleSubmit={handleSubmit}
+              handleChange={handleDeckFormChange}
+              handleSubmit={handleDeckFormSubmit}
               state={deck}
               // styles={styles}
             >
               <Category
                 placeholder={"Add a Category"}
-                handleChange={handleChange}
+                handleChange={handleDeckFormChange}
                 categoryState={deck.categories}
               />
             </CreateDeck>
