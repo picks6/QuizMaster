@@ -134,9 +134,6 @@ const DashboardPage = () => {
             ))}
           </Card.Group>
         </Grid.Row>
-        <Grid.Row>
-          <TestDeck />
-        </Grid.Row>
       </Grid>
     </Segment>
   );
