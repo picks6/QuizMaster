@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-
 import { Header, Button, Card } from "semantic-ui-react";
 
-const CreateCardHeader = ({ deck }) => (
+import { Action } from "./Action";
+
+export const CreateCardHeader = ({ deck }) => (
   <Card>
     <Header as="h1">{deck.title}</Header>
     <Header as="h2">
@@ -11,9 +12,8 @@ const CreateCardHeader = ({ deck }) => (
     <Button>Edit Deck information</Button>
   </Card>
 );
-const CreateCard = ({ deck, handleClick, cardState, children }) => (
+export const CreateCard = ({ deck, handleClick, cardState, children }) => (
   <>
-    <CreateCardHeader deck={deck} />
     <Card.Group>
       {deck.cards.length ? (
         deck.cards.map((card) => (
@@ -42,4 +42,3 @@ const CreateCard = ({ deck, handleClick, cardState, children }) => (
     </Card.Group>
   </>
 );
-export default CreateCard;
