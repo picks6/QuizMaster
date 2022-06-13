@@ -74,7 +74,6 @@ export const QUERY_DECKS = gql`
       }
       description
       creator {
-        _id
         username
       }
       date_created
