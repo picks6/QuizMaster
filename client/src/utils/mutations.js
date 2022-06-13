@@ -111,7 +111,9 @@ export const UPDATE_DECK = gql`
       }
       description
       price
-      creator
+      creator {
+        username
+      }
       date_created
       cards {
         sideA
