@@ -65,13 +65,15 @@ const Landing = ({ decks }) => {
           decks.map((deck) => (
             <Card color="blue" key={deck._id}>
               <DeckPreview deck={deck} />
-              {!deck.price ? (
-                <PaywallButtons deck={deck} />
-              ) : (
-                <DeckLink deck={deck}>
-                  if Deck.Price, render Deck.Price
-                </DeckLink>
-              )}
+              {
+                !deck.price && !state.permissions.includes(deck._id) ? (
+                  <PaywallButtons deck={deck} />
+                ) : (
+                  <DeckLink deck={deck}>
+                    View Deck
+                  </DeckLink>
+                )
+              }
             </Card>
           ))
         ) : (

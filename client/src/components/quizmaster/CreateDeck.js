@@ -1,77 +1,23 @@
 import React, { useState } from "react";
-
-import { Form, Button, Checkbox, Label } from "semantic-ui-react";
+import DeckForm from "./DeckForm";
 
 import classes from "./CreateDeck.module.css";
-
 import "../../index.css";
 
-function CreateDeck({ handleChange, handleFormSubmit, formState, children }) {
-  const [paywall, setPaywall] = useState(true);
+export const CreateDeck = ({ state, handleChange, handleSubmit, children }) => {
+  const styles = {
+    label: "ui teal label ui big label",
+    search__container: classes.search__container,
+    checkbox: `${classes.checkbox} ui checkbox`,
+    price: classes.price__container
+  }
   return (
-    <Form onSubmit={handleFormSubmit}>
-      <Form.Field>
-        <div className="ui teal label ui big label">
-          <label>Title</label>
-        </div>
-        <div className={classes.search__container}>
-          <Form.Input
-            placeholder="Title"
-            name="title"
-            type="text"
-            onChange={handleChange}
-            value={formState.title}
-          />
-        </div>
-      </Form.Field>
-      <Form.Field>
-        <div className="ui teal label ui big label">
-          <label>Category</label>
-        </div>
-        <div className={classes.search__container}>{children}</div>
-      </Form.Field>
-      <Form.Field>
-        <div className="ui teal label ui big label">
-          <label>Description</label>
-        </div>
-        <div className={classes.search__container}>
-          <Form.Input
-            placeholder="Description"
-            name="description"
-            type="text"
-            onChange={handleChange}
-            value={formState.description}
-          />
-        </div>
-      </Form.Field>
-      <div className={`${classes.checkbox} ui checkbox`}>
-        <Checkbox
-          id="text"
-          label="Make Deck Public"
-          onChange={() => setPaywall(!paywall)}
-        />
-      </div>
-      {paywall ? (
-        <>
-          <div>
-            <Label className="ui teal label ui big label">Set Price</Label>
-          </div>
-          <Form.Input
-            className={classes.price__container}
-            placeholder="$0.99"
-            name="price"
-            type="text"
-            onChange={handleChange}
-          />
-        </>
-      ) : (
-        <></>
-      )}
-      <Button inverted type="submit" color="teal" size="big">
-        Create
-      </Button>
-    </Form>
+    <DeckForm 
+      handleChange={handleChange}
+      handleSubmit={handleSubmit}
+      state={state}
+      children={children}
+      styles={styles}
+    />
   );
-}
-
-export default CreateDeck;
+};

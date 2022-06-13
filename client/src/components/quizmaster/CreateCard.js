@@ -1,25 +1,50 @@
 import React, { useState } from "react";
-
 import { Header, Button, Card } from "semantic-ui-react";
 
-const CreateCardHeader = ({ deck }) => (
+import { EditDeck, EditCard, Delete } from "./Actions";
+
+export const CreateCardHeader = ({ deck, handleChange, handleSubmit, handleCancel }) => (
   <Card>
-    <Header as="h1">{deck.title}</Header>
-    <Header as="h2">
-      Category: {deck.categories.map((category) => category.category)}
-    </Header>
-    <Button>Edit Deck information</Button>
+    <Card.Content>
+      <EditDeck
+        state={deck}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        handleCancel={handleCancel}
+      />
+      <Delete 
+        header={'Are you sure you want to delete this Deck?'}
+      />
+    </Card.Content>
+    <Card.Content>
+      <Header as="h1">{deck.title}</Header>
+      <Header as="h2">
+        Category: {deck.categories.map((category) => category.category)}
+      </Header>
+    </Card.Content>
   </Card>
 );
-const CreateCard = ({ deck, handleClick, cardState, children }) => (
+export const CreateCard = ({ deck, handleChange, handleSubmit, handleClick, handleCancel, cardState, children }) => (
   <>
-    <CreateCardHeader deck={deck} />
     <Card.Group>
       {deck.cards.length ? (
         deck.cards.map((card) => (
           <Card id={card._id}>
-            <Card.Content>{card.sideA}</Card.Content>
-            <Card.Content>{card.sideB}</Card.Content>
+            <Card.Content>
+              <EditCard 
+                state={deck}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+                handleCancel={handleCancel}
+              />
+              <Delete 
+                header={'Delete this card?'}
+              />
+            </Card.Content>
+            <Card.Content>
+              <p>{card.sideA}</p>
+              <p>{card.sideB}</p>
+              </Card.Content>
           </Card>
         ))
       ) : (
@@ -42,4 +67,3 @@ const CreateCard = ({ deck, handleClick, cardState, children }) => (
     </Card.Group>
   </>
 );
-export default CreateCard;
