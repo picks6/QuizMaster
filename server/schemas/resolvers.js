@@ -196,7 +196,7 @@ const resolvers = {
     updateDeck: async (parent, args, context) => {
       // args: { deckId: ID!, title: String, category: String, description: String }
       if (context.deck) {
-        return await Deck.findByIdAndUpdate(context.deck._id, args, {new: true});
+        return await Deck.findByIdAndUpdate(context.deck._id, args, {new: true}).populate('creator categories');
       }
       if (args.deckId) { // for backend testing
         return await Deck.findByIdAndUpdate(
@@ -205,13 +205,29 @@ const resolvers = {
       }
     },
     updateCard: async (parent, args, context) => {
-      // args: { deckId: ID!, cardId: ID, sideA: String!, sideB: String! }
-      if (args.cardId) { // for backend testing
-        return await Deck.findOneAndUpdate(
-          { _id: args.deckId, "cards._id": args.cardId }, 
-          { $set: {"cards.$.sideA": args.sideA, "cards.$.sideB": args.sideB} }, 
-          { new: true }
-        );
+      // args: { deckId: ID!, cardId: ID, sideA: String, sideB: String }
+      try {
+        if (args.sideA && args.sideB) { 
+          return await Deck.findOneAndUpdate(
+            { _id: args.deckId, "cards._id": args.cardId }, 
+            { $set: {"cards.$.sideA": args.sideA, "cards.$.sideB": args.sideB} }, 
+            { new: true }
+          );
+        } else if (args.sideA) { 
+          return await Deck.findOneAndUpdate(
+            { _id: args.deckId, "cards._id": args.cardId }, 
+            { $set: { "cards.$.sideA": args.sideA } }, 
+            { new: true }
+          );
+        } else if (args.sideB) { 
+          return await Deck.findOneAndUpdate(
+            { _id: args.deckId, "cards._id": args.cardId }, 
+            { $set: { "cards.$.sideB": args.sideB } }, 
+            { new: true }
+          );
+        };
+      } catch (error) {
+        console.log(error);
       }
     },
     removeDeck: async (parent, args, context) => {

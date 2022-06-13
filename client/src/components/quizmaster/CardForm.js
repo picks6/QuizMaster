@@ -7,6 +7,7 @@ const CardForm = ({ state, handleChange, handleSubmit, handleCancel }) => (
     <Segment stacked>
       <Form.Input
         fluid 
+        placeholder='Front'
         name='sideA' 
         type='text' 
         value={state.sideA}
@@ -14,6 +15,7 @@ const CardForm = ({ state, handleChange, handleSubmit, handleCancel }) => (
       />
       <Form.Input
         fluid 
+        placeholder='Back'
         name='sideB' 
         type='text' 
         value={state.sideB}

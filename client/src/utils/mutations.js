@@ -63,7 +63,7 @@ export const ADD_CARD = gql`
     }
   }`;
 export const UPDATE_CARD = gql`
-  mutation UpdateCard($deckId: ID!, $cardId: ID!, $sideA: String!, $sideB: String!) {
+  mutation UpdateCard($deckId: ID!, $cardId: ID!, $sideA: String, $sideB: String) {
     updateCard(deckId: $deckId, cardId: $cardId, sideA: $sideA, sideB: $sideB) {
       _id
       title
@@ -71,7 +71,9 @@ export const UPDATE_CARD = gql`
         _id
         category
       }
-      creator
+      creator {
+        username
+      }
       date_created
       cards {
         _id
@@ -130,6 +132,33 @@ export const LOGIN_USER = gql`
         username
         email
         password
+      }
+    }
+  }`;
+export const REMOVE_DECK = gql`
+  mutation removeDeck($deckId: ID!) {
+    removeDeck(deckId: $deckId) {
+      _id
+    }
+  }`;
+export const REMOVE_CARD = gql`
+  mutation RemoveCard($cardId: ID!) {
+    removeCard(cardId: $cardId) {
+      _id
+      title
+      categories {
+        category
+      }
+      description
+      price
+      creator {
+        username
+      }
+      date_created
+      cards {
+        _id
+        sideA
+        sideB
       }
     }
   }`;

@@ -1,9 +1,17 @@
 import React, { useState } from "react";
 import { Form, Button, Checkbox, Label } from "semantic-ui-react";
 
-const DeckForm = ({ state, handleChange, handleSubmit, handleCancel, children, styles }) => {
-  const [paywall, setPaywall] = useState(true);
+import classes from "./DeckForm.module.css";
+import "../../index.css";
 
+export const DeckForm = ({ state, handleChange, handleSubmit, handleCancel, children }) => {
+  const [paywall, setPaywall] = useState(true);
+  const styles = {
+    label: "ui teal label ui big label",
+    search__container: classes.search__container,
+    checkbox: `${classes.checkbox} ui checkbox`,
+    price: classes.price__container
+  }
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Field>
@@ -69,6 +77,5 @@ const DeckForm = ({ state, handleChange, handleSubmit, handleCancel, children, s
         }
       </Form.Field>
     </Form>
-  )
+  );
 };
-export default DeckForm;
