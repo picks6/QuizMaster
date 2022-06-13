@@ -43,7 +43,7 @@ const Cart = () => {
   useEffect(() => {
     const setState = async () => {
       if (!cart.length) {
-        const cart = getCart();
+        const cart = await getCart();
         setCart(cart);
       }
     };
@@ -56,7 +56,7 @@ const Cart = () => {
       const addPermission = async () => {
         try {
           const { data } = await updateUser({ variables: { permission: cart[0]._id}});
-          const updatedUser = data.updateUser
+          const updatedUser = data.updateUser;
           await dispatch({ type: SET_PERMISSIONS, permissions: updatedUser.permissions });
           clearCart(cart);
         } catch (error) {
@@ -114,9 +114,9 @@ const Cart = () => {
           <Card.Header>Deck: {cart[0].title}</Card.Header>
         </Card.Content>
         <Card.Content className="description">
-          {/* <Header>
+          <Header>
             Categories: {cart[0].categories.map((category) => `${category.category} `)}
-          </Header> */}
+          </Header>
           <p>By: {cart[0].creator.username}</p>
           <p>Price: {cart[0].price}</p>
           <p>Description:</p>
