@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Modal, Icon } from 'semantic-ui-react';
 import DeckForm from "./DeckForm";
 
 import classes from "./CreateDeck.module.css";

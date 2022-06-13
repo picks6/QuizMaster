@@ -151,13 +151,16 @@ function CreateDeckPage() {
             <CreateCardHeader deck={deck} />
             <CreateCard
               deck={deck}
+              handleSubmit={handleCardFormSubmit}
+              handleChange={handleCardFormChange}
+              handleCancel={handleCancel}
               handleClick={handleClick}
               cardState={cardState}
             >
               <CardForm
-                handleFormSubmit={handleCardFormSubmit}
+                handleSubmit={handleCardFormSubmit}
                 handleChange={handleCardFormChange}
-                cardFormState={cardFormState}
+                state={cardFormState}
                 handleCancel={handleCancel}
               />
             </CreateCard>
