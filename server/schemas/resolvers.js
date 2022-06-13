@@ -165,10 +165,12 @@ const resolvers = {
       //   return await User.findByIdAndUpdate(context.user._id, args, { new: true });
       // } 
       if (args.permission) {
-        console.log(context.user.id, args)
-        // return await User.findByIdAndUpdate(
-        //   context.user._id,
-        // )
+        console.log(context.user, args)
+        const updatedUser = await User.findByIdAndUpdate(
+          context.user._id, { $addToSet: { permissions: args.permission }}, {new: true}
+        );
+        console.log(updatedUser);
+        return updatedUser;
       }
       if (args.deckId) { // for backend testing
         return await User.findOneAndUpdate( // add Deck to User

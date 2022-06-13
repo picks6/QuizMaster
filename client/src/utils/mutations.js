@@ -97,12 +97,13 @@ export const UPDATE_CARD = gql`
     }
   }`;
 export const UPDATE_USER = gql`
-  mutation UpdateUser($password: String, $email: String, $username: String, $deckId: ID) {
-    updateUser(password: $password, email: $email, username: $username, deckId: $deckId) {
+  mutation UpdateUser($permission: ID, $username: String, $email: String, $password: String, $deckId: ID) {
+    updateUser(permission: $permission, username: $username, email: $email, password: $password, deckId: $deckId) {
       _id
       username
       email
       password
+      permissions
       decks {
         _id
         title
@@ -111,14 +112,7 @@ export const UPDATE_USER = gql`
           category
         }
         description
-        creator
         date_created
-        cards {
-          _id
-          sideA
-          sideB
-          deck
-        }
       }
     }
   }`;

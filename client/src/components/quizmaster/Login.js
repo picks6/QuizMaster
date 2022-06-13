@@ -22,7 +22,6 @@ const Login = (props) => {
     });
   };
 
-  // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     console.log(formState);
@@ -30,17 +29,12 @@ const Login = (props) => {
       const { data } = await login({
         variables: { ...formState },
       });
-
+      setFormState({ email: "", password: "" });
       Auth.login(data.login.token);
     } catch (e) {
       console.error(e);
     }
-
-    // clear form values
-    setFormState({
-      email: "",
-      password: "",
-    });
+    
   };
 
   return (
@@ -51,7 +45,7 @@ const Login = (props) => {
         </Header>
         {data ? (
           <p>
-            Success! You may now head <Logout />
+            Success! Redirecting to Dashboard...
             {/* <Link to="/">back to the homepage.</Link> */}
           </p>
         ) : (

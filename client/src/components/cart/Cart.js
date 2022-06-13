@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Header, Button } from "semantic-ui-react";
 import { loadStripe } from '@stripe/stripe-js';
-import { useQuery, useLazyQuery } from "@apollo/client";
+import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
 import { QUERY_CHECKOUT } from "../../utils/queries";
+import { UPDATE_USER } from "../../utils/mutations";
 
 import { idbPromise } from '../../utils/helpers';
 import Auth from "../../utils/auth";
+import { useLocation } from "react-router-dom";
 import { useStoreContext } from "../../utils/GlobalState";
-import { TOGGLE_CART, REMOVE_FROM_CART } from '../../utils/actions';
+import { SET_PERMISSIONS } from '../../utils/actions';
 // import "./ProductDisplay.css";
 
 const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
@@ -38,21 +40,25 @@ const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 //   </section>
 // );
 
-const Cart = ({deck, children}) => {
+const Cart = () => {
   const [message, setMessage] = useState("");
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
+  const [cart, setCart] = useState([]);
   const [state, dispatch] = useStoreContext();
   const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
-
+  const [updateUser, {}] = useMutation(UPDATE_USER);
+  
+  const getCart = async () => {
+    const cart = await idbPromise('cart', 'get');
+    console.log('cart:', cart);
+    setCart(cart[0]);
+  };
   useEffect(() => {
-    const newCart = async () => {
-      console.log('deck:', deck);
-      const cart = await idbPromise('cart', 'put', {_id: deck._id});
-      return cart;
-    };
-    console.log('cart:', newCart);
-  }, []);
 
+    if (!cart.length) {
+      getCart();
+    }
+  }, []);
   useEffect(() => {
     if (data) {
       console.log(data);
@@ -66,6 +72,22 @@ const Cart = ({deck, children}) => {
     const query = new URLSearchParams(window.location.search);
 
     if (query.get("success")) {
+      const addPermission = async () => {
+        try {
+          const cart = await idbPromise('cart', 'get');
+          console.log('cart:', cart[0]._id);
+          const { data } = await updateUser({ variables: { permission: cart[0]._id}});
+          const updatedUser = data.updateUser
+          // console.log('updateduser:', updatedUser);
+          if (updatedUser.permissions.includes(cart[0]._id)) {
+            const newCart = await idbPromise('cart', 'delete', cart[0]);
+            console.log('success:', newCart);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      addPermission();
       setMessage("Order placed! You will receive an email confirmation.");
     }
 
@@ -75,18 +97,8 @@ const Cart = ({deck, children}) => {
       );
     }
   }, []);
-  useEffect(() => {
-    async function getCart() {
-      const cart = await idbPromise('cart', 'get');
-      // dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart] });
-    }
 
-    if (!state.cart.length) {
-      getCart();
-    }
-  }, [state.cart.length, dispatch]);
-
-  const toggleCart = () => dispatch({ type: TOGGLE_CART });
+  // const toggleCart = () => dispatch({ type: TOGGLE_CART });
 
   // const calculateTotal = () => {
   //   let sum = 0;
@@ -120,6 +132,8 @@ const Cart = ({deck, children}) => {
   //     </div>
   //   );
   // };
+  // console.log("user:", Auth.getUser());
+  
   const Message = ({ message }) => (
     <section>
       <p>{message}</p>
@@ -141,8 +155,8 @@ const Cart = ({deck, children}) => {
       <button onClick={submitCheckout}>
         Checkout
       </button>
-    
     </section>
+
     // message ? (<Message message={message} />) : (
     //   <Modal 
     //     onOpen={()=>setOpen(true)} 

@@ -7,6 +7,7 @@ export const QUERY_USER = gql`
       _id
       username
       email
+      permissions 
       decks {
         _id
         categories {
@@ -77,11 +78,6 @@ export const QUERY_DECKS = gql`
         username
       }
       date_created
-      cards {
-        _id
-        sideA
-        sideB
-      }
     }
   }`;
 export const QUERY_DECKS_TITLE = gql`
@@ -98,11 +94,6 @@ export const QUERY_DECKS_TITLE = gql`
         username
       }
       date_created
-      cards {
-        _id
-        sideA
-        sideB
-      }
     }
   }`;
 
@@ -143,10 +134,5 @@ export const QUERY_DECKS_CATEGORY = gql`
         username
       }
       date_created
-      cards {
-        _id
-        sideA
-        sideB
-      }
     }
   }`;

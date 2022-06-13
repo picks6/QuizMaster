@@ -12,15 +12,15 @@ const slugify = require("slugify");
 const Landing = ({ decks }) => {
   const [state, dispatch] = useStoreContext();
 
-  // const handleCheckout = async ({deck}) => {
-  //   console.log('deck:', deck);
-  //   const cart = await idbPromise('cart', 'put', {_id: deck._id});
-  //   console.log('cart:', cart);
-  // }
-  const DeckLink = ({ deck, children }) => (
-    <Button
-      as={Link}
-      to={`/deck/${slugify(deck.title)}/${deck._id}`}
+  const handleCheckout = async ({deck}) => {
+    console.log('deck:', deck);
+    const cart = await idbPromise('cart', 'put', deck);
+    console.log('cart:', cart);
+  }
+  const DeckLink = ({deck, children}) => (
+    <Button 
+      as={Link} 
+      to={`/deck/${slugify(deck.title)}/${deck._id}`} 
       state={deck}
     >
       {children}
@@ -33,8 +33,8 @@ const Landing = ({ decks }) => {
         animated
         as={Link}
         to={url}
-        state={deck}
-        // onClick={()=>handleCheckout(deck)}
+        // state={deck}
+        onClick={()=>handleCheckout(deck)}
       >
         <Button.Content visible>Buy</Button.Content>
         <Button.Content hidden>Price</Button.Content>
