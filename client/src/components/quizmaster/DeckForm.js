@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Checkbox, Label } from "semantic-ui-react";
 
-const DeckForm = ({ state, handleChange, handleSubmit, children, styles }) => {
+const DeckForm = ({ state, handleChange, handleSubmit, handleCancel, children, styles }) => {
   const [paywall, setPaywall] = useState(true);
 
   return (
@@ -34,15 +34,11 @@ const DeckForm = ({ state, handleChange, handleSubmit, children, styles }) => {
       </Form.Field>
 
       <Form.Field>
-          <Checkbox
-            id="text"
-            label="Make Deck Public"
-            className={styles.checkbox}
-            onChange={() => setPaywall(!paywall)}
-          />
         {!paywall ? <></> : (
           <>
-            <Label className={styles.label}>Set Price:</Label>
+            <div>
+              <Label className={styles.label}>Set Price:</Label>
+            </div>
             <Form.Input
               className={styles.price}
               placeholder="$0.99"
@@ -53,14 +49,24 @@ const DeckForm = ({ state, handleChange, handleSubmit, children, styles }) => {
             />
           </>
         )}
+          <Checkbox
+            id="text"
+            label="Make Deck Public"
+            className={styles.checkbox}
+            onChange={() => setPaywall(!paywall)}
+          />
       </Form.Field>
       <Form.Field>
         <Button inverted type="submit" color="teal" size="big">
           Save
         </Button>
-        <Button inverted color="teal" size="big">
-          Cancel
-        </Button>
+        {
+          !handleCancel ? <></> : (
+          <Button inverted type="button" color="teal" size="big" onClick={handleCancel}>
+            Cancel
+          </Button>
+          )
+        }
       </Form.Field>
     </Form>
   )

@@ -1,32 +1,49 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Category from "../components/ui/Category";
 import { CreateDeck } from "../components/quizmaster/CreateDeck";
 import { CreateCard, CreateCardHeader } from "../components/quizmaster/CreateCard";
 import CardForm from "../components/quizmaster/CardForm";
 
-import { useMutation } from "@apollo/client";
-import { ADD_CATEGORIES, ADD_DECK, ADD_CARD } from "../utils/mutations";
+import { useMutation, useLazyQuery } from "@apollo/client";
+import { QUERY_DECK } from "../utils/queries";
+import {  ADD_CATEGORIES, ADD_DECK, ADD_CARD, UPDATE_DECK, UPDATE_CARD } from "../utils/mutations";
 import { Grid, Segment } from "semantic-ui-react";
 import "../index.css";
 
 function CreateDeckPage() {
-  // const [categoryValue, setCategoryValue] = useState({category: '' })
+  const params = useParams();
+  const [queryDeck, {}] = useLazyQuery(QUERY_DECK);
   const [addCategories, {}] = useMutation(ADD_CATEGORIES);
 
-  const [deckFormState, setDeckFormState] = useState({
-    title: "",
-    categories: [],
-    description: "",
-    price: null
-  });
+  const [deckFormState, setDeckFormState] = useState({});
   const [cardFormState, setCardFormState] = useState({ sideA: "", sideB: "" });
   
   const [deck, setDeck] = useState("");
   const [addDeck, {}] = useMutation(ADD_DECK);
+  const [updateDeck, {}] = useMutation(UPDATE_DECK);
+
+  useEffect(() => {
+    const getDeck = async () => {
+      try {
+        if (params) {
+          console.log(params);
+          const { data } = queryDeck({
+            variables: { deckId: params.id }
+          })
+          console.log('queryDeck:',data);
+          // setDeck(location.state);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getDeck();
+  }, []);
 
   const [cardState, setCardState] = useState({ editing: false });
   const [addCard, {}] = useMutation(ADD_CARD);
+  const [updateCard, {}] = useMutation(UPDATE_CARD);
 
   const handleDeckFormChange = (event, valueArr) => {
     if (event) {
@@ -74,16 +91,28 @@ function CreateDeckPage() {
         categories = deckFormState.categories.map((category) => category.value);
         // console.log("categories:", categories);
       }
-      const { data } = await addDeck({
-        variables: {
-          ...deckFormState,
-          price: parseFloat(deckFormState.price),
-          categories: categories
-        },
-      });
-      const newDeck = data.addDeck;
-      // console.log("ADD_DECK:", newDeck);
-      setDeck(data.addDeck);
+      if (!params) {
+        const { data } = await addDeck({
+          variables: {
+            ...deckFormState,
+            price: parseFloat(deckFormState.price),
+            categories: categories
+          },
+        });
+        console.log("ADD_DECK:", data);
+        setDeck(data.addDeck);
+      } else {
+        const { data } = await updateDeck({
+          variables: {
+            ...deckFormState,
+            deckId: deck._id,
+            price: parseFloat(deckFormState.price),
+            categories: categories
+          }
+        });
+        console.log('update deck:', data);
+        setDeck(data.updateDeck);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -145,7 +174,12 @@ function CreateDeckPage() {
       <Grid columns={3} textAlign="center">
         <Grid.Row verticalAlign="middle">
           <Grid.Column>
-            <CreateCardHeader deck={deck} />
+            <CreateCardHeader 
+              deck={deck} 
+              state={deckFormState}
+              handleChange={handleDeckFormChange} 
+              handleSubmit={handleDeckFormSubmit}
+            />
             <CreateCard
               deck={deck}
               handleSubmit={handleCardFormSubmit}
