@@ -9,23 +9,23 @@ const Category = ({ handleChange, categoryState, placeholder }) => {
 
   if (loading) return <div>Loading</div>; 
   if (error) return `Error! ${error.message}`;
-  
-  // console.log('categories:', data.categories);
-  const categories = data.categories.map(
-    ({ category, _id }) => {return { label: category, value: _id}}
-  );
-  // console.log('categoryState:', categoryState);
-  return (
-    <Creatable
-     placeholder={placeholder} 
-     isClearable
-     isMulti
-     onChange={(value) => handleChange( null, value)}
-     options={categories}
-     value={categoryState}
-    />
-
-  )
+  if (data) {
+    // console.log('categories:', data.categories);
+    const categories = data.categories.map(
+      ({ category, _id }) => {return { label: category, value: _id}}
+    );
+    // console.log('categoryState:', categoryState);
+    return (
+      <Creatable
+       placeholder={placeholder} 
+       isClearable
+       isMulti
+       onChange={(value) => handleChange( null, value)}
+       options={categories}
+       value={categoryState}
+      />
+    )
+  }
 };
 
 export default Category;
