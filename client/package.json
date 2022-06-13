@@ -32,7 +32,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "postinstall": "semantic-ui-css-patch"
+    "postinstall": "semantic-ui-css-patch",
+    "heroku-postbuild": "npm --legacy-peer-deps"
   },
   "eslintConfig": {
     "extends": [
