@@ -53,14 +53,11 @@ function CreateDeckPage() {
         (category) => category.__isNew__ === true
       );
       // console.log("newCategories:", newCategories);
-
       if (newCategories.length) {
         const args = newCategories.map((category) => category.value);
         // console.log('variables:', args);
-
         const { data } = await addCategories({ variables: { categories: args }});
         // console.log('test:', data);
-
         const addedCategories = data.addCategories;
         // console.log("addedCategories:", addedCategories);
 
@@ -79,9 +76,9 @@ function CreateDeckPage() {
       }
       const { data } = await addDeck({
         variables: {
-          title: deckFormState.title,
-          category: categories,
-          description: deckFormState.description,
+          ...deckFormState,
+          price: parseFloat(deckFormState.price),
+          categories: categories
         },
       });
       const newDeck = data.addDeck;
