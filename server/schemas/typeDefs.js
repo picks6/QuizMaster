@@ -32,6 +32,7 @@ const typeDefs = gql`
     title: String
     categories: [Category]
     description: String
+    price: Float
     creator: User
     date_created: String
     cards: [Card]
@@ -45,9 +46,8 @@ const typeDefs = gql`
 
   type Query {
     user: User
-    order(_id: ID!): Order
     checkout(products: [ID]!): Checkout
-    #category(categoryID: ID, category: String): Category
+    # category(categoryID: ID, category: String): Category
     categories: [Category]
     decks(deckTitle: String, categories: [ID]): [Deck]
     deck(deckId: ID!): Deck
@@ -58,15 +58,15 @@ const typeDefs = gql`
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
-    addOrder(products: [ID]!): Order
+    # addOrder(products: [ID]!): Order
     addCategories(categories: [String]!): [Category]
-    addDeck(title: String!, categories: [ID]!, description: String): Deck
+    addDeck(title: String!, categories: [ID]!, description: String, price: Float): Deck
     addCard(deckId: ID!, sideA: String!, sideB: String!): Deck
 
     updateUser(username: String, email: String, password: String, deckId: ID, permission: ID): User
     login( username: String, email: String!, password: String!): Auth
     # updateCategory(categoryID: ID!, categories: [ID]!): Category
-    updateDeck(deckId: ID!, title: String, categories: [ID], description: String): Deck
+    updateDeck(deckId: ID!, title: String, categories: [ID], description: String, price: Float): Deck
     updateCard(deckId: ID!, cardId: ID!, sideA: String!, sideB: String!): Deck
 
     removeDeck(deckId: ID!): Deck

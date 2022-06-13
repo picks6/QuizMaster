@@ -44,6 +44,7 @@ export const QUERY_DECK = gql`
         category
       }
       description
+      price
       creator {
         _id
         username
@@ -73,6 +74,7 @@ export const QUERY_DECKS = gql`
         category
       }
       description
+      price
       creator {
         username
       }
@@ -89,6 +91,7 @@ export const QUERY_DECKS_TITLE = gql`
         category
       }
       description
+      price
       creator {
         username
       }
@@ -129,6 +132,7 @@ export const QUERY_DECKS_CATEGORY = gql`
         category
       }
       description
+      price
       creator {
         username
       }

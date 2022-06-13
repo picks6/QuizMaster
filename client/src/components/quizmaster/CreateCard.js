@@ -6,6 +6,7 @@ import { EditDeck, EditCard, Delete } from "./Actions";
 export const CreateCardHeader = ({ deck, handleChange, handleSubmit, handleCancel }) => (
   <Card>
     <Card.Content>
+      <Header as="h1">{deck.title}</Header>
       <EditDeck
         state={deck}
         handleChange={handleChange}
@@ -17,10 +18,12 @@ export const CreateCardHeader = ({ deck, handleChange, handleSubmit, handleCance
       />
     </Card.Content>
     <Card.Content>
-      <Header as="h1">{deck.title}</Header>
       <Header as="h2">
         Category: {deck.categories.map((category) => category.category)}
       </Header>
+      <Header as="h3">{deck.creator.username}</Header>
+      <p>{deck.description}</p>
+      {deck.price ? <Header>{deck.price}</Header> : <></>}
     </Card.Content>
   </Card>
 );

@@ -113,18 +113,6 @@ const resolvers = {
 
 			return { token, user };
 		},
-    addOrder: async (parent, { products }, context) => {
-      console.log(context);
-      if (context.user) {
-        const order = new Order({ products });
-
-        await User.findByIdAndUpdate(context.user._id, { $push: { orders: order } });
-
-        return order;
-      }
-
-      throw new AuthenticationError('Not logged in');
-    },
 		addCategories: async (parent, { categories }) => {
 			// categories: [String]!
 			const categoryData = categories.map((category) => ({
@@ -134,12 +122,10 @@ const resolvers = {
 			return await Category.insertMany(categoryData);
 		},
 
-		addDeck: async (parent, { title, categories, description }, context) => {
-			console.log({ title, description, categories }, context.user);
+		addDeck: async (parent, args, context) => {
+			console.log(args, context.user);
 			const newDeck = await Deck.create({
-				title,
-				description,
-				categories,
+				...args,
 				creator: context.user._id,
 			});
       // console.log('newDeck:', newDeck);
