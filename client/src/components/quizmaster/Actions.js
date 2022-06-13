@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Icon, Button } from 'semantic-ui-react';
 
-import { CreateDeck } from "./CreateDeck";
+import { DeckForm } from "./DeckForm";
 import Category from "../ui/Category";
 import CardForm from "./CardForm";
 
@@ -28,7 +28,7 @@ export const EditDeck = ({ state, handleChange, handleSubmit, handleCancel}) => 
       icon={'edit'} 
       header={'Edit Deck Information:'}
     >
-      <CreateDeck 
+      <DeckForm 
         handleChange={handleChange}
         handleSubmit={handleSubmit}
         handleCancel={() => setEditingDeck(false)}
@@ -40,7 +40,7 @@ export const EditDeck = ({ state, handleChange, handleSubmit, handleCancel}) => 
           handleChange={handleChange}
           categoryState={state.categories}
         />
-      </CreateDeck>
+      </DeckForm>
     </Action>
   )
 };
