@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Card, Modal, Header, Button } from "semantic-ui-react";
+import { Card,  Header, Button } from "semantic-ui-react";
 import { loadStripe } from '@stripe/stripe-js';
 import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
-import { QUERY_CHECKOUT } from "../../utils/queries";
+import { QUERY_CHECKOUT, QUERY_USER } from "../../utils/queries";
 import { UPDATE_USER } from "../../utils/mutations";
 
 import { idbPromise } from '../../utils/helpers';
@@ -20,6 +20,7 @@ const Cart = () => {
   const [state, dispatch] = useStoreContext();
   const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
   const [updateUser, {}] = useMutation(UPDATE_USER);
+  const [getUser, {}] = useLazyQuery(QUERY_USER);
   
   const getCart = async () => {
     try {
@@ -53,7 +54,7 @@ const Cart = () => {
     // Check to see if this is a redirect back from Checkout
     const query = new URLSearchParams(window.location.search);
     if (query.get("success")) {
-      const addPermission = async () => {
+      const updatePermission = async () => {
         try {
           const { data } = await updateUser({ variables: { permission: cart[0]._id}});
           const updatedUser = data.updateUser;
@@ -63,14 +64,23 @@ const Cart = () => {
           console.log(error);
         }
       };
-      addPermission(cart);
-      setMessage("Order placed! You will receive an email confirmation.");
+      updatePermission(cart);
+      setMessage("Order placed!.");
     }
 
     if (query.get("canceled")) {
-      clearCart(cart);
+      const getPermissions = async () => {
+        try {
+          const { data } = await getUser();
+          await dispatch({ type: SET_PERMISSIONS, permissions: data.user.permissions });
+          clearCart(cart);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      getPermissions();
       setMessage(
-        "Order canceled -- continue to shop around and checkout when you're ready."
+        "Order canceled."
       );
     }
   }, []);
