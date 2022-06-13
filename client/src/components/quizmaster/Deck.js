@@ -3,6 +3,7 @@ import { Card, Button, Header, Form, Modal, Icon } from 'semantic-ui-react';
 // import CardFlip from '../quizmaster/CardFlip';
 
 import { Action, EditDeck, EditCard, Delete } from './Actions';
+import { CreateCardHeader } from './CreateCard';
 import { CreateDeck } from './CreateDeck';
 import DeckForm from './DeckForm';
 import Category from '../ui/Category';
@@ -27,21 +28,9 @@ const Deck = ({
 
   return (
     <>
-      <Card>
-        <Card.Content>
-          {deck.title} 
-          <EditDeck
-            state={deck}
-            handleChange={handleDeckFormChange}
-            handleSubmit={handleDeckFormSubmit}
-          />
-          <Delete 
-            header={'Are you sure you want to delete this Deck?'}
-          />
-        </Card.Content>
-        <Card.Content>created by: {deck.creator.username}</Card.Content>
-        <Card.Content>categories: {deck.categories.map((category) => `${category.category} `)}</Card.Content>
-      </Card>
+      <CreateCardHeader 
+        deck={deck}
+      />
       {
         deck.cards.map(
           (card) => (
