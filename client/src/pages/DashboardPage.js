@@ -10,21 +10,35 @@ import {
   Icon,
   Segment,
 } from "semantic-ui-react";
+import { useStoreContext } from "../utils/GlobalState";
 import Category from "../components/ui/Category";
 import Searcher from "../components/ui/Searcher";
 
 import Auth from "../utils/auth";
-
+import TestDeck from "../components/quizmaster/testDeck";
 import { useLazyQuery, useQuery } from "@apollo/client";
 import { QUERY_USER } from "../utils/queries";
-import DashboardWrapper from "../components/ui/DashboardWrapper";
+import "../index.css";
 import "./DashboardPage.module.css";
 import classes from "./DashboardPage.module.css";
+import { SET_PERMISSIONS } from "../utils/actions";
 
 const DashboardPage = () => {
   // const [user, setUser] = useState("");
+  const [state, dispatch] = useStoreContext();
   const { loading, error, data } = useQuery(QUERY_USER);
 
+  useEffect(() => {
+    const setPermissions = async () => {
+      if (data) {
+        await dispatch({
+          type: SET_PERMISSIONS,
+          permissions: data.user.permissions,
+        });
+      }
+    };
+    setPermissions();
+  }, [data]);
   // const [decks, setDecks] = useState("");
   // const [search, setSearch] = useState("");
   // const [categories, setCategories] = useState("");
@@ -57,6 +71,7 @@ const DashboardPage = () => {
 
   const user = data.user;
   console.log("QUERY_USER:", user);
+  console.log(state);
 
   return !Auth.isLoggedIn() ? (
     window.location.assign("/login")
@@ -99,7 +114,7 @@ const DashboardPage = () => {
         </Grid.Row>
 
         <Grid.Row>
-          <Header size="large" inverted color="teal">
+          <Header className={classes.header} size="large" inverted color="teal">
             Decks:
           </Header>
           <Card.Group>

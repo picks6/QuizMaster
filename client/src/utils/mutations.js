@@ -13,22 +13,6 @@ export const ADD_USER = gql`
       }
     }
   }`;
-export const ADD_ORDER = gql`
-  mutation addOrder($products: [ID]!) {
-    addOrder(products: $products) {
-      purchaseDate
-      products {
-        _id
-        name
-        description
-        price
-        quantity
-        category {
-          name
-        }
-      }
-    }
-  }`;
 export const ADD_CATEGORIES = gql`
   mutation AddCategories($categories: [String]!) {
     addCategories(categories: $categories) {
@@ -37,8 +21,8 @@ export const ADD_CATEGORIES = gql`
     }
   }`;
 export const ADD_DECK = gql`
-  mutation AddDeck($title: String!, $category: [ID]!, $description: String) {
-    addDeck(title: $title, categories: $category, description: $description) {
+  mutation AddDeck($title: String!, $categories: [ID]!, $description: String, $price: Float) {
+    addDeck(title: $title, categories: $categories, description: $description, price: $price) {
       _id
       title
       categories {
@@ -46,6 +30,7 @@ export const ADD_DECK = gql`
         category
       }
       description
+      price
       creator {
         _id
         username
@@ -78,7 +63,7 @@ export const ADD_CARD = gql`
     }
   }`;
 export const UPDATE_CARD = gql`
-  mutation UpdateCard($deckId: ID!, $cardId: ID!, $sideA: String!, $sideB: String!) {
+  mutation UpdateCard($deckId: ID!, $cardId: ID!, $sideA: String, $sideB: String) {
     updateCard(deckId: $deckId, cardId: $cardId, sideA: $sideA, sideB: $sideB) {
       _id
       title
@@ -86,7 +71,9 @@ export const UPDATE_CARD = gql`
         _id
         category
       }
-      creator
+      creator {
+        username
+      }
       date_created
       cards {
         _id
@@ -97,12 +84,13 @@ export const UPDATE_CARD = gql`
     }
   }`;
 export const UPDATE_USER = gql`
-  mutation UpdateUser($password: String, $email: String, $username: String, $deckId: ID) {
-    updateUser(password: $password, email: $email, username: $username, deckId: $deckId) {
+  mutation UpdateUser($permission: ID, $username: String, $email: String, $password: String, $deckId: ID) {
+    updateUser(permission: $permission, username: $username, email: $email, password: $password, deckId: $deckId) {
       _id
       username
       email
       password
+      permissions
       decks {
         _id
         title
@@ -111,27 +99,23 @@ export const UPDATE_USER = gql`
           category
         }
         description
-        creator
         date_created
-        cards {
-          _id
-          sideA
-          sideB
-          deck
-        }
       }
     }
   }`;
 export const UPDATE_DECK = gql`
-  mutation UpdateDeck($deckId: ID!, $description: String, $category: [ID], $title: String) {
-    updateDeck(deckId: $deckId, description: $description, categories: $category, title: $title) {
+  mutation UpdateDeck($deckId: ID!, $description: String, $category: [ID], $title: String, $price: Float) {
+    updateDeck(deckId: $deckId, description: $description, categories: $category, title: $title, price: $price) {
       title
       categories {
         _id
         category
       }
       description
-      creator
+      price
+      creator {
+        username
+      }
       date_created
       cards {
         sideA
@@ -148,6 +132,33 @@ export const LOGIN_USER = gql`
         username
         email
         password
+      }
+    }
+  }`;
+export const REMOVE_DECK = gql`
+  mutation removeDeck($deckId: ID!) {
+    removeDeck(deckId: $deckId) {
+      _id
+    }
+  }`;
+export const REMOVE_CARD = gql`
+  mutation RemoveCard($cardId: ID!) {
+    removeCard(cardId: $cardId) {
+      _id
+      title
+      categories {
+        category
+      }
+      description
+      price
+      creator {
+        username
+      }
+      date_created
+      cards {
+        _id
+        sideA
+        sideB
       }
     }
   }`;

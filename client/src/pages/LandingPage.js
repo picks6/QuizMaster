@@ -65,13 +65,7 @@ const LandingPage = () => {
       return;
     }
   };
-  // const LinkButton = ({deck, children}) => (
-  //   <Button 
-  //   as={Link} 
-  //   to={`/deck/${slugify(deck.title)}/${deck._id}`} 
-  //   state={deck}
-  //   >{children}</Button>
-  // )
+  
   return (
     <>
       <Form size="big" className={classes.form} onSubmit={handleSubmitSearch}>
@@ -94,34 +88,6 @@ const LandingPage = () => {
         </Button>
       </Form>
       <Landing decks={decks} />
-      {/* <CardWrapper>
-        <Card.Group>
-          {decks.length ? (
-            decks.map((deck) => (
-              <Card color="blue" key={deck._id}>
-                <Card.Content>{deck.title}</Card.Content>
-                <Card.Content>{deck.description}</Card.Content>
-                <Card.Content>
-                  {deck.categories.map((category) => `${category.category} `)}
-                </Card.Content>
-                {
-                  deck.price 
-                  ? (
-                    <Button.Group>
-                      <LinkButton deck={deck}>view deck</LinkButton>
-                      <Button.Or />
-                      <Button>Price</Button>
-                    </Button.Group>
-                    ) 
-                  : <LinkButton deck={deck}>if Deck.Price, render Deck.Price</LinkButton>
-                }
-              </Card>
-            ))
-          ) : (
-            <></>
-          )}
-        </Card.Group>
-      </CardWrapper> */}
     </>
   );
 };

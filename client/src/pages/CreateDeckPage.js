@@ -1,169 +1,269 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import Category from "../components/ui/Category";
+import { DeckForm } from "../components/quizmaster/DeckForm";
+import { CreateCard, CreateCardHeader } from "../components/quizmaster/CreateCard";
+import CardForm from "../components/quizmaster/CardForm";
 
-import Category from '../components/ui/Category';
-import CreateDeck from "../components/quizmaster/CreateDeck";
-import CreateCard from '../components/quizmaster/CreateCard';
-import CardForm from '../components/quizmaster/CardForm';
-
-import { useMutation } from '@apollo/client';
-import { ADD_CATEGORIES, ADD_DECK, ADD_CARD } from '../utils/mutations';
-import { Grid } from 'semantic-ui-react';
+import { useMutation, useLazyQuery } from "@apollo/client";
+import { QUERY_DECK } from "../utils/queries";
+import { 
+  ADD_CATEGORIES, 
+  ADD_DECK, 
+  ADD_CARD, 
+  UPDATE_DECK, 
+  UPDATE_CARD,
+  REMOVE_DECK,
+  REMOVE_CARD } from "../utils/mutations";
+import { Button, Grid, Segment } from "semantic-ui-react";
+import "../index.css";
 
 function CreateDeckPage() {
-  // const [categoryValue, setCategoryValue] = useState({category: '' })
+  const params = useParams();
+  const [queryDeck, {}] = useLazyQuery(QUERY_DECK);
   const [addCategories, {}] = useMutation(ADD_CATEGORIES);
 
-  const [deckFormState, setDeckFormState] = useState(
-    { title: '', categories: [], description: '' }
-  );
+  const [deckFormState, setDeckFormState] = useState({});
+  const [cardFormState, setCardFormState] = useState({ sideA: "", sideB: "" });
+  
   const [deck, setDeck] = useState('');
   const [addDeck, {}] = useMutation(ADD_DECK);
+  const [updateDeck, {}] = useMutation(UPDATE_DECK);
+  const [removeCard, {}] = useMutation(REMOVE_CARD);
+  const [removeDeck, {}] = useMutation(REMOVE_DECK);
+
+  useEffect(() => {
+    const getDeck = async () => {
+      try {
+        if (params.id) {
+          console.log(params);
+          const { data } = await queryDeck({
+            variables: { deckId: params.id }
+          })
+          console.log('queryDeck:',data.deck);
+          setDeck(data.deck);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getDeck();
+  }, []);
 
   const [cardState, setCardState] = useState({ editing: false });
   const [addCard, {}] = useMutation(ADD_CARD);
-
-  const [cardFormState, setCardFormState] = useState({ sideA: '', sideB: '' });
+  const [updateCard, {}] = useMutation(UPDATE_CARD);
 
   const handleDeckFormChange = (event, valueArr) => {
     if (event) {
       const { name, value } = event.target;
-      console.log('event:', {name, value});
+      // console.log("event:", { name, value });
       setDeckFormState({ ...deckFormState, [name]: value });
     } else {
-      console.log('state:', { ...deckFormState, categories: [...valueArr] });
+      console.log("state:", { ...deckFormState, categories: [...valueArr] });
       // const categories = valueArr.map(category => deckFormState.categories.push(category));
       // console.log('new array:', categories);
       setDeckFormState({ ...deckFormState, categories: [...valueArr] });
     }
   };
-  const handleDeckFormSubmit = async (event) => {
+  const handleDeckFormSubmit = async (event, action) => {
     event.preventDefault();
-    console.log('test:', {            
-      title: deckFormState.title, 
-      categories: [...deckFormState.categories], 
-      description: deckFormState.description
-    });
+    // console.log("test:", {
+    //   title: deckFormState.title,
+    //   categories: [...deckFormState.categories],
+    //   description: deckFormState.description,
+    // });
     let categories;
     try {
-      const newCategories = deckFormState.categories.filter(category => category.__isNew__ === true);
-      console.log('newCategories:', newCategories);
-
-      if (newCategories.length) {
-        const args = newCategories.map(category => category.value);
-        // console.log('variables:', args);
-        
-        const { data } = await addCategories({ variables: { categories: args } });
-        // console.log('test:', data);
-
-        const addedCategories = data.addCategories;
-        console.log('addedCategories:', addedCategories);
-
-        categories = deckFormState.categories.map(
-          category => {
-            const index = addedCategories.findIndex(
-              element => {
-                // console.log(element.category, category.value);
-                return element.category === category.value;
-              }
-            )
-            // console.log(index);
-            return (index === -1) ? category.value : addedCategories[index]._id;
-          }
-        );
-        console.log('categories:', categories);
-        
-      } else {
-        categories = deckFormState.categories.map(category => category.value);
-        console.log('categories:', categories);
-      }
-      const { data } = await addDeck(
-        {
-          variables: {
-            title: deckFormState.title, 
-            category: categories, 
-            description: deckFormState.description
-          }
-        }
+      const newCategories = deckFormState.categories.filter(
+        (category) => category.__isNew__ === true
       );
-      const newDeck = data.addDeck;
-      console.log('ADD_DECK:', newDeck);
-      setDeck(data.addDeck);
+      // console.log("newCategories:", newCategories);
+      if (newCategories.length) {
+        const args = newCategories.map((category) => category.value);
+        // console.log('variables:', args);
+        const { data } = await addCategories({ variables: { categories: args }});
+        // console.log('test:', data);
+        const addedCategories = data.addCategories;
+        console.log("addedCategories:", addedCategories);
+
+        categories = deckFormState.categories.map((category) => {
+          const index = addedCategories.findIndex((element) => {
+            // console.log(element.category, category.value);
+            return element.category === category.value;
+          });
+          // console.log(index);
+          return index === -1 ? category.value : addedCategories[index]._id;
+        });
+        // console.log("categories:", categories);
+      } else {
+        categories = deckFormState.categories.map((category) => category.value);
+        // console.log("categories:", categories);
+      }
+
+      if (action === 'ADD_DECK') {
+        const { data } = await addDeck({
+          variables: {
+            ...deckFormState,
+            price: parseFloat(deckFormState.price),
+            categories: categories
+          },
+        });
+        console.log("ADD_DECK:", data);
+        setDeck(data.addDeck);
+        return;
+      } 
+      if (action === 'UPDATE_DECK') {
+        if (deckFormState.price) {
+          setDeckFormState({ ...deckFormState, price: parseFloat(deckFormState.price)})
+        }
+        const { data } = await updateDeck({
+          variables: {
+            ...deckFormState,
+            deckId: deck._id,
+            categories: categories
+          }
+        });
+        console.log('update deck:', data);
+        setDeck(data.updateDeck);
+        return;
+      }
     } catch (error) {
       console.log(error);
     }
   };
-  
+
   const handleClick = async (event) => {
-    setCardState({ editing: true })
-  }
-  
+    setCardState({ editing: true });
+    return;
+  };
+
   const handleCardFormChange = async (event) => {
     const { name, value } = event.target;
-    setCardFormState({ ...cardFormState, [name]: value});
+    setCardFormState({ ...cardFormState, [name]: value });
   };
-  const handleCardFormSubmit = async (event) => {
+  const handleCardFormSubmit = async (event, action, cardId) => {
     event.preventDefault();
     // console.log({ ...cardFormState, deckId: deck._id });
     try {
-      const { data } = await addCard(
-        { variables: { ...cardFormState, deckId: deck._id } }
-      );
-      const newDeck = data.addCard;
-      // console.log('ADD_CARD', newDeck);
-      setDeck(newDeck)
+      if (action === 'ADD_CARD') {
+        const { data } = await addCard(
+          { variables: { ...cardFormState, deckId: deck._id }}
+        );
+        // console.log('ADD_CARD', data.addCard);
+        setDeck(data.addCard);
+      }
+      if (action === 'UPDATE_CARD') {
+        console.log(deck._id, cardId);
+        const { data } = await updateCard({
+          variables: { ...cardFormState, deckId: deck._id, cardId: cardId }
+        });
+        console.log('UPDATE_CARD:', data.update);
+        setDeck(data.updateCard);
+      };
+
       setCardState({ editing: false });
-      setCardFormState('');
+      setCardFormState("");
+      return;
     } catch (error) {
       console.log(error);
     }
   };
-  const handleCancel = (event) => {
+  const handleCancelCard = (event) => {
     event.preventDefault();
     // console.log('test');
     setCardState({ editing: false });
-    setCardFormState('');
-  }
-  
+    setCardFormState("");
+    return;
+  };
+
+  const handleDelete = async (action, stateId) => {
+    console.log(action, stateId);
+    try {
+      if (action === 'REMOVE_DECK') {
+        const { data } = await removeDeck(
+          {variables: { deckId: stateId}}
+        );
+        console.log('removeDeck:', data);
+        setDeck(data.removeDeck);
+        return;
+      };
+      if (action === 'REMOVE_CARD') {
+        const { data } = await removeCard(
+          {variables: { cardId: stateId}}
+        );
+        console.log('removeCard:', data);
+        setDeck(data.removeCard);
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (deck === '') {
     return (
-      <Grid columns={3} textAlign='center'>
-        <Grid.Row verticalAlign='middle'>
+      <Grid columns={3} textAlign="center">
+        <Grid.Row verticalAlign="middle">
           <Grid.Column>
-            <CreateDeck 
-              handleChange={handleDeckFormChange} 
-              handleFormSubmit={handleDeckFormSubmit} 
-              formState={deckFormState}
+            <DeckForm
+              handleChange={handleDeckFormChange}
+              handleSubmit={(event) => handleDeckFormSubmit(event, 'ADD_DECK')}
+              state={deckFormState}
             >
-              <Category 
-                placeholder={'Add a Category'}
-                handleChange={handleDeckFormChange} 
+              <Category
+                placeholder={"Add a Category"}
+                handleChange={handleDeckFormChange}
                 categoryState={deckFormState.categories}
               />
-            </CreateDeck>
+            </DeckForm>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    );
+  } else if (deck.title) {
+    return (
+      <Grid columns={3} textAlign="center">
+        <Grid.Row verticalAlign="middle">
+          <Grid.Column>
+            <CreateCardHeader 
+              deck={deck} 
+              state={deckFormState}
+              handleChange={handleDeckFormChange} 
+              handleSubmit={handleDeckFormSubmit}
+              handleDelete={handleDelete}
+            />
+            <CreateCard
+              deck={deck}
+              handleChange={handleCardFormChange}
+              handleSubmit={handleCardFormSubmit}
+              handleClick={handleClick}
+              cardState={cardState}
+              handleDelete={handleDelete}
+            >
+              <CardForm
+                handleChange={handleCardFormChange}
+                handleSubmit={(event) => handleCardFormSubmit(event, 'ADD_CARD')}
+                state={cardFormState}
+                handleCancel={handleCancelCard}
+              />
+            </CreateCard>
           </Grid.Column>
         </Grid.Row>
       </Grid>
     );
   } else {
     return (
-      <Grid columns={3} textAlign='center'>
-        <Grid.Row verticalAlign='middle'>
-          <Grid.Column>
-            <CreateCard  
-              deck={deck} 
-              handleClick={handleClick} 
-              cardState={cardState}
-            >
-              <CardForm 
-                handleFormSubmit={handleCardFormSubmit}
-                handleChange={handleCardFormChange}
-                cardFormState={cardFormState}
-                handleCancel={handleCancel}
-              />
-            </CreateCard>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <div>
+        <div>Deck deleted.</div>
+        <Button 
+          as={Link} 
+          to={'/dashboard'} 
+          inverted color="teal"
+        >
+          Return to Dashboard
+        </Button> 
+      </div>
     )
   }
 }

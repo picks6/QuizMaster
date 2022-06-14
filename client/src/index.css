@@ -84,8 +84,58 @@ krub title
 Ubuntu headings
 Open Sans paragraphs*/
 
+/* .content {
+text-overflow: ellipsis;
+} */
+
 input {
   border-radius: 20px;
+}
+
+
+.ui.checkbox input.hidden+label {
+  color: aqua;
+  margin-left: 1rem;
+}
+
+.ui.card {
+  background-image: url(./assets/images/card.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  color: #0d19a3;
+  font-weight: 700;
+}
+
+ .ui.card:hover {
+    transform: scale(1.02);
+    transition-delay: .4s ease-in-out;
+  }
+
+.ui.header {
+  color: #0d19a3;
+  font-weight: 700;
+  padding-top: 1rem;
+}
+
+.ui.card, .ui.cards>.card {
+  background-image: url('./assets/images/deck1.svg')!important;
+  box-shadow: 0px 0px 5px 5px #e4c580 !important;
+  border-radius: 5px;
+}
+
+#side1 {
+  max-width: 20rem;
+  text-align: center;
+}
+
+#side2 {
+  max-width: 20rem;
+  text-align: center;
+}
+
+.cardStyles.front {
+  width: 5rem;
 }
 
 

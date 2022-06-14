@@ -113,18 +113,6 @@ const resolvers = {
 
 			return { token, user };
 		},
-    addOrder: async (parent, { products }, context) => {
-      console.log(context);
-      if (context.user) {
-        const order = new Order({ products });
-
-        await User.findByIdAndUpdate(context.user._id, { $push: { orders: order } });
-
-        return order;
-      }
-
-      throw new AuthenticationError('Not logged in');
-    },
 		addCategories: async (parent, { categories }) => {
 			// categories: [String]!
 			const categoryData = categories.map((category) => ({
@@ -134,12 +122,10 @@ const resolvers = {
 			return await Category.insertMany(categoryData);
 		},
 
-		addDeck: async (parent, { title, categories, description }, context) => {
-			console.log({ title, description, categories }, context.user);
+		addDeck: async (parent, args, context) => {
+			console.log(args, context.user);
 			const newDeck = await Deck.create({
-				title,
-				description,
-				categories,
+				...args,
 				creator: context.user._id,
 			});
       // console.log('newDeck:', newDeck);
@@ -165,10 +151,12 @@ const resolvers = {
       //   return await User.findByIdAndUpdate(context.user._id, args, { new: true });
       // } 
       if (args.permission) {
-        console.log(context.user.id, args)
-        // return await User.findByIdAndUpdate(
-        //   context.user._id,
-        // )
+        console.log(context.user, args)
+        const updatedUser = await User.findByIdAndUpdate(
+          context.user._id, { $addToSet: { permissions: args.permission }}, {new: true}
+        );
+        console.log(updatedUser);
+        return updatedUser;
       }
       if (args.deckId) { // for backend testing
         return await User.findOneAndUpdate( // add Deck to User
@@ -208,33 +196,55 @@ const resolvers = {
     updateDeck: async (parent, args, context) => {
       // args: { deckId: ID!, title: String, category: String, description: String }
       if (context.deck) {
-        return await Deck.findByIdAndUpdate(context.deck._id, args, {new: true});
+        return await Deck.findByIdAndUpdate(context.deck._id, args, {new: true}).populate('creator categories');
       }
       if (args.deckId) { // for backend testing
         return await Deck.findByIdAndUpdate(
           args.deckId, { ...args }, { new: true }
-        );
+        ).populate('creator categories');
       }
     },
     updateCard: async (parent, args, context) => {
-      // args: { deckId: ID!, cardId: ID, sideA: String!, sideB: String! }
-      if (args.cardId) { // for backend testing
-        return await Deck.findOneAndUpdate(
-          { _id: args.deckId, "cards._id": args.cardId }, 
-          { $set: {"cards.$.sideA": args.sideA, "cards.$.sideB": args.sideB} }, 
-          { new: true }
-        );
+      // args: { deckId: ID!, cardId: ID, sideA: String, sideB: String }
+      try {
+        if (args.sideA && args.sideB) { 
+          return await Deck.findOneAndUpdate(
+            { _id: args.deckId, "cards._id": args.cardId }, 
+            { $set: {"cards.$.sideA": args.sideA, "cards.$.sideB": args.sideB} }, 
+            { new: true }
+          );
+        } else if (args.sideA) { 
+          return await Deck.findOneAndUpdate(
+            { _id: args.deckId, "cards._id": args.cardId }, 
+            { $set: { "cards.$.sideA": args.sideA } }, 
+            { new: true }
+          );
+        } else if (args.sideB) { 
+          return await Deck.findOneAndUpdate(
+            { _id: args.deckId, "cards._id": args.cardId }, 
+            { $set: { "cards.$.sideB": args.sideB } }, 
+            { new: true }
+          );
+        };
+      } catch (error) {
+        console.log(error);
       }
     },
     removeDeck: async (parent, args, context) => {
       if (context.user) {
-        return Deck.findOneAndDelete({ creator: context.user._id });
+        return Deck.findOneAndDelete(
+          { _id: args.deckId }
+        );
       }
       throw new AuthenticationError('You need to be logged in!');
     },
     removeCard: async (parent, args, context) => {
       if (context.user) {
-        return Card.findOneAndDelete({ creator: context.user._id });
+        const deleted = await Deck.findOneAndUpdate(
+          {"cards._id": { "$eq": args.cardId }}, { $pull: { cards: { _id: args.cardId }} }, { new: true }
+        ).populate('categories creator');
+        console.log(deleted);
+        return deleted;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
