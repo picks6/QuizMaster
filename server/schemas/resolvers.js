@@ -10,18 +10,6 @@ const resolvers = {
         context.user._id
       ).populate({ path: 'decks', populate: 'categories cards' });
     },
-    // order: async (parent, { _id }, context) => {
-    //   if (context.user) {
-    //     const user = await User.findById(context.user._id).populate({
-    //       path: 'orders.products',
-    //       populate: 'category'
-    //     });
-
-    //     return user.orders.id(_id);
-    //   }
-
-    //   throw new AuthenticationError('Not logged in');
-    // },
     checkout: async (parent, args, context) => {
       // console.log('test', args);
       const url = new URL(context.headers.referer).origin;
@@ -105,7 +93,8 @@ const resolvers = {
 				...args,
 				creator: context.user._id,
 			});
-      await User.findByIdAndUpdate(context.user._id, {$addToSet: { decks: newDeck._id}});
+      const deck = await User.findByIdAndUpdate(context.user._id, {$addToSet: { decks: newDeck._id}});
+      const permissions = await User.findByIdAndUpdate(context.user._id, {$addToSet: { permissions: newDeck._id}});
 			return await newDeck.populate('categories creator');
 		},
 		addCard: async (parent, { sideA, sideB, deckId }, context) => {

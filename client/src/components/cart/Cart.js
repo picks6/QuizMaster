@@ -23,15 +23,6 @@ const Cart = () => {
   const [updateUser, {}] = useMutation(UPDATE_USER);
   const [getUser, {}] = useLazyQuery(QUERY_USER);
 
-  const getCart = async () => {
-    try {
-      const cart = await idbPromise('cart', 'get');
-
-      return cart;
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const clearCart = async (cart) => {
     try {
       const newCart = await idbPromise('cart', 'delete', cart[0]);
@@ -44,22 +35,23 @@ const Cart = () => {
 
   useEffect(() => {
     const setState = async () => {
-      if (!cart.length) {
-        const cart = await getCart();
-        setCart(cart);
-      }
+      const cart = await idbPromise('cart', 'get');
+      setCart(cart);
     };
     setState();
-  }, []);
+  }, [cart]);
   useEffect(() => {
     // Check to see if this is a redirect back from Checkout
     const query = new URLSearchParams(window.location.search);
     if (query.get("success")) {
       const updatePermission = async () => {
         try {
+          const cart = await idbPromise('cart', 'get');
+          console.log(cart);
           const { data } = await updateUser({
             variables: { permission: cart[0]._id },
           });
+          console.log(data);
           const updatedUser = data.updateUser;
           await dispatch({
             type: SET_PERMISSIONS,

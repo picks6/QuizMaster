@@ -52,11 +52,13 @@ function CardFlipPage() {
   useEffect(() => {
     const setState = async () => {
       if (data) { 
-        const cards = data.deck.price && state.permissions.includes(data.deck._id) ? data.deck.cards : (
+        console.log(data);
+        const cards = (data.deck.price && !state.permissions.includes(data.deck._id)) 
+        ? (
           data.deck.cards.map(card => {
             return { ...card, sideB: "PAYWALL"}
           }).splice(0,3)
-        );
+        ) : data.deck.cards ;
         setCards(cards);
       }
     }
