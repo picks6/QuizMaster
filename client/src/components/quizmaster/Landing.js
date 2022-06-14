@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Form, Button } from "semantic-ui-react";
+import { Card, Form, Button, Header } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { useStoreContext } from "../../utils/GlobalState";
 
@@ -50,10 +50,12 @@ const Landing = ({ decks }) => {
   );
   const DeckPreview = ({ deck }) => (
     <>
-      <Card.Content>{deck.title}</Card.Content>
-      <Card.Content>{deck.description}</Card.Content>
       <Card.Content>
-        {deck.categories.map((category) => `${category.category} `)}
+        <Header as={'h1'}>{deck.title}</Header>
+        <Header as={'h2'}>By: {deck.creator.username}</Header>
+        {deck.price ? <p>{`$${deck.price}`}</p> : <></>}
+        <p>{deck.categories.map((category) => `${category.category} `)}</p>
+        <p>{deck.description}</p>
       </Card.Content>
     </>
   );
@@ -66,7 +68,7 @@ const Landing = ({ decks }) => {
             <Card color="blue" key={deck._id}>
               <DeckPreview deck={deck} />
               {
-                !deck.price && !state.permissions.includes(deck._id) ? (
+                deck.price && !state.permissions.includes(deck._id) ? (
                   <PaywallButtons deck={deck} />
                 ) : (
                   <DeckLink deck={deck}>
