@@ -2,8 +2,16 @@ import React, { useState } from "react";
 import { Header, Button, Card } from "semantic-ui-react";
 
 import { EditDeck, EditCard, Delete } from "./Actions";
+import "../../index.css";
 
-export const CreateCardHeader = ({ deck, state, handleChange, handleSubmit, handleCancel, handleDelete }) => (
+export const CreateCardHeader = ({
+  deck,
+  state,
+  handleChange,
+  handleSubmit,
+  handleCancel,
+  handleDelete,
+}) => (
   <Card>
     <Card.Content>
       <Card.Header>
@@ -14,10 +22,10 @@ export const CreateCardHeader = ({ deck, state, handleChange, handleSubmit, hand
           handleSubmit={handleSubmit}
           handleCancel={handleCancel}
         />
-        <Delete 
-          action={'REMOVE_DECK'}
+        <Delete
+          action={"REMOVE_DECK"}
           stateId={deck._id}
-          header={'Are you sure you want to delete this Deck?'}
+          header={"Are you sure you want to delete this Deck?"}
           handleDelete={handleDelete}
         />
       </Card.Header>
@@ -30,30 +38,38 @@ export const CreateCardHeader = ({ deck, state, handleChange, handleSubmit, hand
     </Card.Content>
   </Card>
 );
-export const CreateCard = ({ deck, handleChange, handleSubmit, handleClick, handleDelete, cardState, children }) => (
+export const CreateCard = ({
+  deck,
+  handleChange,
+  handleSubmit,
+  handleClick,
+  handleDelete,
+  cardState,
+  children,
+}) => (
   <>
     <Card.Group>
       {deck.cards.length ? (
         deck.cards.map((card) => (
           <Card key={card._id}>
             <Card.Content>
-              <EditCard 
+              <EditCard
                 state={cardState}
                 card={card}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
               />
-              <Delete 
-                action={'REMOVE_CARD'}
+              <Delete
+                action={"REMOVE_CARD"}
                 stateId={card._id}
-                header={'Delete this card?'}
+                header={"Delete this card?"}
                 handleDelete={handleDelete}
               />
             </Card.Content>
             <Card.Content>
-              <p>{card.sideA}</p>
-              <p>{card.sideB}</p>
-              </Card.Content>
+              <p id="side1">{card.sideA}</p>
+              <p id="side2">{card.sideB}</p>
+            </Card.Content>
           </Card>
         ))
       ) : (
