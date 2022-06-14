@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-//import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button, Form, Grid, Header, Segment } from "semantic-ui-react";
 import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../../utils/mutations";
@@ -7,6 +7,7 @@ import { ADD_USER } from "../../utils/mutations";
 import Auth from "../../utils/auth";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [formState, setFormState] = useState({
     username: "",
     email: "",
@@ -33,6 +34,7 @@ const Signup = () => {
       });
 
       Auth.login(data.addUser.token);
+      navigate("/dashboard");
     } catch (e) {
       console.error(e);
     }
