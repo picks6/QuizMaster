@@ -26,7 +26,7 @@ export const CreateCardHeader = ({ deck, state, handleChange, handleSubmit, hand
       </Header>
       <Header as="h3">{deck.creator.username}</Header>
       <p>{deck.description}</p>
-      {deck.price ? <Header>{deck.price}</Header> : <></>}
+      {deck.price ? <Header>{`$${deck.price}`}</Header> : <></>}
     </Card.Content>
   </Card>
 );

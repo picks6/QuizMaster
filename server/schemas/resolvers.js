@@ -201,7 +201,7 @@ const resolvers = {
       if (args.deckId) { // for backend testing
         return await Deck.findByIdAndUpdate(
           args.deckId, { ...args }, { new: true }
-        );
+        ).populate('creator categories');
       }
     },
     updateCard: async (parent, args, context) => {
@@ -240,9 +240,9 @@ const resolvers = {
     },
     removeCard: async (parent, args, context) => {
       if (context.user) {
-        const deleted = await Deck.findOneAndDelete(
-          { "cards._id": args.cardId }
-        );
+        const deleted = await Deck.findOneAndUpdate(
+          {"cards._id": { "$eq": args.cardId }}, { $pull: { cards: { _id: args.cardId }} }, { new: true }
+        ).populate('categories creator');
         console.log(deleted);
         return deleted;
       }
