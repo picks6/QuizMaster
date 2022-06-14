@@ -125,8 +125,8 @@ input {
 }
 
 #decks__div {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding-top: 7rem;
+  padding-bottom: 4rem;
 }
 
 #login__header {
@@ -143,14 +143,22 @@ input {
 }
 
 #side1 {
-  max-width: 20rem;
+  max-width: 25rem;
   text-align: center;
+  font-size: 1.5rem;
 }
 
 #side2 {
-  max-width: 20rem;
+  max-width: 25rem;
   text-align: center;
+  font-size: 1.5rem;
+  color: purple;
 }
+
+#singleDeck__container {
+  margin-right: -2rem;
+}
+
 
 #signup {
   padding-top: 5rem;
@@ -160,4 +168,5 @@ input {
   font-size: 4rem;
   font-weight: 700;
 }
+
 
