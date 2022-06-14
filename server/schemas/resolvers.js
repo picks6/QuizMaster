@@ -23,29 +23,21 @@ const resolvers = {
     //   throw new AuthenticationError('Not logged in');
     // },
     checkout: async (parent, args, context) => {
-      console.log('test');
+      // console.log('test', args);
       const url = new URL(context.headers.referer).origin;
-      // const order = new Order({ products: args.products });
-      console.log('url:', url);
+      // console.log('url:', url);
       const line_items = [];
-      
-      const products = [
-        {"_id":"62a4b2a8076f279593d56f98","image":"canned-coffee.jpg","name":"Canned Coffee","price":1.99,"quantity":500,"purchaseQuantity":1},
-        {"_id":"62a4b2a8076f279593d56f98","image":"canned-coffee.jpg","name":"Canned Coffee","price":1.99,"quantity":500,"purchaseQuantity":1}
-      ];
 
-      // const { products } = await order.populate('products');
-
-      for (let i = 0; i < products.length; i++) {
+      for (let i  =0; i < args.products.length; i++) {
+        const deck = await Deck.findById(args.products[0]);
         const product = await stripe.products.create({
-          name: products[i].name,
-          description: products[i].description,
-          // images: [`${url}/images/${products[i].image}`]
+          name: deck.title,
+          description: deck.description,
         });
 
         const price = await stripe.prices.create({
           product: product.id,
-          unit_amount: products[i].price * 100,
+          unit_amount: deck.price * 100,
           currency: 'usd',
         });
 
@@ -53,7 +45,7 @@ const resolvers = {
           price: price.id,
           quantity: 1
         });
-      }
+      };
 
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
