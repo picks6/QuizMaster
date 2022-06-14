@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../utils/mutations";
 import { Button, Form, Grid, Header, Segment } from "semantic-ui-react";
@@ -8,8 +8,7 @@ import Logout from "../../components/quizmaster/Logout";
 import Auth from "../../utils/auth";
 import classes from "./Login.module.css";
 
-const Login = () => {
-  const navigate = useNavigate();
+const Login = (props) => {
   const [formState, setFormState] = useState({ email: "", password: "" });
   const [login, { error, data }] = useMutation(LOGIN_USER);
 
@@ -32,7 +31,6 @@ const Login = () => {
       });
       setFormState({ email: "", password: "" });
       Auth.login(data.login.token);
-      navigate("/dashboard");
     } catch (e) {
       console.error(e);
     }
