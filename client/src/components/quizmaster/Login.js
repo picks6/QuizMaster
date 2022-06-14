@@ -4,9 +4,7 @@ import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../utils/mutations";
 import { Button, Form, Grid, Header, Segment } from "semantic-ui-react";
 
-import Logout from "../../components/quizmaster/Logout";
 import Auth from "../../utils/auth";
-import classes from "./Login.module.css";
 
 const Login = (props) => {
   const navigate = useNavigate();

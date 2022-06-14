@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { useStoreContext } from "../../utils/GlobalState";
 import classes from "./Landing.module.css";
 
-import Cart from "../cart/Cart";
 import { idbPromise } from "../../utils/helpers";
 import Auth from "../../utils/auth";
 import CardWrapper from "../../components/ui/CardWrapper";
