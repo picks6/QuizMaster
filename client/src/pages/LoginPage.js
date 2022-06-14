@@ -1,9 +1,12 @@
 import Login from "../components/quizmaster/Login";
+import LoginWrapper from "../components/ui/LoginWrapper";
 
 function LoginPage() {
   return (
     <section>
-      <Login />
+      <LoginWrapper>
+        <Login />
+      </LoginWrapper>
     </section>
   );
 }
