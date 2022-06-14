@@ -114,7 +114,7 @@ const DashboardPage = () => {
         </Grid.Row>
 
         <Grid.Row>
-          <Header size="large" inverted color="teal">
+          <Header className={classes.header} size="large" inverted color="teal">
             Decks:
           </Header>
           <Card.Group>

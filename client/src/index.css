@@ -84,6 +84,10 @@ krub title
 Ubuntu headings
 Open Sans paragraphs*/
 
+/* .content {
+text-overflow: ellipsis;
+} */
+
 input {
   border-radius: 20px;
 }
@@ -119,4 +123,19 @@ input {
   box-shadow: 0px 0px 5px 5px #e4c580 !important;
   border-radius: 5px;
 }
+
+#side1 {
+  max-width: 20rem;
+  text-align: center;
+}
+
+#side2 {
+  max-width: 20rem;
+  text-align: center;
+}
+
+.cardStyles.front {
+  width: 5rem;
+}
+
 
