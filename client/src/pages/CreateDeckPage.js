@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Category from "../components/ui/Category";
 import { DeckForm } from "../components/quizmaster/DeckForm";
 import { CreateCard, CreateCardHeader } from "../components/quizmaster/CreateCard";
@@ -15,7 +15,7 @@ import {
   UPDATE_CARD,
   REMOVE_DECK,
   REMOVE_CARD } from "../utils/mutations";
-import { Grid, Segment } from "semantic-ui-react";
+import { Button, Grid, Segment } from "semantic-ui-react";
 import "../index.css";
 
 function CreateDeckPage() {
@@ -26,7 +26,7 @@ function CreateDeckPage() {
   const [deckFormState, setDeckFormState] = useState({});
   const [cardFormState, setCardFormState] = useState({ sideA: "", sideB: "" });
   
-  const [deck, setDeck] = useState(false);
+  const [deck, setDeck] = useState('');
   const [addDeck, {}] = useMutation(ADD_DECK);
   const [updateDeck, {}] = useMutation(UPDATE_DECK);
   const [removeCard, {}] = useMutation(REMOVE_CARD);
@@ -183,6 +183,7 @@ function CreateDeckPage() {
           {variables: { deckId: stateId}}
         );
         console.log('removeDeck:', data);
+        setDeck(data.removeDeck);
         return;
       };
       if (action === 'REMOVE_CARD') {
@@ -190,6 +191,7 @@ function CreateDeckPage() {
           {variables: { cardId: stateId}}
         );
         console.log('removeCard:', data);
+        setDeck(data.removeCard);
         return;
       }
     } catch (error) {
@@ -197,7 +199,7 @@ function CreateDeckPage() {
     }
   };
 
-  if (!deck) {
+  if (deck === '') {
     return (
       <Grid columns={3} textAlign="center">
         <Grid.Row verticalAlign="middle">
@@ -217,7 +219,7 @@ function CreateDeckPage() {
         </Grid.Row>
       </Grid>
     );
-  } else {
+  } else if (deck.title) {
     return (
       <Grid columns={3} textAlign="center">
         <Grid.Row verticalAlign="middle">
@@ -248,6 +250,19 @@ function CreateDeckPage() {
         </Grid.Row>
       </Grid>
     );
+  } else {
+    return (
+      <div>
+        <div>Deck deleted.</div>
+        <Button 
+          as={Link} 
+          to={'/dashboard'} 
+          inverted color="teal"
+        >
+          Return to Dashboard
+        </Button> 
+      </div>
+    )
   }
 }
 
