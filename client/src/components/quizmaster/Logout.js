@@ -14,7 +14,7 @@ const Logout = () => {
     <Button 
       color="purple" 
       content="Logout" 
-      onClick={Auth.logout}
+      onClick={handleLogout}
     />
   )
 };
