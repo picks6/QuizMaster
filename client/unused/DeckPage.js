@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { useLocation } from "react-router-dom";
 
 import { useMutation } from '@apollo/client';
-import { ADD_CATEGORIES, UPDATE_DECK, UPDATE_CARD } from '../utils/mutations';
+import { ADD_CATEGORIES, UPDATE_DECK, UPDATE_CARD } from '../src/utils/mutations';
 
 import Deck from "../components/quizmaster/Deck";
 
