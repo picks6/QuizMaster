@@ -57,9 +57,12 @@ const Cart = () => {
     if (query.get("success")) {
       const updatePermission = async () => {
         try {
+          const cart = await idbPromise('cart', 'get');
+          console.log(cart);
           const { data } = await updateUser({
             variables: { permission: cart[0]._id },
           });
+          console.log(data);
           const updatedUser = data.updateUser;
           await dispatch({
             type: SET_PERMISSIONS,

@@ -105,7 +105,8 @@ const resolvers = {
 				...args,
 				creator: context.user._id,
 			});
-      await User.findByIdAndUpdate(context.user._id, {$addToSet: { decks: newDeck._id}});
+      const deck = await User.findByIdAndUpdate(context.user._id, {$addToSet: { decks: newDeck._id}});
+      const permissions = await User.findByIdAndUpdate(context.user._id, {$addToSet: { permissions: newDeck._id}});
 			return await newDeck.populate('categories creator');
 		},
 		addCard: async (parent, { sideA, sideB, deckId }, context) => {

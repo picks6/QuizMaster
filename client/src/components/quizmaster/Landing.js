@@ -69,7 +69,7 @@ const Landing = ({ decks }) => {
             <Card color="blue" key={deck._id}>
               <DeckPreview deck={deck} />
               {
-                deck.price && !state.permissions.includes(deck._id) ? (
+                (deck.price && !state.permissions.includes(deck._id)) ? (
                   <PaywallButtons deck={deck} />
                 ) : (
                   <DeckLink deck={deck}>
