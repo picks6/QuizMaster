@@ -18,10 +18,10 @@ const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
 const Cart = () => {
   const [message, setMessage] = useState("");
   const [cart, setCart] = useState([]);
-  const [state, dispatch] = useStoreContext();
+  const [dispatch] = useStoreContext();
   const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
-  const [updateUser, {}] = useMutation(UPDATE_USER);
-  const [getUser, {}] = useLazyQuery(QUERY_USER);
+  const [updateUser] = useMutation(UPDATE_USER);
+  const [getUser] = useLazyQuery(QUERY_USER);
 
   const getCart = async () => {
     try {

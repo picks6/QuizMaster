@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Card, Form, Button, Header } from "semantic-ui-react";
+import React  from "react";
+import { Card, Button, Header } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { useStoreContext } from "../../utils/GlobalState";
 import classes from "./Landing.module.css";
@@ -10,7 +10,7 @@ import CardWrapper from "../../components/ui/CardWrapper";
 const slugify = require("slugify");
 
 const Landing = ({ decks }) => {
-  const [state, dispatch] = useStoreContext();
+  const [state] = useStoreContext();
 
   const handleCheckout = async ({ deck }) => {
     await idbPromise("cart", "put", deck);

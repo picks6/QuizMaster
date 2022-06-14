@@ -41,7 +41,7 @@ const Button = styled.button`
 `;
 
 function CardFlipPage() {
-  const [state, dispatch] = useStoreContext();
+  const [state] = useStoreContext();
   const params = useParams();
   const [index, setIndex] = useState(0);
   const [cards, setCards] = useState("");

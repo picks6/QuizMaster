@@ -75,7 +75,7 @@ export const CreateCard = ({
       ) : (
         <></>
       )}
-      {cardState.editing == true ? (
+      {cardState.editing === true ? (
         <Card>
           <Card.Content>{children}</Card.Content>
         </Card>
