@@ -2,21 +2,26 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import Category from "../components/ui/Category";
 import { DeckForm } from "../components/quizmaster/DeckForm";
-import { CreateCard, CreateCardHeader } from "../components/quizmaster/CreateCard";
+import {
+  CreateCard,
+  CreateCardHeader,
+} from "../components/quizmaster/CreateCard";
 import CardForm from "../components/quizmaster/CardForm";
 
 import { useMutation, useLazyQuery } from "@apollo/client";
 import { QUERY_DECK } from "../utils/queries";
-import { 
-  ADD_CATEGORIES, 
-  ADD_DECK, 
-  ADD_CARD, 
-  UPDATE_DECK, 
+import {
+  ADD_CATEGORIES,
+  ADD_DECK,
+  ADD_CARD,
+  UPDATE_DECK,
   UPDATE_CARD,
   REMOVE_DECK,
-  REMOVE_CARD } from "../utils/mutations";
+  REMOVE_CARD,
+} from "../utils/mutations";
 import { Button, Grid, Segment } from "semantic-ui-react";
 import "../index.css";
+import SingleDeckWrapper from "../components/ui/SingleDeckWrapper";
 
 function CreateDeckPage() {
   const params = useParams();
@@ -25,8 +30,8 @@ function CreateDeckPage() {
 
   const [deckFormState, setDeckFormState] = useState({});
   const [cardFormState, setCardFormState] = useState({ sideA: "", sideB: "" });
-  
-  const [deck, setDeck] = useState('');
+
+  const [deck, setDeck] = useState("");
   const [addDeck, {}] = useMutation(ADD_DECK);
   const [updateDeck, {}] = useMutation(UPDATE_DECK);
   const [removeCard, {}] = useMutation(REMOVE_CARD);
@@ -38,9 +43,9 @@ function CreateDeckPage() {
         if (params.id) {
           console.log(params);
           const { data } = await queryDeck({
-            variables: { deckId: params.id }
-          })
-          console.log('queryDeck:',data.deck);
+            variables: { deckId: params.id },
+          });
+          console.log("queryDeck:", data.deck);
           setDeck(data.deck);
         }
       } catch (error) {
@@ -82,7 +87,9 @@ function CreateDeckPage() {
       if (newCategories.length) {
         const args = newCategories.map((category) => category.value);
         // console.log('variables:', args);
-        const { data } = await addCategories({ variables: { categories: args }});
+        const { data } = await addCategories({
+          variables: { categories: args },
+        });
         // console.log('test:', data);
         const addedCategories = data.addCategories;
         console.log("addedCategories:", addedCategories);
@@ -101,30 +108,33 @@ function CreateDeckPage() {
         // console.log("categories:", categories);
       }
 
-      if (action === 'ADD_DECK') {
+      if (action === "ADD_DECK") {
         const { data } = await addDeck({
           variables: {
             ...deckFormState,
             price: parseFloat(deckFormState.price),
-            categories: categories
+            categories: categories,
           },
         });
         console.log("ADD_DECK:", data);
         setDeck(data.addDeck);
         return;
-      } 
-      if (action === 'UPDATE_DECK') {
+      }
+      if (action === "UPDATE_DECK") {
         if (deckFormState.price) {
-          setDeckFormState({ ...deckFormState, price: parseFloat(deckFormState.price)})
+          setDeckFormState({
+            ...deckFormState,
+            price: parseFloat(deckFormState.price),
+          });
         }
         const { data } = await updateDeck({
           variables: {
             ...deckFormState,
             deckId: deck._id,
-            categories: categories
-          }
+            categories: categories,
+          },
         });
-        console.log('update deck:', data);
+        console.log("update deck:", data);
         setDeck(data.updateDeck);
         return;
       }
@@ -146,21 +156,21 @@ function CreateDeckPage() {
     event.preventDefault();
     // console.log({ ...cardFormState, deckId: deck._id });
     try {
-      if (action === 'ADD_CARD') {
-        const { data } = await addCard(
-          { variables: { ...cardFormState, deckId: deck._id }}
-        );
+      if (action === "ADD_CARD") {
+        const { data } = await addCard({
+          variables: { ...cardFormState, deckId: deck._id },
+        });
         // console.log('ADD_CARD', data.addCard);
         setDeck(data.addCard);
       }
-      if (action === 'UPDATE_CARD') {
+      if (action === "UPDATE_CARD") {
         console.log(deck._id, cardId);
         const { data } = await updateCard({
-          variables: { ...cardFormState, deckId: deck._id, cardId: cardId }
+          variables: { ...cardFormState, deckId: deck._id, cardId: cardId },
         });
-        console.log('UPDATE_CARD:', data.update);
+        console.log("UPDATE_CARD:", data.update);
         setDeck(data.updateCard);
-      };
+      }
 
       setCardState({ editing: false });
       setCardFormState("");
@@ -180,19 +190,15 @@ function CreateDeckPage() {
   const handleDelete = async (action, stateId) => {
     console.log(action, stateId);
     try {
-      if (action === 'REMOVE_DECK') {
-        const { data } = await removeDeck(
-          {variables: { deckId: stateId}}
-        );
-        console.log('removeDeck:', data);
+      if (action === "REMOVE_DECK") {
+        const { data } = await removeDeck({ variables: { deckId: stateId } });
+        console.log("removeDeck:", data);
         setDeck(data.removeDeck);
         return;
-      };
-      if (action === 'REMOVE_CARD') {
-        const { data } = await removeCard(
-          {variables: { cardId: stateId}}
-        );
-        console.log('removeCard:', data);
+      }
+      if (action === "REMOVE_CARD") {
+        const { data } = await removeCard({ variables: { cardId: stateId } });
+        console.log("removeCard:", data);
         setDeck(data.removeCard);
         return;
       }
@@ -201,14 +207,14 @@ function CreateDeckPage() {
     }
   };
 
-  if (deck === '') {
+  if (deck === "") {
     return (
       <Grid columns={3} textAlign="center">
         <Grid.Row verticalAlign="middle">
           <Grid.Column>
             <DeckForm
               handleChange={handleDeckFormChange}
-              handleSubmit={(event) => handleDeckFormSubmit(event, 'ADD_DECK')}
+              handleSubmit={(event) => handleDeckFormSubmit(event, "ADD_DECK")}
               state={deckFormState}
             >
               <Category
@@ -223,48 +229,48 @@ function CreateDeckPage() {
     );
   } else if (deck.title) {
     return (
-      <Grid columns={3} textAlign="center">
-        <Grid.Row verticalAlign="middle">
-          <Grid.Column>
-            <CreateCardHeader 
-              deck={deck} 
-              state={deckFormState}
-              handleChange={handleDeckFormChange} 
-              handleSubmit={handleDeckFormSubmit}
-              handleDelete={handleDelete}
-            />
-            <CreateCard
-              deck={deck}
-              handleChange={handleCardFormChange}
-              handleSubmit={handleCardFormSubmit}
-              handleClick={handleClick}
-              cardState={cardState}
-              handleDelete={handleDelete}
-            >
-              <CardForm
-                handleChange={handleCardFormChange}
-                handleSubmit={(event) => handleCardFormSubmit(event, 'ADD_CARD')}
-                state={cardFormState}
-                handleCancel={handleCancelCard}
+      <SingleDeckWrapper>
+        <Grid padded columns={3} textAlign="center">
+          <Grid.Row verticalAlign="middle">
+            <Grid.Column id="singleDeck__container">
+              <CreateCardHeader
+                deck={deck}
+                state={deckFormState}
+                handleChange={handleDeckFormChange}
+                handleSubmit={handleDeckFormSubmit}
+                handleDelete={handleDelete}
               />
-            </CreateCard>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+              <CreateCard
+                deck={deck}
+                handleChange={handleCardFormChange}
+                handleSubmit={handleCardFormSubmit}
+                handleClick={handleClick}
+                cardState={cardState}
+                handleDelete={handleDelete}
+              >
+                <CardForm
+                  handleChange={handleCardFormChange}
+                  handleSubmit={(event) =>
+                    handleCardFormSubmit(event, "ADD_CARD")
+                  }
+                  state={cardFormState}
+                  handleCancel={handleCancelCard}
+                />
+              </CreateCard>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </SingleDeckWrapper>
     );
   } else {
     return (
       <div>
         <div>Deck deleted.</div>
-        <Button 
-          as={Link} 
-          to={'/dashboard'} 
-          inverted color="teal"
-        >
+        <Button as={Link} to={"/dashboard"} inverted color="teal">
           Return to Dashboard
-        </Button> 
+        </Button>
       </div>
-    )
+    );
   }
 }
 
