@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import { Card,  Header, Button } from "semantic-ui-react";
 import { loadStripe } from '@stripe/stripe-js';
 import { useLazyQuery, useMutation } from "@apollo/client";
@@ -6,11 +7,13 @@ import { QUERY_CHECKOUT, QUERY_USER } from "../../utils/queries";
 import { UPDATE_USER } from "../../utils/mutations";
 
 import { idbPromise } from '../../utils/helpers';
+
 import { useStoreContext } from "../../utils/GlobalState";
-import { SET_PERMISSIONS } from '../../utils/actions';
+import { SET_PERMISSIONS } from "../../utils/actions";
+import CartWrapper from "../ui/CartWrapper";
 // import "./ProductDisplay.css";
 
-const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
 
 const Cart = () => {
   const [message, setMessage] = useState("");
@@ -19,10 +22,11 @@ const Cart = () => {
   const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
   const [updateUser, {}] = useMutation(UPDATE_USER);
   const [getUser, {}] = useLazyQuery(QUERY_USER);
-  
+
   const getCart = async () => {
     try {
       const cart = await idbPromise('cart', 'get');
+
       return cart;
     } catch (error) {
       console.log(error);
@@ -31,6 +35,7 @@ const Cart = () => {
   const clearCart = async (cart) => {
     try {
       const newCart = await idbPromise('cart', 'delete', cart[0]);
+
       return newCart;
     } catch (error) {
       console.log(error);
@@ -52,9 +57,14 @@ const Cart = () => {
     if (query.get("success")) {
       const updatePermission = async () => {
         try {
-          const { data } = await updateUser({ variables: { permission: cart[0]._id}});
+          const { data } = await updateUser({
+            variables: { permission: cart[0]._id },
+          });
           const updatedUser = data.updateUser;
-          await dispatch({ type: SET_PERMISSIONS, permissions: updatedUser.permissions });
+          await dispatch({
+            type: SET_PERMISSIONS,
+            permissions: updatedUser.permissions,
+          });
           clearCart(cart);
         } catch (error) {
           console.log(error);
@@ -68,16 +78,17 @@ const Cart = () => {
       const getPermissions = async () => {
         try {
           const { data } = await getUser();
-          await dispatch({ type: SET_PERMISSIONS, permissions: data.user.permissions });
+          await dispatch({
+            type: SET_PERMISSIONS,
+            permissions: data.user.permissions,
+          });
           clearCart(cart);
         } catch (error) {
           console.log(error);
         }
       };
       getPermissions();
-      setMessage(
-        "Order canceled."
-      );
+      setMessage("Order canceled.");
     }
   }, []);
   useEffect(() => {
@@ -93,42 +104,47 @@ const Cart = () => {
     const productIds = [];
 
     cart.forEach((item) => productIds.push(item._id));
-    console.log('test:', cart);
+    console.log("test:", cart);
     await getCheckout({
       variables: { products: productIds },
     });
   };
-  
+
   const Message = ({ message }) => (
     <section>
       <p>{message}</p>
       {/* <Button onClick={}></Button> */}
     </section>
   );
-  
+
   if (!cart.length) {
-    return <div>Loading</div>
+    return <div>Loading</div>;
   } else {
-    return message ? (<Message message={message} />) : (
-      <Card>
-        <Card.Content className="product">
-          <Card.Header>Deck: {cart[0].title}</Card.Header>
-        </Card.Content>
-        <Card.Content className="description">
-          <Header>
-            Categories: {cart[0].categories.map((category) => `${category.category} `)}
-          </Header>
-          <p>By: {cart[0].creator.username}</p>
-          <p>Price: {cart[0].price}</p>
-          <p>Description:</p>
-          <p>{cart[0].description}</p>
-        </Card.Content>
-        
-        <Button onClick={submitCheckout}>
-          Checkout
-        </Button>
-      </Card>
-    )
+    return message ? (
+      <Message message={message} />
+    ) : (
+      <CartWrapper>
+        <Card>
+          <Card.Content className="product">
+            <Card.Header>Deck: {cart[0].title}</Card.Header>
+          </Card.Content>
+          <Card.Content className="description">
+            <Header>
+              Categories:{" "}
+              {cart[0].categories.map((category) => `${category.category} `)}
+            </Header>
+            <p>By: {cart[0].creator.username}</p>
+            <p>Price: {cart[0].price}</p>
+            <p>Description:</p>
+            <p>{cart[0].description}</p>
+          </Card.Content>
+
+          <Button color="blue" onClick={submitCheckout}>
+            Checkout
+          </Button>
+        </Card>
+      </CartWrapper>
+    );
   }
 };
 export default Cart;
