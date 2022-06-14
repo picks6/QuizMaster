@@ -10,11 +10,11 @@
 
 .label__container {
     padding-top: 1rem;
+    padding-bottom: .7rem;
 }
 
 .price__container {
     padding-bottom: 4rem;
-    padding-top: .7rem;
 }
 
 .search__container {

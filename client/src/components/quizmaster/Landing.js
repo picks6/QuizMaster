@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Card, Form, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { useStoreContext } from "../../utils/GlobalState";
+import classes from "./Landing.module.css";
 
 import Cart from "../cart/Cart";
 import { idbPromise } from "../../utils/helpers";
@@ -12,15 +13,17 @@ const slugify = require("slugify");
 const Landing = ({ decks }) => {
   const [state, dispatch] = useStoreContext();
 
-  const handleCheckout = async ({deck}) => {
-    console.log('deck:', deck);
-    const cart = await idbPromise('cart', 'put', deck);
-    console.log('cart:', cart);
-  }
-  const DeckLink = ({deck, children}) => (
-    <Button 
-      as={Link} 
-      to={`/deck/${slugify(deck.title)}/${deck._id}`} 
+  const handleCheckout = async ({ deck }) => {
+    console.log("deck:", deck);
+    const cart = await idbPromise("cart", "put", deck);
+    console.log("cart:", cart);
+  };
+  const DeckLink = ({ deck, children }) => (
+    <Button
+      color="teal"
+      className={classes.deck__button}
+      as={Link}
+      to={`/deck/${slugify(deck.title)}/${deck._id}`}
       state={deck}
     >
       {children}
@@ -30,11 +33,12 @@ const Landing = ({ decks }) => {
     const url = Auth.isLoggedIn ? "/checkout" : "/signup";
     return (
       <Button
+        color="blue"
         animated
         as={Link}
         to={url}
         // state={deck}
-        onClick={()=>handleCheckout(deck)}
+        onClick={() => handleCheckout(deck)}
       >
         <Button.Content visible>Buy</Button.Content>
         <Button.Content hidden>Price</Button.Content>
@@ -65,15 +69,11 @@ const Landing = ({ decks }) => {
           decks.map((deck) => (
             <Card color="blue" key={deck._id}>
               <DeckPreview deck={deck} />
-              {
-                !deck.price && !state.permissions.includes(deck._id) ? (
-                  <PaywallButtons deck={deck} />
-                ) : (
-                  <DeckLink deck={deck}>
-                    View Deck
-                  </DeckLink>
-                )
-              }
+              {!deck.price && !state.permissions.includes(deck._id) ? (
+                <PaywallButtons deck={deck} />
+              ) : (
+                <DeckLink deck={deck}>View Deck</DeckLink>
+              )}
             </Card>
           ))
         ) : (
