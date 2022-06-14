@@ -73,7 +73,7 @@ const DashboardPage = () => {
   const user = data.user;
   console.log("QUERY_USER:", user);
   console.log(state);
-  
+
   if (!Auth.isLoggedIn()) {
     navigate("/login");
   } else {
@@ -98,10 +98,10 @@ const DashboardPage = () => {
               <Form
               // onSubmit={handleSubmitSearch}
               >
-                <Header size="large" inverted color="teal">
+                <Header id="quicksearch" size="large" inverted color="teal">
                   Quick Search:{" "}
                 </Header>
-  
+
                 {/* <Category 
                     placeholder={''}
                     handleChange={updateSearch}
@@ -114,9 +114,14 @@ const DashboardPage = () => {
               </Form>
             </Grid.Column>
           </Grid.Row>
-  
-          <Grid.Row>
-            <Header className={classes.header} size="large" inverted color="teal">
+
+          <Grid.Row id="decks__div">
+            <Header
+              className={classes.header}
+              size="large"
+              inverted
+              color="teal"
+            >
               Decks:
             </Header>
             <Card.Group>
