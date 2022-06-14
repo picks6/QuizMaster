@@ -8,7 +8,7 @@ import Logout from "../../components/quizmaster/Logout";
 import Auth from "../../utils/auth";
 import classes from "./Login.module.css";
 
-const Login = () => {
+const Login = (props) => {
   const navigate = useNavigate();
   const [formState, setFormState] = useState({ email: "", password: "" });
   const [login, { error, data }] = useMutation(LOGIN_USER);
