@@ -115,7 +115,7 @@ input {
 }
 
 .ui.card, .ui.cards>.card {
-  background: #15db95 !important;
+  background-image: url('./assets/images/deck1.svg')!important;
   box-shadow: 0px 0px 5px 5px #e4c580 !important;
   border-radius: 5px;
 }
