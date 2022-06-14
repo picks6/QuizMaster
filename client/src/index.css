@@ -124,6 +124,24 @@ input {
   border-radius: 5px;
 }
 
+#decks__div {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+#login__header {
+  font-size: 4rem;
+  font-weight: 700;
+}
+
+#login {
+  padding-top: 5rem;
+}
+
+#quicksearch {
+  margin-top: 2.5rem;
+}
+
 #side1 {
   max-width: 20rem;
   text-align: center;
@@ -134,8 +152,12 @@ input {
   text-align: center;
 }
 
-.cardStyles.front {
-  width: 5rem;
+#signup {
+  padding-top: 5rem;
 }
 
+#signup__header {
+  font-size: 4rem;
+  font-weight: 700;
+}
 
