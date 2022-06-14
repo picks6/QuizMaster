@@ -124,18 +124,49 @@ input {
   border-radius: 5px;
 }
 
+#decks__div {
+  padding-top: 7rem;
+  padding-bottom: 4rem;
+}
+
+#login__header {
+  font-size: 4rem;
+  font-weight: 700;
+}
+
+#login {
+  padding-top: 5rem;
+}
+
+#quicksearch {
+  margin-top: 2.5rem;
+}
+
 #side1 {
-  max-width: 20rem;
+  max-width: 25rem;
   text-align: center;
+  font-size: 1.5rem;
 }
 
 #side2 {
-  max-width: 20rem;
+  max-width: 25rem;
   text-align: center;
+  font-size: 1.5rem;
+  color: purple;
 }
 
-.cardStyles.front {
-  width: 5rem;
+#singleDeck__container {
+  margin-right: -2rem;
+}
+
+
+#signup {
+  padding-top: 5rem;
+}
+
+#signup__header {
+  font-size: 4rem;
+  font-weight: 700;
 }
 
 

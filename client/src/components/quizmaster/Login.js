@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../utils/mutations";
 import { Button, Form, Grid, Header, Segment } from "semantic-ui-react";
@@ -9,6 +9,7 @@ import Auth from "../../utils/auth";
 import classes from "./Login.module.css";
 
 const Login = (props) => {
+  const navigate = useNavigate();
   const [formState, setFormState] = useState({ email: "", password: "" });
   const [login, { error, data }] = useMutation(LOGIN_USER);
 
@@ -31,16 +32,16 @@ const Login = (props) => {
       });
       setFormState({ email: "", password: "" });
       Auth.login(data.login.token);
+      navigate("/dashboard");
     } catch (e) {
       console.error(e);
     }
-    
   };
 
   return (
-    <Grid textAlign="center" style={{ height: "70vh" }} verticalAlign="middle">
-      <Grid.Column style={{ maxWidth: 450 }}>
-        <Header as="h2" color="teal" textAlign="center">
+    <Grid textAlign="center" verticalAlign="middle">
+      <Grid.Column style={{ maxWidth: 550 }}>
+        <Header id="login__header" as="h2" color="teal" textAlign="center">
           Login
         </Header>
         {data ? (
@@ -49,7 +50,7 @@ const Login = (props) => {
             {/* <Link to="/">back to the homepage.</Link> */}
           </p>
         ) : (
-          <Form size="large" onSubmit={handleFormSubmit}>
+          <Form id="login" onSubmit={handleFormSubmit}>
             <Segment stacked></Segment>
             <Form.Input
               fluid

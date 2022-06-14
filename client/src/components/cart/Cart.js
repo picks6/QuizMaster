@@ -96,21 +96,17 @@ const Cart = () => {
   const submitCheckout = async () => {
     const productIds = [];
 
-    cart.forEach((item) => {
-      for (let i = 0; i < item.purchaseQuantity; i++) {
-        productIds.push(item._id);
-      }
-    });
-
+    cart.forEach((item) => productIds.push(item._id));
+    console.log('test:', cart);
     await getCheckout({
       variables: { products: productIds },
     });
-    console.log('test:', data);
   };
   
   const Message = ({ message }) => (
     <section>
       <p>{message}</p>
+      {/* <Button onClick={}></Button> */}
     </section>
   );
   // console.log(cart);
