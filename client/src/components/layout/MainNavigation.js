@@ -57,14 +57,14 @@ const MainNavigation = () => {
         <>
           <DashboardButton />
           <HomeButton />
-          <SearchBar />
+          {/* <SearchBar /> */}
           <LogoutButton />
         </>
       ) : (
         <>
           <LoginButton />
           <HomeButton />
-          <SearchBar />
+          {/* <SearchBar /> */}
           <SignupButton />
         </>
       )}
