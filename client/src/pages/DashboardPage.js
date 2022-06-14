@@ -85,7 +85,7 @@ const DashboardPage = () => {
 
       searcherDispatch({ type: "FINISH_SEARCH", results: user.decks.filter(isMatch) });
     }, 300);
-  }, [data.user.decks]);
+  }, [data]);
   // const [decks, setDecks] = useState("");
   // const [search, setSearch] = useState("");
   // const [categories, setCategories] = useState("");
@@ -115,7 +115,7 @@ const DashboardPage = () => {
   // };
   if (loading) return <div>Loading</div>;
   if (error) return `Error! ${error.message}`;
-
+  
   const user = data.user;
   // console.log("QUERY_USER:", user);
   // console.log(state);
@@ -166,9 +166,6 @@ const DashboardPage = () => {
                   value={searcherState.value}
 
                 />
-                <Button inverted color="teal" type="submit">
-                  Search
-                </Button>
               </Form>
             </Grid.Column>
           </Grid.Row>
