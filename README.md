@@ -1,17 +1,20 @@
 # Table of Contents
   1. [Title](#Title)
-  2. [Description](#Description)
-  3. [Installation](#Installation)
-  4. [Benefits](#Benefits)
-  5. [Licenses](#Licenses)
-  6. [Contributions](#Contributions)
-  7. [Technologies] (#Technologies)
-  7. [Email](#Email)
+  2. [Mockup](#Mockup)
+  3. [Description](#Description)
+  4. [Installation](#Installation)
+  5. [Benefits](#Benefits)
+  6. [Licenses](#Licenses)
+  7. [Contributions](#Contributions)
+  8. [Technologies](#Technologies)
+  9. [Email](#Email)
   
 # Quizmaster
 Deployed application is live at: https://polar-island-54317.herokuapp.com/ on Heroku
+## Mockup 
+<img src="./assets/../client/src/assets/images/mockup.png" alt="home, search, and deck pages of the app">
 
-# Description
+## Description
 Quizmaster is a full stack trivia question exchange. Users can browse or purchase trivia questions sets or even create their own to be listed in the exchange
 # Installation
 Clone repository <br>
