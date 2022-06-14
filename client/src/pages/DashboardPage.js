@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useRef, useCallback } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Button,
   Card,
@@ -24,7 +24,6 @@ import classes from "./DashboardPage.module.css";
 import { SET_PERMISSIONS } from "../utils/actions";
 
 const DashboardPage = () => {
-  const navigate = useNavigate();
   // const [user, setUser] = useState("");
   const [state, dispatch] = useStoreContext();
   const { loading, error, data } = useQuery(QUERY_USER);
@@ -73,72 +72,70 @@ const DashboardPage = () => {
   const user = data.user;
   console.log("QUERY_USER:", user);
   console.log(state);
-  
-  if (!Auth.isLoggedIn()) {
-    navigate("/login");
-  } else {
-    return (
-      <Segment inverted className="container" placeholder>
-        <Grid stackable columns={3} textAlign="center">
-          <Grid.Row verticalAlign="middle">
-            <Grid.Column>
-              <Header size="huge" inverted color="teal">
-                Welcome {data.user.username}
-              </Header>
-            </Grid.Column>
-            <Grid.Column>
-              <Header size="large" inverted color="teal" icon>
-                Create a Deck:
-              </Header>
-              <Button as={Link} to="/create-deck" inverted color="teal">
-                <Icon name="plus" />
-              </Button>
-            </Grid.Column>
-            <Grid.Column className={classes.search}>
-              <Form
-              // onSubmit={handleSubmitSearch}
-              >
-                <Header size="large" inverted color="teal">
-                  Quick Search:{" "}
-                </Header>
-  
-                {/* <Category 
-                    placeholder={''}
-                    handleChange={updateSearch}
-                    categoryState={categories} 
-                  /> */}
-                <Searcher decks={user.decks} />
-                <Button inverted color="teal" type="submit">
-                  Search
-                </Button>
-              </Form>
-            </Grid.Column>
-          </Grid.Row>
-  
-          <Grid.Row>
-            <Header className={classes.header} size="large" inverted color="teal">
-              Decks:
+
+  return !Auth.isLoggedIn() ? (
+    window.location.assign("/login")
+  ) : (
+    <Segment inverted className="container" placeholder>
+      <Grid stackable columns={3} textAlign="center">
+        <Grid.Row verticalAlign="middle">
+          <Grid.Column>
+            <Header size="huge" inverted color="teal">
+              Welcome {data.user.username}
             </Header>
-            <Card.Group>
-              {user.decks.map((deck) => (
-                <Card
-                  as={Link}
-                  to={`/deck/${deck._id}/edit`}
-                  state={deck}
-                  key={deck._id}
-                >
-                  <Card.Content>{deck.title}</Card.Content>
-                  <Card.Content>{deck.description}</Card.Content>
-                  <Card.Content>
-                    {deck.categories.map((category) => `${category.category} `)}
-                  </Card.Content>
-                </Card>
-              ))}
-            </Card.Group>
-          </Grid.Row>
-        </Grid>
-      </Segment>
-    );
-  }
+          </Grid.Column>
+          <Grid.Column>
+            <Header size="large" inverted color="teal" icon>
+              Create a Deck:
+            </Header>
+            <Button as={Link} to="/create-deck" inverted color="teal">
+              <Icon name="plus" />
+            </Button>
+          </Grid.Column>
+          <Grid.Column className={classes.search}>
+            <Form
+            // onSubmit={handleSubmitSearch}
+            >
+              <Header size="large" inverted color="teal">
+                Quick Search:{" "}
+              </Header>
+
+              {/* <Category 
+                  placeholder={''}
+                  handleChange={updateSearch}
+                  categoryState={categories} 
+                /> */}
+              <Searcher decks={user.decks} />
+              <Button inverted color="teal" type="submit">
+                Search
+              </Button>
+            </Form>
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row>
+          <Header className={classes.header} size="large" inverted color="teal">
+            Decks:
+          </Header>
+          <Card.Group>
+            {user.decks.map((deck) => (
+              <Card
+                as={Link}
+                to={`/deck/${deck._id}/edit`}
+                state={deck}
+                key={deck._id}
+              >
+                <Card.Content>{deck.title}</Card.Content>
+                <Card.Content>{deck.description}</Card.Content>
+                <Card.Content>
+                  {deck.categories.map((category) => `${category.category} `)}
+                </Card.Content>
+              </Card>
+            ))}
+          </Card.Group>
+        </Grid.Row>
+      </Grid>
+    </Segment>
+  );
 };
 export default DashboardPage;
