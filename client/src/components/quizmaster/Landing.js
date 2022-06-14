@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { useStoreContext } from "../../utils/GlobalState";
 import classes from "./Landing.module.css";
 
-import Cart from "../cart/Cart";
 import { idbPromise } from "../../utils/helpers";
 import Auth from "../../utils/auth";
 import CardWrapper from "../../components/ui/CardWrapper";
@@ -14,9 +13,7 @@ const Landing = ({ decks }) => {
   const [state, dispatch] = useStoreContext();
 
   const handleCheckout = async ({ deck }) => {
-    console.log("deck:", deck);
-    const cart = await idbPromise("cart", "put", deck);
-    console.log("cart:", cart);
+    await idbPromise("cart", "put", deck);
   };
   const DeckLink = ({ deck, children }) => (
     <Button

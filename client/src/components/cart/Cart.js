@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Card, Header, Button } from "semantic-ui-react";
-import { loadStripe } from "@stripe/stripe-js";
-import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
+
+import { Card,  Header, Button } from "semantic-ui-react";
+import { loadStripe } from '@stripe/stripe-js';
+import { useLazyQuery, useMutation } from "@apollo/client";
 import { QUERY_CHECKOUT, QUERY_USER } from "../../utils/queries";
 import { UPDATE_USER } from "../../utils/mutations";
 
-import { idbPromise } from "../../utils/helpers";
-import Auth from "../../utils/auth";
-import { useLocation } from "react-router-dom";
+import { idbPromise } from '../../utils/helpers';
+
 import { useStoreContext } from "../../utils/GlobalState";
 import { SET_PERMISSIONS } from "../../utils/actions";
 import CartWrapper from "../ui/CartWrapper";
@@ -25,8 +25,8 @@ const Cart = () => {
 
   const getCart = async () => {
     try {
-      const cart = await idbPromise("cart", "get");
-      console.log("getCart:", cart);
+      const cart = await idbPromise('cart', 'get');
+
       return cart;
     } catch (error) {
       console.log(error);
@@ -34,8 +34,8 @@ const Cart = () => {
   };
   const clearCart = async (cart) => {
     try {
-      const newCart = await idbPromise("cart", "delete", cart[0]);
-      console.log("clearCart:", newCart);
+      const newCart = await idbPromise('cart', 'delete', cart[0]);
+
       return newCart;
     } catch (error) {
       console.log(error);
@@ -116,7 +116,6 @@ const Cart = () => {
       {/* <Button onClick={}></Button> */}
     </section>
   );
-  // console.log(cart);
 
   if (!cart.length) {
     return <div>Loading</div>;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Header, Button, Card } from "semantic-ui-react";
 
 import { EditDeck, EditCard, Delete } from "./Actions";

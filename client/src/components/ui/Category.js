@@ -10,11 +10,9 @@ const Category = ({ handleChange, categoryState, placeholder }) => {
   if (loading) return <div>Loading</div>; 
   if (error) return `Error! ${error.message}`;
   if (data) {
-    // console.log('categories:', data.categories);
     const categories = data.categories.map(
       ({ category, _id }) => {return { label: category, value: _id}}
     );
-    // console.log('categoryState:', categoryState);
     return (
       <Creatable
        placeholder={placeholder} 
