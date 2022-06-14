@@ -40,7 +40,6 @@ export const EditDeck = ({ state, handleChange, handleSubmit}) => {
         }
         handleCancel={() => setEditingDeck(false)}
         state={state}
-        // styles={styles}
       >
         <Category
           placeholder={"Add a Category"}
@@ -78,27 +77,6 @@ export const EditCard = ({ state, card, handleChange, handleSubmit }) => {
 export const Delete = ({ header, action, stateId, handleDelete }) => {
   const [confirmDelete, setConfirmDelete] = useState(false);
 
-  // const handleDelete = async (action, stateId) => {
-  //   console.log(action, stateId);
-  //   try {
-  //     if (action === 'REMOVE_DECK') {
-  //       const { data } = await removeDeck(
-  //         {variables: { deckId: stateId}}
-  //       );
-  //       console.log('removeDeck:', data);
-  //       setConfirmDelete(false);
-  //     };
-  //     if (action === 'REMOVE_CARD') {
-  //       const { data } = await removeCard(
-  //         {variables: { cardId: stateId}}
-  //       );
-  //       console.log('removeCard:', data);
-  //       setConfirmDelete(false);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
   return (
     <Action 
       state={confirmDelete} 

@@ -41,11 +41,9 @@ function CreateDeckPage() {
     const getDeck = async () => {
       try {
         if (params.id) {
-          console.log(params);
           const { data } = await queryDeck({
             variables: { deckId: params.id },
           });
-          console.log("queryDeck:", data.deck);
           setDeck(data.deck);
         }
       } catch (error) {
@@ -62,50 +60,35 @@ function CreateDeckPage() {
   const handleDeckFormChange = (event, valueArr) => {
     if (event) {
       const { name, value } = event.target;
-      // console.log("event:", { name, value });
       setDeckFormState({ ...deckFormState, [name]: value });
     } else {
-      console.log("state:", { ...deckFormState, categories: [...valueArr] });
-      // const categories = valueArr.map(category => deckFormState.categories.push(category));
-      // console.log('new array:', categories);
       setDeckFormState({ ...deckFormState, categories: [...valueArr] });
     }
   };
   const handleDeckFormSubmit = async (event, action) => {
     event.preventDefault();
-    // console.log("test:", {
-    //   title: deckFormState.title,
-    //   categories: [...deckFormState.categories],
-    //   description: deckFormState.description,
-    // });
+
     let categories;
     try {
       const newCategories = deckFormState.categories.filter(
         (category) => category.__isNew__ === true
       );
-      // console.log("newCategories:", newCategories);
       if (newCategories.length) {
         const args = newCategories.map((category) => category.value);
-        // console.log('variables:', args);
         const { data } = await addCategories({
           variables: { categories: args },
         });
-        // console.log('test:', data);
         const addedCategories = data.addCategories;
         console.log("addedCategories:", addedCategories);
 
         categories = deckFormState.categories.map((category) => {
           const index = addedCategories.findIndex((element) => {
-            // console.log(element.category, category.value);
             return element.category === category.value;
           });
-          // console.log(index);
           return index === -1 ? category.value : addedCategories[index]._id;
         });
-        // console.log("categories:", categories);
       } else {
         categories = deckFormState.categories.map((category) => category.value);
-        // console.log("categories:", categories);
       }
 
       if (action === "ADD_DECK") {
@@ -116,7 +99,6 @@ function CreateDeckPage() {
             categories: categories,
           },
         });
-        console.log("ADD_DECK:", data);
         setDeck(data.addDeck);
         return;
       }
@@ -134,7 +116,6 @@ function CreateDeckPage() {
             categories: categories,
           },
         });
-        console.log("update deck:", data);
         setDeck(data.updateDeck);
         return;
       }
@@ -154,21 +135,17 @@ function CreateDeckPage() {
   };
   const handleCardFormSubmit = async (event, action, cardId) => {
     event.preventDefault();
-    // console.log({ ...cardFormState, deckId: deck._id });
     try {
       if (action === "ADD_CARD") {
         const { data } = await addCard({
           variables: { ...cardFormState, deckId: deck._id },
         });
-        // console.log('ADD_CARD', data.addCard);
         setDeck(data.addCard);
       }
       if (action === "UPDATE_CARD") {
-        console.log(deck._id, cardId);
         const { data } = await updateCard({
           variables: { ...cardFormState, deckId: deck._id, cardId: cardId },
         });
-        console.log("UPDATE_CARD:", data.update);
         setDeck(data.updateCard);
       }
 
@@ -181,7 +158,6 @@ function CreateDeckPage() {
   };
   const handleCancelCard = (event) => {
     event.preventDefault();
-    // console.log('test');
     setCardState({ editing: false });
     setCardFormState("");
     return;
@@ -192,13 +168,11 @@ function CreateDeckPage() {
     try {
       if (action === "REMOVE_DECK") {
         const { data } = await removeDeck({ variables: { deckId: stateId } });
-        console.log("removeDeck:", data);
         setDeck(data.removeDeck);
         return;
       }
       if (action === "REMOVE_CARD") {
         const { data } = await removeCard({ variables: { cardId: stateId } });
-        console.log("removeCard:", data);
         setDeck(data.removeCard);
         return;
       }

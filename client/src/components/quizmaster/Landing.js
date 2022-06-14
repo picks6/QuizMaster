@@ -14,9 +14,7 @@ const Landing = ({ decks }) => {
   const [state, dispatch] = useStoreContext();
 
   const handleCheckout = async ({ deck }) => {
-    console.log("deck:", deck);
-    const cart = await idbPromise("cart", "put", deck);
-    console.log("cart:", cart);
+    await idbPromise("cart", "put", deck);
   };
   const DeckLink = ({ deck, children }) => (
     <Button

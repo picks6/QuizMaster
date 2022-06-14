@@ -54,17 +54,8 @@ const resolvers = {
         success_url: `${url}/checkout?success=true`,
         cancel_url: `${url}/checkout?canceled=true`
       });
-      console.log('session');
-      console.log('session:', session);
-
       return { session: session.id };
     },
-    // // NOT USED:
-    // category: async (parent, args) => { // args: { categoryID: ID, category: String }
-    //   return await Category.findOne(
-    //     { $or: [{ _id: args.categoryID }, { category: args.category }] }
-    //   );
-    // },
     categories: async () => { // return all categories
       return await Category.find({});
     },
@@ -72,7 +63,6 @@ const resolvers = {
       return await Deck.findOne({ _id: deckId });
     },
     decks: async (parent, {deckTitle, categories}) => { // { deckTitle: String, categories: [ID] }
-      // console.log('test:', deckTitle, categories);
       const categorySelectors = categories.map(id => ({ categories: { _id: id } }));
       return await Deck.find(
         { title: { $regex: deckTitle }, $or: categorySelectors }
@@ -82,20 +72,16 @@ const resolvers = {
       return await Deck.find({ title: { $regex: deckTitle }}).populate('categories creator');
     },
     decksCategory: async(parent, {categories}) =>{ // category: [ID]
-      // console.log('args:', categories);
       const selectors = categories.map(id => ({ categories: { _id: id } }));
-      // console.log('deckCategory:', selectors);
       return await Deck.find({ $or: selectors}).populate('categories creator');
     },
 		card: async (parent, args) => {
 			if (args.cardId && args.deckId) {
 				// for testing
 				return await Deck.findById(
-					// args.deckId, { cards: { $elemMatch: { _id: args.cardId} }}
 					args.deckId
 				);
 			}
-			// return await Card.find({deck: args.deck});
 		},
   },
   Mutation: {
@@ -106,7 +92,6 @@ const resolvers = {
 			return { token, user };
 		},
 		addCategories: async (parent, { categories }) => {
-			// categories: [String]!
 			const categoryData = categories.map((category) => ({
 				category: category,
 			}));
@@ -120,10 +105,7 @@ const resolvers = {
 				...args,
 				creator: context.user._id,
 			});
-      // console.log('newDeck:', newDeck);
-      // const updatedUser = 
       await User.findByIdAndUpdate(context.user._id, {$addToSet: { decks: newDeck._id}});
-      // console.log('user:', updatedUser);
 			return await newDeck.populate('categories creator');
 		},
 		addCard: async (parent, { sideA, sideB, deckId }, context) => {
@@ -138,10 +120,6 @@ const resolvers = {
     },
     // Update User
     updateUser: async (parent, args, context) => {
-      // args: { username: String, email: String, password: String, deck: ID, permission: ID }
-      // if (context.user) {
-      //   return await User.findByIdAndUpdate(context.user._id, args, { new: true });
-      // } 
       if (args.permission) {
         console.log(context.user, args)
         const updatedUser = await User.findByIdAndUpdate(
@@ -172,19 +150,7 @@ const resolvers = {
 
       return { token, user };
     },
-    // // NOT USED:
-    // updateCategory: async (parent, args, context) => { // args: { categoryId: ID!, category: String! }
-    //   if (context.deck) { 
-    //     return await Category.findByIdAndUpdate(context.category._id, args, {new: true});
-    //   } 
-    // //   if (args.cardId) { // for backend testing
-    // //     return await Deck.findOneAndUpdate(
-    // //       { _id: args.deckId, "cards._id": args.cardId }, 
-    // //       { $set: {"cards.$.sideA": args.sideA, "cards.$.sideB": args.sideB} }, 
-    // //       { new: true }
-    // //     );
-    // //   }
-    // },
+
     updateDeck: async (parent, args, context) => {
       // args: { deckId: ID!, title: String, category: String, description: String }
       if (context.deck) {

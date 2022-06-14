@@ -11,7 +11,6 @@ import {
   Segment,
 } from "semantic-ui-react";
 import { useStoreContext } from "../utils/GlobalState";
-// import Searcher from "../components/ui/Searcher";
 import escapeRegExp from "../utils/escapeRegExp";
 
 import Auth from "../utils/auth";
@@ -86,39 +85,12 @@ const DashboardPage = () => {
       searcherDispatch({ type: "FINISH_SEARCH", results: user.decks.filter(isMatch) });
     }, 300);
   }, [data]);
-  // const [decks, setDecks] = useState("");
-  // const [search, setSearch] = useState("");
-  // const [categories, setCategories] = useState("");
 
-  // const updateSearch = (event, value) => {
-  //   // if (event) {
-  //   //   const { name, value } = event.target;
-  //   //   setSearch(value);
-  //   // } else {
-  //   //   setCategories(value);
-  //   // }
-  // };
-  // const handleSubmitSearch = async (event, data) => {
-  //   event.preventDefault();
-  //   // console.log('test');
-
-  //   // const args = categories.map(category => category.value);
-  //   // console.log(args);
-  //   // const { data } = await getDecks(
-  //   //   { variables: { categories: args }}
-  //   // );
-
-  //   // const decks = data.deckCategory;
-
-  //   // console.log("QUERY_DECKS_CATEGORY:", decks);
-  //   // setDecks(decks);
-  // };
   if (loading) return <div>Loading</div>;
   if (error) return `Error! ${error.message}`;
   
   const user = data.user;
-  // console.log("QUERY_USER:", user);
-  // console.log(state);
+
   const decks = searcherState.results.length ? searcherState.results : user.decks;
 
   if (!Auth.isLoggedIn()) {
@@ -148,12 +120,6 @@ const DashboardPage = () => {
                 <Header id="quicksearch" size="large" inverted color="teal">
                   Quick Search:{" "}
                 </Header>
-
-                {/* <Category 
-                    placeholder={''}
-                    handleChange={updateSearch}
-                    categoryState={categories} 
-                  /> */}
                 <Search
                   className={classes.search}
                   loading={searcherState.loading}

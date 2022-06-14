@@ -25,7 +25,6 @@ const Cart = () => {
   const getCart = async () => {
     try {
       const cart = await idbPromise('cart', 'get');
-      console.log('getCart:', cart);
       return cart;
     } catch (error) {
       console.log(error);
@@ -34,7 +33,6 @@ const Cart = () => {
   const clearCart = async (cart) => {
     try {
       const newCart = await idbPromise('cart', 'delete', cart[0]);
-      console.log('clearCart:', newCart);
       return newCart;
     } catch (error) {
       console.log(error);
@@ -109,7 +107,6 @@ const Cart = () => {
       {/* <Button onClick={}></Button> */}
     </section>
   );
-  // console.log(cart);
   
   if (!cart.length) {
     return <div>Loading</div>

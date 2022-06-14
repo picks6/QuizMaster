@@ -52,14 +52,11 @@ function CardFlipPage() {
   useEffect(() => {
     const setState = async () => {
       if (data) { 
-        console.log('data:', data.deck.cards);
-        const cards = state.permissions.includes(data.deck._id) ? data.deck.cards : (
+        const cards = data.deck.price && state.permissions.includes(data.deck._id) ? data.deck.cards : (
           data.deck.cards.map(card => {
             return { ...card, sideB: "PAYWALL"}
           }).splice(0,3)
         );
-
-        console.log('cards:', cards);
         setCards(cards);
       }
     }
@@ -70,7 +67,6 @@ function CardFlipPage() {
   if (error) return <div>Error! {`${error.message}`}</div>;
 
   const setFinishedIndex = (i) => {
-    console.log("finished dragging on slide", i);
     setIndex(i);
   };
   const next = () => {
