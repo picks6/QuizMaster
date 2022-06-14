@@ -14,7 +14,7 @@ import { useStoreContext } from "../utils/GlobalState";
 import escapeRegExp from "../utils/escapeRegExp";
 
 import Auth from "../utils/auth";
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { QUERY_USER } from "../utils/queries";
 import "../index.css";
 import "./DashboardPage.module.css";

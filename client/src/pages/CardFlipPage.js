@@ -6,7 +6,7 @@ import styled, { createGlobalStyle, css } from "styled-components";
 
 import CardFlip from "../components/quizmaster/CardFlip";
 import { useQuery } from "@apollo/client";
-import { QUERY_CARD, QUERY_DECK } from "../utils/queries";
+import { QUERY_DECK } from "../utils/queries";
 import FlipWrapper from "../components/ui/FlipWrapper";
 
 // define some basic styles

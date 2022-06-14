@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Card,  Header, Button } from "semantic-ui-react";
 import { loadStripe } from '@stripe/stripe-js';
-import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import { QUERY_CHECKOUT, QUERY_USER } from "../../utils/queries";
 import { UPDATE_USER } from "../../utils/mutations";
 
 import { idbPromise } from '../../utils/helpers';
-import Auth from "../../utils/auth";
-import { useLocation } from "react-router-dom";
 import { useStoreContext } from "../../utils/GlobalState";
 import { SET_PERMISSIONS } from '../../utils/actions';
 // import "./ProductDisplay.css";
