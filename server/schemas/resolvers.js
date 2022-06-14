@@ -201,7 +201,7 @@ const resolvers = {
       if (args.deckId) { // for backend testing
         return await Deck.findByIdAndUpdate(
           args.deckId, { ...args }, { new: true }
-        );
+        ).populate('creator categories');
       }
     },
     updateCard: async (parent, args, context) => {
