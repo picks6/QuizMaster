@@ -84,8 +84,8 @@ export const CreateCard = ({
       )}
       <Card>
         <Card.Content>
-          <Button basic color="white" onClick={handleClick}>
-            +
+          <Button color="blue" onClick={handleClick}>
+            Add a Card!
           </Button>
         </Card.Content>
       </Card>
