@@ -105,7 +105,7 @@ const Cart = () => {
   const Message = ({ message }) => (
     <section>
       <p>{message}</p>
-      <Button inverted color="purple" as={Link} to={'/dashboard'}>Return to Dashboard</Button>
+      <Button as={Link} to={'/dashboard'} inverted color="purple">Return to Dashboard</Button>
     </section>
   );
 
