@@ -6,7 +6,6 @@ import {
 export const reducer = (state, action) => {
   switch (action.type) {
     case SET_PERMISSIONS:
-
       return {
         ...state,
         permissions: [...action.permissions],

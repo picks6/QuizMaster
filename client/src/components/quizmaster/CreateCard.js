@@ -32,7 +32,7 @@ export const CreateCardHeader = ({
       </Card.Header>
       <Header as="h2">
         Categories: 
-        {deck.categories.forEach((category) => <span key={category.id}>{category.category} </span>)}
+        {deck.categories.forEach((category) => `${category.category} `)}
       </Header>
       <Header as="h3">By: {deck.creator.username}</Header>
       <p>Description: {deck.description}</p>
