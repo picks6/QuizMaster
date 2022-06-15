@@ -160,6 +160,10 @@ input {
   margin-top: .3rem;
 }
 
+#searchResults {
+  align-content: center;
+}
+
 #side1 {
   max-width: 25rem;
   text-align: center;
