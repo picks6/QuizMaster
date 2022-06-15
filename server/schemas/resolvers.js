@@ -141,8 +141,9 @@ const resolvers = {
     },
 
     updateDeck: async (parent, args, context) => {
-      // args: { deckId: ID!, title: String, category: String, description: String }
+      // args: { deckId: ID!, title: String, categories: [ID], description: String }
       // if (args.deckId) { // for backend testing
+      console.log(args);
       return await Deck.findOneAndUpdate(
         args.deckId, { ...args }, { new: true }
       ).populate('creator categories');

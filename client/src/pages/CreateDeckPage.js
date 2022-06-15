@@ -39,20 +39,27 @@ function CreateDeckPage() {
 
   useEffect(() => {
     const getDeck = async () => {
-      try {
-        if (params.id) {
+      if (params.id) {
+        try {
           const { data } = await queryDeck({
             variables: { deckId: params.id },
           });
-          setDeckFormState(data.deck);
           setDeck(data.deck);
+        } catch (error) {
+          console.log(error);
         }
-      } catch (error) {
-        console.log(error);
       }
     };
     getDeck();
   }, []);
+  useEffect(() => {
+    try {
+      const categories = deck.categories.map(({ category, _id }) => {return { label: category, value: _id}})
+      setDeckFormState({...deck, categories: categories });
+    } catch (error) {
+      console.log(error);
+    }
+  }, [deck])
 
   const [cardState, setCardState] = useState({ editing: false });
   const [addCard] = useMutation(ADD_CARD);
@@ -91,7 +98,6 @@ function CreateDeckPage() {
       } else {
         categories = deckFormState.categories.map((category) => category.value);
       }
-
       if (action === "ADD_DECK") {
         const { data } = await addDeck({
           variables: {
@@ -103,18 +109,13 @@ function CreateDeckPage() {
         setDeck(data.addDeck);
       }
       if (action === "UPDATE_DECK") {
-        // if (deckFormState.price) {
-        //   setDeckFormState({
-        //     ...deckFormState,
-        //     price: parseFloat(deckFormState.price),
-        //   });
-        // }
+        console.log('categories:', categories);
         const { data } = await updateDeck({
           variables: {
             ...deckFormState,
             deckId: deck._id,
             price: parseFloat(deckFormState.price),
-            categories: categories,
+            categories: [...categories],
           },
         });
         console.log(data.updateDeck);
