@@ -100,7 +100,6 @@ function CreateDeckPage() {
           },
         });
         setDeck(data.addDeck);
-        return;
       }
       if (action === "UPDATE_DECK") {
         if (deckFormState.price) {
@@ -117,7 +116,6 @@ function CreateDeckPage() {
           },
         });
         setDeck(data.updateDeck);
-        return;
       }
     } catch (error) {
       console.log(error);
@@ -126,7 +124,6 @@ function CreateDeckPage() {
 
   const handleClick = async (event) => {
     setCardState({ editing: true });
-    return;
   };
 
   const handleCardFormChange = async (event) => {

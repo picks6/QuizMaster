@@ -8,10 +8,10 @@ const Logout = () => {
 
   const handleLogout = () => {
     Auth.logout();
-    navigate("/");
   }
+  
   return (
-    <Button 
+    <Button inverted
       color="purple" 
       content="Logout" 
       onClick={handleLogout}

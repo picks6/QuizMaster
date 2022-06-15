@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../utils/mutations";
-import { Button, Form, Grid, Header, Segment } from "semantic-ui-react";
+import { Button, Form, Grid, Header } from "semantic-ui-react";
 
 import Auth from "../../utils/auth";
 
@@ -30,7 +30,6 @@ const Login = (props) => {
       });
       setFormState({ email: "", password: "" });
       Auth.login(data.login.token);
-      navigate("/dashboard");
     } catch (e) {
       console.error(e);
     }
@@ -49,7 +48,6 @@ const Login = (props) => {
           </p>
         ) : (
           <Form id="login" onSubmit={handleFormSubmit}>
-            <Segment stacked></Segment>
             <Form.Input
               fluid
               placeholder="Your email"
