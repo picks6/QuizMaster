@@ -31,7 +31,8 @@ export const CreateCardHeader = ({
         />
       </Card.Header>
       <Header as="h2">
-        Category: {deck.categories.map((category) => category.category)}
+        Categories: 
+        {deck.categories.forEach((category) => <span key={category.id}>{category.category}</span>)}
       </Header>
       <Header as="h3">{deck.creator.username}</Header>
       <p>{deck.description}</p>
@@ -41,6 +42,7 @@ export const CreateCardHeader = ({
 );
 export const CreateCard = ({
   deck,
+  state,
   handleChange,
   handleSubmit,
   handleClick,

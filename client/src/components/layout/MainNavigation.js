@@ -13,19 +13,23 @@ import classes from "./MainNavigation.module.css";
 
 const DashboardButton = () => (
   <Menu.Item>
-    <Button as={Link} to="/dashboard" inverted color="olive">
+    <Button 
+      // as={Link} to="/dashboard" 
+      inverted color="olive" onClick={() => window.location.assign('/dashboard')}>
       Dashboard
     </Button>
+    
   </Menu.Item>
 );
-const SearchBar = () => (
-  <Menu.Item position="right">
-    <Input icon="search" placeholder="Search..." />
-  </Menu.Item>
-);
+// const SearchBar = () => (
+//   <Menu.Item position="right">
+//     <Input icon="search" placeholder="Search..." />
+//   </Menu.Item>
+// );
 const LoginButton = () => (
   <Menu.Item>
-    <Button as={Link} to="/login" inverted color="orange">
+    <Button 
+      as={Link} to="/login" inverted color="orange">
       Log in
     </Button>
   </Menu.Item>
