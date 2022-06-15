@@ -102,16 +102,17 @@ function CreateDeckPage() {
         setDeck(data.addDeck);
       }
       if (action === "UPDATE_DECK") {
-        if (deckFormState.price) {
-          setDeckFormState({
-            ...deckFormState,
-            price: parseFloat(deckFormState.price),
-          });
-        }
+        // if (deckFormState.price) {
+        //   setDeckFormState({
+        //     ...deckFormState,
+        //     price: parseFloat(deckFormState.price),
+        //   });
+        // }
         const { data } = await updateDeck({
           variables: {
             ...deckFormState,
             deckId: deck._id,
+            price: parseFloat(deckFormState.price),
             categories: categories,
           },
         });

@@ -142,11 +142,11 @@ const resolvers = {
 
     updateDeck: async (parent, args, context) => {
       // args: { deckId: ID!, title: String, category: String, description: String }
-      if (args.deckId) { // for backend testing
-        return await Deck.findByIdAndUpdate(
-          args.deckId, { ...args }, { new: true }
-        ).populate('creator categories');
-      }
+      // if (args.deckId) { // for backend testing
+      return await Deck.findOneAndUpdate(
+        args.deckId, { ...args }, { new: true }
+      ).populate('creator categories');
+      // }
     },
     updateCard: async (parent, args, context) => {
       // args: { deckId: ID!, cardId: ID, sideA: String, sideB: String }
