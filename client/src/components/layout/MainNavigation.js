@@ -8,7 +8,7 @@ import {
 } from "semantic-ui-react";
 
 import Auth from "../../utils/auth";
-
+import Logout from "../quizmaster/Logout";
 import classes from "./MainNavigation.module.css";
 
 const DashboardButton = () => (
@@ -46,7 +46,7 @@ const SignupButton = () => (
 );
 const LogoutButton = () => (
   <Menu.Item>
-    <Icon name="log out" color="red" onClick={Auth.logout} />
+    <Logout />
   </Menu.Item>
 );
 
