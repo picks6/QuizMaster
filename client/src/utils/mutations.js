@@ -148,6 +148,7 @@ export const REMOVE_CARD = gql`
       _id
       title
       categories {
+        _id
         category
       }
       description
