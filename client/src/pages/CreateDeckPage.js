@@ -54,12 +54,14 @@ function CreateDeckPage() {
   }, []);
   useEffect(() => {
     try {
-      const categories = deck.categories.map(({ category, _id }) => {return { label: category, value: _id}})
-      setDeckFormState({...deck, categories: categories });
+      const categories = deck.categories.map(({ category, _id }) => {
+        return { label: category, value: _id };
+      });
+      setDeckFormState({ ...deck, categories: categories });
     } catch (error) {
       console.log(error);
     }
-  }, [deck])
+  }, [deck]);
 
   const [cardState, setCardState] = useState({ editing: false });
   const [addCard] = useMutation(ADD_CARD);
@@ -109,7 +111,7 @@ function CreateDeckPage() {
         setDeck(data.addDeck);
       }
       if (action === "UPDATE_DECK") {
-        console.log('categories:', categories);
+        console.log("categories:", categories);
         const { data } = await updateDeck({
           variables: {
             ...deckFormState,
@@ -242,10 +244,11 @@ function CreateDeckPage() {
     return (
       <div>
         <div>Deck deleted.</div>
-        <Button 
-          // as={Link} to={"/dashboard"} 
-          inverted color="teal"
-          onClick={() => window.location.assign('/dashboard')}
+        <Button
+          // as={Link} to={"/dashboard"}
+          inverted
+          color="teal"
+          onClick={() => window.location.assign("/dashboard")}
         >
           Return to Dashboard
         </Button>
