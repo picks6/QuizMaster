@@ -23,7 +23,7 @@ import { Button, Grid } from "semantic-ui-react";
 import "../index.css";
 import SingleDeckWrapper from "../components/ui/SingleDeckWrapper";
 
-function CreateDeckPage() {
+function DeckPage() {
   const params = useParams();
   const [queryDeck] = useLazyQuery(QUERY_DECK);
   const [addCategories] = useMutation(ADD_CATEGORIES);
@@ -40,13 +40,13 @@ function CreateDeckPage() {
   useEffect(() => {
     const getDeck = async () => {
       try {
-        if (params.id) {
+        // if (params.id) {
           const { data } = await queryDeck({
             variables: { deckId: params.id },
           });
           setDeckFormState(data.deck);
           setDeck(data.deck);
-        }
+        // }
       } catch (error) {
         console.log(error);
       }
@@ -92,16 +92,16 @@ function CreateDeckPage() {
         categories = deckFormState.categories.map((category) => category.value);
       }
 
-      if (action === "ADD_DECK") {
-        const { data } = await addDeck({
-          variables: {
-            ...deckFormState,
-            price: parseFloat(deckFormState.price),
-            categories: categories,
-          },
-        });
-        setDeck(data.addDeck);
-      }
+      // if (action === "ADD_DECK") {
+      //   const { data } = await addDeck({
+      //     variables: {
+      //       ...deckFormState,
+      //       price: parseFloat(deckFormState.price),
+      //       categories: categories,
+      //     },
+      //   });
+      //   setDeck(data.addDeck);
+      // }
       if (action === "UPDATE_DECK") {
         // if (deckFormState.price) {
         //   setDeckFormState({
@@ -118,7 +118,7 @@ function CreateDeckPage() {
           },
         });
         console.log(data.updateDeck);
-        setDeck(data.updateDeck);
+        // setDeck(data.updateDeck);
       }
     } catch (error) {
       console.log(error);
@@ -181,27 +181,28 @@ function CreateDeckPage() {
     }
   };
 
-  if (deck === "") {
-    return (
-      <Grid columns={3} textAlign="center">
-        <Grid.Row verticalAlign="middle">
-          <Grid.Column>
-            <DeckForm
-              handleChange={handleDeckFormChange}
-              handleSubmit={(event) => handleDeckFormSubmit(event, "ADD_DECK")}
-              state={deckFormState}
-            >
-              <Category
-                placeholder={"Add a Category"}
-                handleChange={handleDeckFormChange}
-                categoryState={deckFormState.categories}
-              />
-            </DeckForm>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    );
-  } else if (deck.title) {
+  // if (deck === "") {
+  //   return (
+  //     <Grid columns={3} textAlign="center">
+  //       <Grid.Row verticalAlign="middle">
+  //         <Grid.Column>
+  //           <DeckForm
+  //             handleChange={handleDeckFormChange}
+  //             handleSubmit={(event) => handleDeckFormSubmit(event, "ADD_DECK")}
+  //             state={deckFormState}
+  //           >
+  //             <Category
+  //               placeholder={"Add a Category"}
+  //               handleChange={handleDeckFormChange}
+  //               categoryState={deckFormState.categories}
+  //             />
+  //           </DeckForm>
+  //         </Grid.Column>
+  //       </Grid.Row>
+  //     </Grid>
+  //   );
+  // } else 
+  if (deck.title) {
     return (
       <Grid padded columns={3} textAlign="center">
         <Grid.Row verticalAlign="middle">
@@ -253,4 +254,4 @@ function CreateDeckPage() {
   }
 }
 
-export default CreateDeckPage;
+export default DeckPage;
