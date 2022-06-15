@@ -105,7 +105,10 @@ const Cart = () => {
   const Message = ({ message }) => (
     <section>
       <p>{message}</p>
-      <Button as={Link} to='/dashboard' inverted color="purple">Return to Dashboard</Button>
+      <Button 
+        // as={Link} to='/dashboard' 
+        onClick={() => window.location.assign('/dashboard')}
+        inverted color="purple">Return to Dashboard</Button>
     </section>
   );
 
