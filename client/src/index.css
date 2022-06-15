@@ -105,9 +105,12 @@ input {
   background-position: center;
   color: #0d19a3;
   font-weight: 700;
+  justify-content: center;
+
 }
 
 .ui.cards {
+  flex-direction: column !important;
   justify-content: center;
 }
 
@@ -126,6 +129,10 @@ input {
   background-image: url('./assets/images/deck1.svg')!important;
   box-shadow: 0px 0px 5px 5px #e4c580 !important;
   border-radius: 5px;
+}
+
+.ui.grid>.row {
+  justify-content: center;
 }
 
 
@@ -165,7 +172,7 @@ input {
 }
 
 #singleDeck__container {
-  width: 25%;
+  width:auto;
 }
 
 

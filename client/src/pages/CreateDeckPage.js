@@ -182,7 +182,7 @@ function CreateDeckPage() {
 
   if (deck === "") {
     return (
-      <Grid columns={3} textAlign="center">
+      <Grid columns={1} textAlign="center">
         <Grid.Row verticalAlign="middle">
           <Grid.Column>
             <DeckForm
@@ -202,10 +202,10 @@ function CreateDeckPage() {
     );
   } else if (deck.title) {
     return (
-      <Grid padded columns={3} textAlign="center">
-        <Grid.Row verticalAlign="middle">
-          <Grid.Column id="singleDeck__container">
-            <SingleDeckWrapper>
+      <SingleDeckWrapper>
+        <Grid padded columns={1} textAlign="center">
+          <Grid.Row verticalAlign="middle">
+            <Grid.Column id="singleDeck__container">
               <CreateCardHeader
                 deck={deck}
                 state={deckFormState}
@@ -230,10 +230,10 @@ function CreateDeckPage() {
                   handleCancel={handleCancelCard}
                 />
               </CreateCard>
-            </SingleDeckWrapper>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </SingleDeckWrapper>
     );
   } else {
     return (
