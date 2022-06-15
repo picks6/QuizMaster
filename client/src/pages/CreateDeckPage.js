@@ -45,6 +45,7 @@ function CreateDeckPage() {
             variables: { deckId: params.id },
           });
           setDeck(data.deck);
+          setDeckFormState(data.deck);
         }
       } catch (error) {
         console.log(error);
