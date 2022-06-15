@@ -54,7 +54,7 @@ function CreateDeckPage() {
   }, []);
   useEffect(() => {
     try {
-      const categories = deck.categories.map(({ category, _id }) => {return { label: category, value: _id}})
+      const categories = deck.categories.map(({ category, _id }) => {return { label: `${category}`, value: _id}})
       setDeckFormState({...deck, categories: categories });
     } catch (error) {
       console.log(error);
