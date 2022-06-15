@@ -1,0 +1,33 @@
+.deckForm__wrapper {
+    padding-left: 5rem;
+    padding-right: 5rem;
+}
+
+@media screen and (min-width: 700px) {
+    .deckForm__wrapper {
+        padding-left: 20rem;
+        padding-right: 20rem;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .deckForm__wrapper {
+        padding-left: 30rem;
+        padding-right: 30rem;
+    }
+}
+
+@media screen and (min-width: 1300px) {
+    .deckForm__wrapper {
+        padding-left: 50rem;
+        padding-right: 50rem;
+    }
+}
+
+@media screen and (min-width: 1600px) {
+    .deckForm__wrapper {
+        padding-left: 60rem;
+        padding-right: 60rem;
+    }
+}
+
