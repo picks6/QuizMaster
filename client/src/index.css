@@ -88,6 +88,7 @@ Open Sans paragraphs*/
 text-overflow: ellipsis;
 } */
 
+
 input {
   border-radius: 20px;
 }
@@ -118,6 +119,7 @@ input {
     transform: scale(1.02);
     transition-delay: .4s ease-in-out;
   }
+
 
 .ui.header {
   color: #0d19a3;
