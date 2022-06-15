@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Creatable from 'react-select/creatable'
 // import {Card } from "semantic-ui-react";
 import { useQuery } from '@apollo/client';

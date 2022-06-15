@@ -19,23 +19,23 @@ import {
   REMOVE_DECK,
   REMOVE_CARD,
 } from "../utils/mutations";
-import { Button, Grid, Segment } from "semantic-ui-react";
+import { Button, Grid } from "semantic-ui-react";
 import "../index.css";
 import SingleDeckWrapper from "../components/ui/SingleDeckWrapper";
 
 function CreateDeckPage() {
   const params = useParams();
-  const [queryDeck, {}] = useLazyQuery(QUERY_DECK);
-  const [addCategories, {}] = useMutation(ADD_CATEGORIES);
+  const [queryDeck] = useLazyQuery(QUERY_DECK);
+  const [addCategories] = useMutation(ADD_CATEGORIES);
 
   const [deckFormState, setDeckFormState] = useState({});
   const [cardFormState, setCardFormState] = useState({ sideA: "", sideB: "" });
 
   const [deck, setDeck] = useState("");
-  const [addDeck, {}] = useMutation(ADD_DECK);
-  const [updateDeck, {}] = useMutation(UPDATE_DECK);
-  const [removeCard, {}] = useMutation(REMOVE_CARD);
-  const [removeDeck, {}] = useMutation(REMOVE_DECK);
+  const [addDeck] = useMutation(ADD_DECK);
+  const [updateDeck] = useMutation(UPDATE_DECK);
+  const [removeCard] = useMutation(REMOVE_CARD);
+  const [removeDeck] = useMutation(REMOVE_DECK);
 
   useEffect(() => {
     const getDeck = async () => {
@@ -54,8 +54,8 @@ function CreateDeckPage() {
   }, []);
 
   const [cardState, setCardState] = useState({ editing: false });
-  const [addCard, {}] = useMutation(ADD_CARD);
-  const [updateCard, {}] = useMutation(UPDATE_CARD);
+  const [addCard] = useMutation(ADD_CARD);
+  const [updateCard] = useMutation(UPDATE_CARD);
 
   const handleDeckFormChange = (event, valueArr) => {
     if (event) {

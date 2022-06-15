@@ -41,7 +41,7 @@ const Button = styled.button`
 `;
 
 function CardFlipPage() {
-  const [state, dispatch] = useStoreContext();
+  const [state] = useStoreContext();
   const params = useParams();
   const [index, setIndex] = useState(0);
   const [cards, setCards] = useState("");
@@ -52,14 +52,15 @@ function CardFlipPage() {
   useEffect(() => {
     const setState = async () => {
       if (data) {
+        console.log(data);
         const cards =
-          data.deck.price && state.permissions.includes(data.deck._id)
+          data.deck.price && !state.permissions.includes(data.deck._id)
             ? data.deck.cards
-            : data.deck.cards
                 .map((card) => {
                   return { ...card, sideB: "PAYWALL" };
                 })
-                .splice(0, 3);
+                .splice(0, 3)
+            : data.deck.cards;
         setCards(cards);
         console.log(cards);
       }

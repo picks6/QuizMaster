@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Modal, Icon, Button } from 'semantic-ui-react';
 
 import { DeckForm } from "./DeckForm";
-import { REMOVE_DECK, REMOVE_CARD } from "../../utils/mutations";
-import { useMutation } from "@apollo/client";
+
+
 import Category from "../ui/Category";
 import CardForm from "./CardForm";
 

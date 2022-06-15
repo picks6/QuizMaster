@@ -28,7 +28,7 @@ const CardFlip = ({ card }) => {
       <Card>
         <div style={{ width: "30rem" }}>
           <Card.Content>
-            {card.sideB == "PAYWALL" ? (
+            {card.sideB === "PAYWALL" ? (
               <Image
                 src="https://react.semantic-ui.com/images/wireframe/paragraph.png"
                 fluid

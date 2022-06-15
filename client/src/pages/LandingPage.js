@@ -16,14 +16,14 @@ import classes from "./LandingPage.module.css";
 
 const LandingPage = () => {
   const [decks, setDecks] = useState("");
-  const [queryDecks, {}] = useLazyQuery(QUERY_DECKS);
+  const [queryDecks] = useLazyQuery(QUERY_DECKS);
   const [search, setSearch] = useState({title: "", categories: []});
-  const [queryCategory, {}] = useLazyQuery(QUERY_DECKS_CATEGORY);
-  const [queryTitle, {}] = useLazyQuery(QUERY_DECKS_TITLE);
+  const [queryCategory] = useLazyQuery(QUERY_DECKS_CATEGORY);
+  const [queryTitle] = useLazyQuery(QUERY_DECKS_TITLE);
 
   const handleFormChange = (event, value) => {
     if (event) {
-      const { name, value } = event.target;
+      const { value } = event.target;
       setSearch({ ...search, title: value });
     } else {
       setSearch({ ...search, categories: [...value] });
