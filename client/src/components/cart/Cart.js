@@ -105,7 +105,7 @@ const Cart = () => {
   const Message = ({ message }) => (
     <section>
       <p>{message}</p>
-      {/* <Button onClick={}></Button> */}
+      <Button inverted color="purple" as={Link} to={'/dashboard'}>Return to Dashboard</Button>
     </section>
   );
 
