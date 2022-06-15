@@ -129,6 +129,7 @@ export const QUERY_DECKS_CATEGORY = gql`
       _id
       title
       categories {
+        _id
         category
       }
       description
