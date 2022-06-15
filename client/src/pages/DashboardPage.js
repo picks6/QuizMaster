@@ -52,7 +52,7 @@ const searcherReducer = (state, action) => {
 const DashboardPage = () => {
   const navigate = useNavigate();
   const timeoutRef = useRef();
-  const [dispatch] = useStoreContext();
+  const [state, dispatch] = useStoreContext();
   
   const [searcherState, searcherDispatch] = useReducer(searcherReducer, initialState);
   const { loading, error, data } = useQuery(QUERY_USER);

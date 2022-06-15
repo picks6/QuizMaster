@@ -63,7 +63,7 @@ export const DeckForm = ({
             </div>
             <Form.Input
               className={styles.price}
-              placeholder="$0.99"
+              placeholder="$1.00"
               name="price"
               type="text"
               onChange={handleChange}

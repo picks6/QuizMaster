@@ -27,7 +27,7 @@ const Landing = ({ decks }) => {
     </Button>
   );
   const CheckoutLink = (deck) => {
-    const url = Auth.isLoggedIn ? "/checkout" : "/signup";
+    const url = Auth.isLoggedIn() ? "/checkout" : "/signup";
     return (
       <Button
         color="blue"
