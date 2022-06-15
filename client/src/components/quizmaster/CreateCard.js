@@ -3,6 +3,7 @@ import { Header, Button, Card } from "semantic-ui-react";
 
 import { EditDeck, EditCard, Delete } from "./Actions";
 import "../../index.css";
+import classes from "./CreateCard.module.css";
 
 export const CreateCardHeader = ({
   deck,
@@ -12,7 +13,7 @@ export const CreateCardHeader = ({
   handleCancel,
   handleDelete,
 }) => (
-  <Card>
+  <Card className={classes.create__card}>
     <Card.Content>
       <Card.Header>
         <Header as="h1">{deck.title}</Header>

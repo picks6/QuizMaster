@@ -51,15 +51,19 @@ function CardFlipPage() {
   });
   useEffect(() => {
     const setState = async () => {
-      if (data) { 
-        const cards = data.deck.price && state.permissions.includes(data.deck._id) ? data.deck.cards : (
-          data.deck.cards.map(card => {
-            return { ...card, sideB: "PAYWALL"}
-          }).splice(0,3)
-        );
+      if (data) {
+        const cards =
+          data.deck.price && state.permissions.includes(data.deck._id)
+            ? data.deck.cards
+            : data.deck.cards
+                .map((card) => {
+                  return { ...card, sideB: "PAYWALL" };
+                })
+                .splice(0, 3);
         setCards(cards);
+        console.log(cards);
       }
-    }
+    };
     setState();
   }, [data]);
 
@@ -76,7 +80,9 @@ function CardFlipPage() {
     if (index > 0) setIndex(index - 1);
   };
 
-  return (!cards.length) ? <div>Loading</div> : (
+  return !cards.length ? (
+    <div>Loading</div>
+  ) : (
     <>
       <GlobalStyles />
       <AppStyles>

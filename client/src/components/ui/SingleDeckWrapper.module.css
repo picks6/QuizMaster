@@ -1,10 +1,8 @@
 .singleDeck {
-    display: flex;
-    justify-content: center;
     padding-bottom: 10rem;
 }
 
-@media screen and (min-width: 1024px) {
+/* @media screen and (min-width: 1024px) {
     .singleDeck {
         margin-left: 5.5rem;
     }
@@ -20,4 +18,4 @@
     .singleDeck {
         margin-left: 17rem;
     }
-}
+} */
