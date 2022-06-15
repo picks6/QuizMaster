@@ -1,4 +1,5 @@
-import React  from "react";
+import "../../index.css";
+import React from "react";
 import { Card, Button, Header } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { useStoreContext } from "../../utils/GlobalState";
@@ -52,8 +53,8 @@ const Landing = ({ decks }) => {
   const DeckPreview = ({ deck }) => (
     <>
       <Card.Content>
-        <Header as={'h1'}>{deck.title}</Header>
-        <Header as={'h2'}>By: {deck.creator.username}</Header>
+        <Header as={"h1"}>{deck.title}</Header>
+        <Header as={"h2"}>By: {deck.creator.username}</Header>
         {deck.price ? <p>{`$${deck.price}`}</p> : <></>}
         <p>{deck.categories.map((category) => `${category.category} `)}</p>
         <p>{deck.description}</p>
@@ -63,20 +64,16 @@ const Landing = ({ decks }) => {
 
   return (
     <CardWrapper>
-      <Card.Group>
+      <Card.Group id="searchResults">
         {decks.length ? (
           decks.map((deck) => (
             <Card color="blue" key={deck._id}>
               <DeckPreview deck={deck} />
-              {
-                (deck.price && !state.permissions.includes(deck._id)) ? (
-                  <PaywallButtons deck={deck} />
-                ) : (
-                  <DeckLink deck={deck}>
-                    View Deck
-                  </DeckLink>
-                )
-              }
+              {deck.price && !state.permissions.includes(deck._id) ? (
+                <PaywallButtons deck={deck} />
+              ) : (
+                <DeckLink deck={deck}>View Deck</DeckLink>
+              )}
             </Card>
           ))
         ) : (
