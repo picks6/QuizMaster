@@ -32,17 +32,16 @@ export const CreateCardHeader = ({
       </Card.Header>
       <Header as="h2">
         Categories: 
-        {deck.categories.forEach((category) => <span key={category.id}>{category.category}</span>)}
+        {deck.categories.forEach((category) => <span key={category.id}>{category.category} </span>)}
       </Header>
-      <Header as="h3">{deck.creator.username}</Header>
-      <p>{deck.description}</p>
+      <Header as="h3">By: {deck.creator.username}</Header>
+      <p>Description: {deck.description}</p>
       {deck.price ? <Header>{`$${deck.price}`}</Header> : <></>}
     </Card.Content>
   </Card>
 );
 export const CreateCard = ({
   deck,
-  state,
   handleChange,
   handleSubmit,
   handleClick,

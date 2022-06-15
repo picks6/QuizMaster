@@ -104,8 +104,8 @@ export const UPDATE_USER = gql`
     }
   }`;
 export const UPDATE_DECK = gql`
-  mutation UpdateDeck($deckId: ID!, $description: String, $category: [ID], $title: String, $price: Float) {
-    updateDeck(deckId: $deckId, description: $description, categories: $category, title: $title, price: $price) {
+  mutation UpdateDeck($deckId: ID!, $description: String, $categories: [ID], $title: String, $price: Float) {
+    updateDeck(deckId: $deckId, description: $description, categories: $categories, title: $title, price: $price) {
       _id
       title
       categories {

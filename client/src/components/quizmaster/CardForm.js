@@ -2,12 +2,12 @@ import React, { useState } from "react";
 
 import { Button, Form, Segment } from "semantic-ui-react";
 
-const CardForm = ({ state, handleChange, handleSubmit, handleCancel }) => (
+const CardForm = ({ state, card, handleChange, handleSubmit, handleCancel }) => (
   <Form onSubmit={handleSubmit}>
     <Segment stacked>
       <Form.Input
         fluid
-        placeholder="Front"
+        placeholder={card.sideA}
         name="sideA"
         type="text"
         value={state.sideA}
@@ -15,7 +15,7 @@ const CardForm = ({ state, handleChange, handleSubmit, handleCancel }) => (
       />
       <Form.Input
         fluid
-        placeholder="Back"
+        placeholder={card.sideB}
         name="sideB"
         type="text"
         value={state.sideB}

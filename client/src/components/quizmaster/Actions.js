@@ -36,6 +36,7 @@ export const EditDeck = ({ state, handleChange, handleSubmit}) => {
           async (event) => {
             await handleSubmit(event, 'UPDATE_DECK');
             setEditingDeck(false);
+            window.location.reload();
           }
         }
         handleCancel={() => setEditingDeck(false)}
@@ -44,7 +45,9 @@ export const EditDeck = ({ state, handleChange, handleSubmit}) => {
         <Category
           placeholder={"Add a Category"}
           handleChange={handleChange}
-          categoryState={state.categories}
+          categoryState={
+            state.categories
+          }
         />
       </DeckForm>
     </Action>
@@ -62,6 +65,7 @@ export const EditCard = ({ state, card, handleChange, handleSubmit }) => {
     >
       <CardForm 
         state={state}
+        card={card}
         handleChange={handleChange}
         handleSubmit={
           async (event) => {
