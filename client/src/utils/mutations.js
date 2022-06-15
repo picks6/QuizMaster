@@ -106,6 +106,7 @@ export const UPDATE_USER = gql`
 export const UPDATE_DECK = gql`
   mutation UpdateDeck($deckId: ID!, $description: String, $category: [ID], $title: String, $price: Float) {
     updateDeck(deckId: $deckId, description: $description, categories: $category, title: $title, price: $price) {
+      _id
       title
       categories {
         _id
@@ -147,6 +148,7 @@ export const REMOVE_CARD = gql`
       _id
       title
       categories {
+        _id
         category
       }
       description

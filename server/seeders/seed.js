@@ -13,26 +13,26 @@ db.once('open', async () => {
   await User.deleteMany({});
   await Category.deleteMany({});
 
-  // bulk create
-  const categories = await Category.insertMany(categoryData);
-  const decks = await Deck.insertMany(deckData);
-  const users = await User.insertMany(userData);
+  // // bulk create
+  // const categories = await Category.insertMany(categoryData);
+  // const decks = await Deck.insertMany(deckData);
+  // const users = await User.insertMany(userData);
   
-  for (i = 0; i < decks.length; i++) {
-    await User.findByIdAndUpdate(users[i], { $addToSet: { decks: decks[i]._id } });
-    for (j = 0; j < cardData.length; j++) {
-      await Deck.findByIdAndUpdate(
-        decks[i]._id, 
-        {
-          creator: users[i]._id, 
-          $addToSet: {
-            categories: categories[i]._id, 
-            cards: { ...cardData[j], deck: decks[i]._id }
-          }
-        }
-      );
-    };
-  };
+  // for (i = 0; i < decks.length; i++) {
+  //   await User.findByIdAndUpdate(users[i], { $addToSet: { decks: decks[i]._id } });
+  //   for (j = 0; j < cardData.length; j++) {
+  //     await Deck.findByIdAndUpdate(
+  //       decks[i]._id, 
+  //       {
+  //         creator: users[i]._id, 
+  //         $addToSet: {
+  //           categories: categories[i]._id, 
+  //           cards: { ...cardData[j], deck: decks[i]._id }
+  //         }
+  //       }
+  //     );
+  //   };
+  // };
  
 
   console.log('database seeded!');
